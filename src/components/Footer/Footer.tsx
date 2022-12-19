@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './Footer.module.css'
 
 type FooterPropsType = {
 
@@ -6,7 +7,7 @@ type FooterPropsType = {
 
 export function Footer(props: FooterPropsType) {
   return (
-    <footer className={'footer'}>
+    <footer className={s.footer}>
       Footer
     </footer>
   );

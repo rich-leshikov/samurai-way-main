@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
-import {Header} from './components/Header';
-import {Navigation} from './components/Navigation';
-import {ContentArea} from './components/ContentArea';
-import {Footer} from './components/Footer';
+import {Header} from './components/Header/Header';
+import {Navbar} from './components/Navbar/Navbar';
+import {Profile} from './components/Profile/Profile';
+import {Footer} from './components/Footer/Footer';
 
 function App() {
   return (
     <div className="App">
       <Header/>
-      <Navigation/>
-      <ContentArea/>
+      <Navbar/>
+      <Profile/>
       <Footer/>
     </div>
   );
