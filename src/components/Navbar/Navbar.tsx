@@ -1,27 +1,26 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 import s from './Navbar.module.css'
 
-type NavigationPropsType = {
-
-}
+type NavigationPropsType = {}
 
 export function Navbar(props: NavigationPropsType) {
   return (
     <nav className={s.navigation}>
-      <div className={`${s.nav__item} ${s.nav__feed}`}>
-        <a>Feed</a>
+      <div className={`${s.nav__item} ${s.nav__feed} ${s.active}`}>
+        <NavLink to={'feed'} activeClassName={s.active}>Feed</NavLink>
       </div>
       <div className={`${s.nav__item} ${s.nav__messages}`}>
-        <a href={'/dialogs'}>Messages</a>
+        <NavLink to={'/dialogs'} activeClassName={s.active}>Messages</NavLink>
       </div>
       <div className={`${s.nav__item} ${s.nav__music}`}>
-        <a>Music</a>
+        <NavLink to={'/audio'} activeClassName={s.active}>Music</NavLink>
       </div>
       <div className={`${s.nav__item} ${s.nav__profile}`}>
-        <a href={'profile'}>Profile</a>
+        <NavLink to={'profile'} activeClassName={s.active}>Profile</NavLink>
       </div>
       <div className={`${s.nav__item} ${s.nav__settings}`}>
-        <a>Settings</a>
+        <NavLink to={'/settings'} activeClassName={s.active}>Settings</NavLink>
       </div>
     </nav>
   );
