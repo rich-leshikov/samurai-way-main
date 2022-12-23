@@ -4,6 +4,7 @@
   background-color: #d0e7e3;
 }
 
-.nav__item {
-  color: #fff
+.nav__item a {
+  color: #fff;
+  text-decoration: none;
 }

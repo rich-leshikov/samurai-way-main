@@ -12,13 +12,13 @@ export function Navbar(props: NavigationPropsType) {
         <a>Feed</a>
       </div>
       <div className={`${s.nav__item} ${s.nav__messages}`}>
-        <a>Messages</a>
+        <a href={'/dialogs'}>Messages</a>
       </div>
       <div className={`${s.nav__item} ${s.nav__music}`}>
         <a>Music</a>
       </div>
       <div className={`${s.nav__item} ${s.nav__profile}`}>
-        <a>Profile</a>
+        <a href={'profile'}>Profile</a>
       </div>
       <div className={`${s.nav__item} ${s.nav__settings}`}>
         <a>Settings</a>
