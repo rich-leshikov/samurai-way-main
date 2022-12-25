@@ -2,9 +2,21 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 
+type PostsDataType = {
+  id: string,
+  message: string,
+  likesCount: number
+}
+
 type MyPostsPropsType = {}
 
 export function MyPosts(props: MyPostsPropsType) {
+  const postsData: Array<PostsDataType> = [
+    {id: '1', message: 'Hello!', likesCount: 3},
+    {id: '2', message: 'What a nice day!', likesCount: 5},
+    {id: '3', message: "Today I'm playing guitar!", likesCount: 6},
+  ]
+
   return (
     <div className="profile__posts">
       My posts
@@ -13,9 +25,9 @@ export function MyPosts(props: MyPostsPropsType) {
         <button>Add post</button>
       </div>
       <div className="profile__posts-feed">
-        <Post message={"Today I'm playing guitar!"} likesCount={6}/>
-        <Post message={'What a nice day!'} likesCount={5}/>
-        <Post message={'Hello!'} likesCount={3}/>
+        {
+          postsData.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
+        }
       </div>
     </div>
   );
