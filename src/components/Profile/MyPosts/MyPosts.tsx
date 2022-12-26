@@ -1,10 +1,10 @@
 import React from 'react';
+import { PostsType } from '../../../state/state';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {PostsDataType} from '../../../App';
 
 type MyPostsPropsType = {
-  postsData: Array<PostsDataType>,
+  postsData: Array<PostsType>,
 }
 
 export function MyPosts(props: MyPostsPropsType) {

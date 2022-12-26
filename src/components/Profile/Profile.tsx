@@ -2,17 +2,17 @@ import React from 'react';
 import s from './Profile.module.css'
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {PostsDataType} from '../../App';
+import {PostsType} from '../../state/state';
 
 type ProfilePropsType = {
-  postsData: Array<PostsDataType>,
+  posts: Array<PostsType>,
 }
 
 export function Profile(props: ProfilePropsType) {
   return (
     <div className={s.profile}>
       <ProfileInfo/>
-      <MyPosts postsData={props.postsData}/>
+      <MyPosts postsData={props.posts}/>
     </div>
   );
 }
