@@ -1,8 +1,9 @@
 .profile__post {
+  padding: 10px;
   color: #77c7bc;
 }
 
 img.avatar {
-  width: 150px;
+  width: 50px;
   border-radius: 50%;
 }

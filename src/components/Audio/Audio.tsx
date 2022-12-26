@@ -7,8 +7,8 @@ type AudioPropsType = {
 
 export function Audio(props: AudioPropsType) {
   return (
-    <footer className={s.footer}>
+    <div className={s.audio}>
       Music
-    </footer>
+    </div>
   );
 }

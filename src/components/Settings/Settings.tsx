@@ -7,8 +7,8 @@ type SettingsPropsType = {
 
 export function Settings(props: SettingsPropsType) {
   return (
-    <footer className={s.footer}>
+    <div className={s.settings}>
       Settings
-    </footer>
+    </div>
   );
 }

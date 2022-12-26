@@ -7,8 +7,8 @@ type FeedPropsType = {
 
 export function Feed(props: FeedPropsType) {
   return (
-    <footer className={s.footer}>
+    <div className={s.feed}>
       Feed
-    </footer>
+    </div>
   );
 }
