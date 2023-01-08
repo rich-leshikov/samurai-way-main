@@ -3,6 +3,7 @@ import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
 import {DialogsType, MessagesType} from '../../state/state';
+import {MessageForm} from '../EmbeddedModules/MessageForm';
 
 type DialogsPropsType = {
   dialogs: Array<DialogsType>,
@@ -22,6 +23,9 @@ export function Dialogs(props: DialogsPropsType) {
           props.messages.map(m => <Message id={m.id} message={m.message}/>)
         }
       </div>
+
+      {/*  Add dialogs and avatars for every user */}
+      <MessageForm/>
     </div>
   );
 }

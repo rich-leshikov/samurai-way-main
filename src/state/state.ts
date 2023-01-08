@@ -49,7 +49,7 @@ export const state: StateType = {
     posts: [
       {id: '1', message: 'Hello!', likesCount: 3},
       {id: '2', message: 'What a nice day!', likesCount: 5},
-      {id: '3', message: "Today I'm playing guitar!", likesCount: 6},
+      {id: '3', message: 'Today I\'m playing guitar!', likesCount: 6},
     ]
   },
 }

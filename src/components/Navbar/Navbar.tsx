@@ -22,6 +22,8 @@ export function Navbar(props: NavigationPropsType) {
       <div className={`${s.nav__item} ${s.nav__settings}`}>
         <NavLink to={'/settings'} activeClassName={s.active}>Settings</NavLink>
       </div>
+
+    {/*  Add sidebar later */}
     </nav>
   );
 }
