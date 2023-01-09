@@ -12,7 +12,9 @@ import {Settings} from './components/Settings/Settings';
 import {StateType} from './state/state';
 
 type AppPropsType = {
-  state: StateType
+  state: StateType,
+  addMessage: (message: string) => void,
+  addPost: (message: string) => void,
 }
 
 function App(props: AppPropsType) {
@@ -31,6 +33,7 @@ function App(props: AppPropsType) {
             render={() => <Dialogs
               dialogs={props.state.dialogPage.dialogs}
               messages={props.state.dialogPage.messages}
+              addMessage={props.addMessage}
             />}
           />
           <Route
@@ -41,6 +44,7 @@ function App(props: AppPropsType) {
             path={'/profile'}
             render={() => <Profile
               posts={props.state.profilePage.posts}
+              addPost={props.addPost}
             />}
           />
           <Route

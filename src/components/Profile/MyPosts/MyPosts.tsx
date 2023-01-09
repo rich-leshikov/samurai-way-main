@@ -6,6 +6,7 @@ import {MessageForm} from '../../EmbeddedModules/MessageForm';
 
 type MyPostsPropsType = {
   postsData: Array<PostsType>,
+  addPost: (message: string) => void,
 }
 
 export function MyPosts(props: MyPostsPropsType) {
@@ -14,7 +15,7 @@ export function MyPosts(props: MyPostsPropsType) {
     <div className={s.profile__posts}>
       <h3>My posts</h3>
       <div className="profile__new-post">
-        <MessageForm/>
+        <MessageForm addMessage={props.addPost}/>
       </div>
       <div className="profile__posts-feed">
         {

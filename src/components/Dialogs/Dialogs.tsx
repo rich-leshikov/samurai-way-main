@@ -8,6 +8,7 @@ import {MessageForm} from '../EmbeddedModules/MessageForm';
 type DialogsPropsType = {
   dialogs: Array<DialogsType>,
   messages: Array<MessagesType>,
+  addMessage: (message: string) => void,
 }
 
 export function Dialogs(props: DialogsPropsType) {
@@ -22,10 +23,9 @@ export function Dialogs(props: DialogsPropsType) {
         {
           props.messages.map(m => <Message id={m.id} message={m.message}/>)
         }
+        {/*  Add dialogs and avatars for every user */}
+        <MessageForm addMessage={props.addMessage}/>
       </div>
-
-      {/*  Add dialogs and avatars for every user */}
-      <MessageForm/>
     </div>
   );
 }

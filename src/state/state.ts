@@ -1,3 +1,5 @@
+import {v1} from 'uuid';
+
 export type StateType = {
   dialogPage: DialogPageType,
   profilePage: ProfilePageType,
@@ -31,25 +33,65 @@ export type PostsType = {
 export const state: StateType = {
   dialogPage: {
     dialogs: [
-      {id: '1', name: 'Dimych'},
-      {id: '2', name: 'Victor'},
-      {id: '3', name: 'Andrey'},
-      {id: '4', name: 'Sasha'},
-      {id: '5', name: 'Sveta'},
-      {id: '6', name: 'Valera'},
-      {id: '7', name: 'Igor'},
+      {id: v1(), name: 'Dimych'},
+      {id: v1(), name: 'Victor'},
+      {id: v1(), name: 'Andrey'},
+      {id: v1(), name: 'Sasha'},
+      {id: v1(), name: 'Sveta'},
+      {id: v1(), name: 'Valera'},
+      {id: v1(), name: 'Igor'},
     ],
     messages: [
-      {id: '1', message: 'Hi!'},
-      {id: '2', message: 'What\'s good?'},
-      {id: '3', message: 'Yo!'},
+      {id: v1(), message: 'Hi!'},
+      {id: v1(), message: 'What\'s good?'},
+      {id: v1(), message: 'Yo!'},
     ],
   },
   profilePage: {
     posts: [
-      {id: '1', message: 'Hello!', likesCount: 3},
-      {id: '2', message: 'What a nice day!', likesCount: 5},
-      {id: '3', message: 'Today I\'m playing guitar!', likesCount: 6},
+      {id: v1(), message: 'Hello!', likesCount: 3},
+      {id: v1(), message: 'What a nice day!', likesCount: 5},
+      {id: v1(), message: 'Today I\'m playing guitar!', likesCount: 6},
     ]
   },
+}
+
+// for useState
+const addMessageUse = (messagesData: Array<MessagesType>, message: string) => {
+  const newMessage: MessagesType = {
+    id: v1(),
+    message: message
+  }
+
+  messagesData = [...messagesData, newMessage]
+}
+
+const addPostUse = (postsData: Array<PostsType>, message: string) => {
+  const newPost: PostsType = {
+    id: v1(),
+    message: message,
+    likesCount: 0
+  }
+
+  postsData = [...postsData, newPost]
+}
+
+// for handly reloading state
+export const addMessage = (message: string) => {
+  const newMessage: MessagesType = {
+    id: v1(),
+    message: message
+  }
+
+  state.dialogPage.messages.push(newMessage)
+}
+
+export const addPost = (message: string) => {
+  const newPost: PostsType = {
+    id: v1(),
+    message: message,
+    likesCount: 0
+  }
+
+  state.profilePage.posts.push(newPost)
 }
