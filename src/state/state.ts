@@ -1,4 +1,5 @@
 import {v1} from 'uuid';
+import {rerenderEntireTree} from '../render/render';
 
 export type StateType = {
   dialogPage: DialogPageType,
@@ -84,6 +85,7 @@ export const addMessage = (message: string) => {
   }
 
   state.dialogPage.messages.push(newMessage)
+  rerenderEntireTree(state)
 }
 
 export const addPost = (message: string) => {
@@ -94,4 +96,5 @@ export const addPost = (message: string) => {
   }
 
   state.profilePage.posts.push(newPost)
+  rerenderEntireTree(state)
 }
