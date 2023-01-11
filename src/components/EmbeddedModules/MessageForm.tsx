@@ -1,23 +1,27 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 
 type MessageFormPropsType = {
-  addMessage: (message: string) => void,
+  newMessageFromTextarea: string,
+  updateTextarea: (message: string) => void,
+  addMessage: () => void,
 }
 
 export function MessageForm(props: MessageFormPropsType) {
 
   const newMessageElement = React.createRef<HTMLTextAreaElement>()
 
+  const updateTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    props.updateTextarea(e.currentTarget.value)
+  }
+
   const addMessage = () => {
-    if (newMessageElement.current) {
-      props.addMessage(newMessageElement.current.value)
-    }
+    props.addMessage()
   }
 
   return (
     <div>
       <div className="">
-        <textarea ref={newMessageElement}/>
+        <textarea value={props.newMessageFromTextarea} onChange={updateTextarea} ref={newMessageElement}/>
       </div>
       <div className="">
         <button onClick={addMessage}>Send</button>

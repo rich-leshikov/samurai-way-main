@@ -2,6 +2,7 @@ import {v1} from 'uuid';
 import {rerenderEntireTree} from '../render/render';
 
 export type StateType = {
+  newMessageFromTextarea: string,
   dialogPage: DialogPageType,
   profilePage: ProfilePageType,
 }
@@ -32,6 +33,7 @@ export type PostsType = {
 }
 
 export const state: StateType = {
+  newMessageFromTextarea: '',
   dialogPage: {
     dialogs: [
       {id: v1(), name: 'Dimych'},
@@ -57,6 +59,11 @@ export const state: StateType = {
   },
 }
 
+export const updateTextarea = (newText: string) => {
+  state.newMessageFromTextarea = newText
+  rerenderEntireTree(state)
+}
+
 // for useState
 const addMessageUse = (messagesData: Array<MessagesType>, message: string) => {
   const newMessage: MessagesType = {
@@ -66,7 +73,6 @@ const addMessageUse = (messagesData: Array<MessagesType>, message: string) => {
 
   messagesData = [...messagesData, newMessage]
 }
-
 const addPostUse = (postsData: Array<PostsType>, message: string) => {
   const newPost: PostsType = {
     id: v1(),
@@ -78,23 +84,25 @@ const addPostUse = (postsData: Array<PostsType>, message: string) => {
 }
 
 // for handly reloading state
-export const addMessage = (message: string) => {
+export const addMessage = () => {
   const newMessage: MessagesType = {
     id: v1(),
-    message: message
+    message: state.newMessageFromTextarea
   }
 
   state.dialogPage.messages.push(newMessage)
+  state.newMessageFromTextarea = ''
   rerenderEntireTree(state)
 }
 
-export const addPost = (message: string) => {
+export const addPost = () => {
   const newPost: PostsType = {
     id: v1(),
-    message: message,
+    message: state.newMessageFromTextarea,
     likesCount: 0
   }
 
   state.profilePage.posts.push(newPost)
+  state.newMessageFromTextarea = ''
   rerenderEntireTree(state)
 }

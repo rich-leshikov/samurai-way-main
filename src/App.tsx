@@ -13,8 +13,9 @@ import {StateType} from './state/state';
 
 type AppPropsType = {
   state: StateType,
-  addMessage: (message: string) => void,
-  addPost: (message: string) => void,
+  updateTextarea: (message: string) => void,
+  addMessage: () => void,
+  addPost: () => void,
 }
 
 function App(props: AppPropsType) {
@@ -33,6 +34,8 @@ function App(props: AppPropsType) {
             render={() => <Dialogs
               dialogs={props.state.dialogPage.dialogs}
               messages={props.state.dialogPage.messages}
+              newMessageFromTextarea={props.state.newMessageFromTextarea}
+              updateTextarea={props.updateTextarea}
               addMessage={props.addMessage}
             />}
           />
@@ -44,6 +47,8 @@ function App(props: AppPropsType) {
             path={'/profile'}
             render={() => <Profile
               posts={props.state.profilePage.posts}
+              newMessageFromTextarea={props.state.newMessageFromTextarea}
+              updateTextarea={props.updateTextarea}
               addPost={props.addPost}
             />}
           />

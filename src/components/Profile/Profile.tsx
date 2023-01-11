@@ -6,7 +6,9 @@ import {PostsType} from '../../state/state';
 
 type ProfilePropsType = {
   posts: Array<PostsType>,
-  addPost: (message: string) => void,
+  newMessageFromTextarea: string,
+  updateTextarea: (message: string) => void,
+  addPost: () => void,
 }
 
 export function Profile(props: ProfilePropsType) {
@@ -15,6 +17,8 @@ export function Profile(props: ProfilePropsType) {
       <ProfileInfo/>
       <MyPosts
         postsData={props.posts}
+        newMessageFromTextarea={props.newMessageFromTextarea}
+        updateTextarea={props.updateTextarea}
         addPost={props.addPost}
       />
     </div>
