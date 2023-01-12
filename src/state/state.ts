@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {rerenderEntireTree} from '../render/render';
 
 export type StateType = {
   newMessageFromTextarea: string,
@@ -57,6 +56,14 @@ export const state: StateType = {
       {id: v1(), message: 'Today I\'m playing guitar!', likesCount: 6},
     ]
   },
+}
+
+let rerenderEntireTree = (state: StateType) => {
+}
+
+// Pattern Observer
+export const subscribe = (observer: (state: StateType) => void) => {
+  rerenderEntireTree = observer
 }
 
 export const updateTextarea = (newText: string) => {
