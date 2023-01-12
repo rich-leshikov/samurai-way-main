@@ -9,16 +9,15 @@ import {Dialogs} from './components/Dialogs/Dialogs';
 import {Feed} from './components/Feed/Feed';
 import {Audio} from './components/Audio/Audio';
 import {Settings} from './components/Settings/Settings';
-import {StateType} from './state/state';
+import {StoreType} from './redux/store';
 
 type AppPropsType = {
-  state: StateType,
-  updateTextarea: (message: string) => void,
-  addMessage: () => void,
-  addPost: () => void,
+  store: StoreType
 }
 
 function App(props: AppPropsType) {
+  const state = props.store.getState()
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -32,11 +31,11 @@ function App(props: AppPropsType) {
           <Route
             path={'/dialogs'}
             render={() => <Dialogs
-              dialogs={props.state.dialogPage.dialogs}
-              messages={props.state.dialogPage.messages}
-              newMessageFromTextarea={props.state.newMessageFromTextarea}
-              updateTextarea={props.updateTextarea}
-              addMessage={props.addMessage}
+              dialogs={state.dialogPage.dialogs}
+              messages={state.dialogPage.messages}
+              newMessageFromTextarea={state.newMessageFromTextarea}
+              updateTextarea={props.store.updateTextarea.bind(props.store)}
+              addMessage={props.store.addMessage.bind(props.store)}
             />}
           />
           <Route
@@ -46,10 +45,10 @@ function App(props: AppPropsType) {
           <Route
             path={'/profile'}
             render={() => <Profile
-              posts={props.state.profilePage.posts}
-              newMessageFromTextarea={props.state.newMessageFromTextarea}
-              updateTextarea={props.updateTextarea}
-              addPost={props.addPost}
+              posts={state.profilePage.posts}
+              newMessageFromTextarea={state.newMessageFromTextarea}
+              updateTextarea={props.store.updateTextarea.bind(props.store)}
+              addPost={props.store.addPost.bind(props.store)}
             />}
           />
           <Route

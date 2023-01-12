@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
-import {DialogsType, MessagesType} from '../../state/state';
+import {DialogsType, MessagesType} from '../../redux/store';
 import {MessageForm} from '../EmbeddedModules/MessageForm';
 
 type DialogsPropsType = {

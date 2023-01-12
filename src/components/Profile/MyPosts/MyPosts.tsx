@@ -1,5 +1,5 @@
 import React from 'react';
-import {PostsType} from '../../../state/state';
+import {PostsType} from '../../../redux/store';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MessageForm} from '../../EmbeddedModules/MessageForm';
