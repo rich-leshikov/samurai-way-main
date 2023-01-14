@@ -2,24 +2,21 @@ import React from 'react';
 import s from './Profile.module.css'
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {PostsType} from '../../redux/store';
+import {ActionsType, PostsType} from '../../redux/store';
 
 type ProfilePropsType = {
   posts: Array<PostsType>,
   newMessageFromTextarea: string,
-  updateTextarea: (message: string) => void,
-  addPost: () => void,
+  dispatch: (action: ActionsType) => void,
 }
 
-export function Profile(props: ProfilePropsType) {
-  return (
+export function Profile(props: ProfilePropsType) {return (
     <div className={s.profile}>
       <ProfileInfo/>
       <MyPosts
         postsData={props.posts}
         newMessageFromTextarea={props.newMessageFromTextarea}
-        updateTextarea={props.updateTextarea}
-        addPost={props.addPost}
+        dispatch={props.dispatch}
       />
     </div>
   );

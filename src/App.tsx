@@ -12,7 +12,7 @@ import {Settings} from './components/Settings/Settings';
 import {StoreType} from './redux/store';
 
 type AppPropsType = {
-  store: StoreType
+  store: StoreType,
 }
 
 function App(props: AppPropsType) {
@@ -34,8 +34,7 @@ function App(props: AppPropsType) {
               dialogs={state.dialogPage.dialogs}
               messages={state.dialogPage.messages}
               newMessageFromTextarea={state.newMessageFromTextarea}
-              updateTextarea={props.store.updateTextarea.bind(props.store)}
-              addMessage={props.store.addMessage.bind(props.store)}
+              dispatch={props.store.dispatch.bind(props.store)}
             />}
           />
           <Route
@@ -47,8 +46,7 @@ function App(props: AppPropsType) {
             render={() => <Profile
               posts={state.profilePage.posts}
               newMessageFromTextarea={state.newMessageFromTextarea}
-              updateTextarea={props.store.updateTextarea.bind(props.store)}
-              addPost={props.store.addPost.bind(props.store)}
+              dispatch={props.store.dispatch.bind(props.store)}
             />}
           />
           <Route

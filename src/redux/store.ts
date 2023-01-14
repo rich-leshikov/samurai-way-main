@@ -2,12 +2,10 @@ import {v1} from 'uuid';
 
 export type StoreType = {
   _state: RootStateType,
-  getState: () => RootStateType,
-  rerenderEntireTree: (state: RootStateType) => void,
+  _rerenderEntireTree: (state: RootStateType) => void,
   subscribe: (observer: () => void) => void, // Should I declare type for observer?
-  updateTextarea: (newText: string) => void,
-  addMessage: () => void,
-  addPost: () => void,
+  getState: () => RootStateType,
+  dispatch: (action: ActionsType) => void,
 }
 
 export type RootStateType = {
@@ -41,6 +39,21 @@ export type PostsType = {
   likesCount: number
 }
 
+export type UpdateTextareaActionType = {
+  type: "UPDATE-TEXTAREA",
+  newText: string,
+}
+
+export type AddMessageActionType = {
+  type: "ADD-MESSAGE"
+}
+
+export type AddPostActionType = {
+  type: "ADD-POST"
+}
+
+export type ActionsType = UpdateTextareaActionType | AddMessageActionType | AddPostActionType
+
 export const store: StoreType = {
   _state: {
     newMessageFromTextarea: '',
@@ -68,56 +81,37 @@ export const store: StoreType = {
       ]
     },
   },
+  _rerenderEntireTree() {
+  },
+  subscribe(observer: () => void) {
+    this._rerenderEntireTree = observer
+  },
   getState() {
     return this._state
   },
-  rerenderEntireTree() {
-  },
-  subscribe(observer: () => void) {
-    this.rerenderEntireTree = observer
-  },
-  updateTextarea(newText: string) {
-    this._state.newMessageFromTextarea = newText
-    this.rerenderEntireTree(this._state)
-  },
-  addMessage() {
-    const newMessage: MessagesType = {
-      id: v1(),
-      message: this._state.newMessageFromTextarea
-    }
+  dispatch(action) {
+    if (action.type === 'UPDATE-TEXTAREA') {
+      this._state.newMessageFromTextarea = action.newText
+      this._rerenderEntireTree(this._state)
+    } else if (action.type === 'ADD-MESSAGE') {
+      const newMessage: MessagesType = {
+        id: v1(),
+        message: this._state.newMessageFromTextarea
+      }
 
-    this._state.dialogPage.messages.push(newMessage)
-    this._state.newMessageFromTextarea = ''
-    this.rerenderEntireTree(this._state)
-  },
-  addPost() {
-    const newPost: PostsType = {
-      id: v1(),
-      message: this._state.newMessageFromTextarea,
-      likesCount: 0
-    }
+      this._state.dialogPage.messages.push(newMessage)
+      this._state.newMessageFromTextarea = ''
+      this._rerenderEntireTree(this._state)
+    } else if (action.type === 'ADD-POST') {
+      const newPost: PostsType = {
+        id: v1(),
+        message: this._state.newMessageFromTextarea,
+        likesCount: 0
+      }
 
-    this._state.profilePage.posts.push(newPost)
-    this._state.newMessageFromTextarea = ''
-    this.rerenderEntireTree(this._state)
+      this._state.profilePage.posts.push(newPost)
+      this._state.newMessageFromTextarea = ''
+      this._rerenderEntireTree(this._state)
+    }
   }
 }
-
-// for useState
-// const addMessageUse = (messagesData: Array<MessagesType>, message: string) => {
-//   const newMessage: MessagesType = {
-//     id: v1(),
-//     message: message
-//   }
-//
-//   messagesData = [...messagesData, newMessage]
-// }
-// const addPostUse = (postsData: Array<PostsType>, message: string) => {
-//   const newPost: PostsType = {
-//     id: v1(),
-//     message: message,
-//     likesCount: 0
-//   }
-//
-//   postsData = [...postsData, newPost]
-// }

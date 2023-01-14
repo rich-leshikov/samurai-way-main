@@ -1,5 +1,5 @@
 import React from 'react';
-import {PostsType} from '../../../redux/store';
+import {ActionsType, PostsType} from '../../../redux/store';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MessageForm} from '../../EmbeddedModules/MessageForm';
@@ -7,11 +7,15 @@ import {MessageForm} from '../../EmbeddedModules/MessageForm';
 type MyPostsPropsType = {
   postsData: Array<PostsType>,
   newMessageFromTextarea: string,
-  updateTextarea: (message: string) => void,
-  addPost: () => void,
+  dispatch: (action: ActionsType) => void,
 }
 
 export function MyPosts(props: MyPostsPropsType) {
+  const updatePost = (post: string) => {
+    props.dispatch({type: 'UPDATE-TEXTAREA', newText: post})
+  }
+
+  const addPost = () => props.dispatch({type: 'ADD-POST'})
 
   return (
     <div className={s.profile__posts}>
@@ -19,8 +23,8 @@ export function MyPosts(props: MyPostsPropsType) {
       <div className="profile__new-post">
         <MessageForm
           newMessageFromTextarea={props.newMessageFromTextarea}
-          updateTextarea={props.updateTextarea}
-          addMessage={props.addPost}
+          updateTextarea={updatePost}
+          addMessage={addPost}
         />
       </div>
       <div className="profile__posts-feed">
