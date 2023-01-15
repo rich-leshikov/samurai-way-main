@@ -39,20 +39,18 @@ export type PostsType = {
   likesCount: number
 }
 
-export type UpdateTextareaActionType = {
-  type: "UPDATE-TEXTAREA",
-  newText: string,
-}
+export type ActionsType =
+  ReturnType<typeof updateTextareaAC>
+  | ReturnType<typeof addMessageAC>
+  | ReturnType<typeof addPostAC>
 
-export type AddMessageActionType = {
-  type: "ADD-MESSAGE"
-}
+const UPDATE_TEXTAREA = 'UPDATE-TEXTAREA'
+const ADD_MESSAGE = 'ADD-MESSAGE'
+const ADD_POST = 'ADD-POST'
 
-export type AddPostActionType = {
-  type: "ADD-POST"
-}
-
-export type ActionsType = UpdateTextareaActionType | AddMessageActionType | AddPostActionType
+export const updateTextareaAC = (userText: string) => ({type: UPDATE_TEXTAREA, newText: userText} as const)
+export const addMessageAC = () => ({type: ADD_MESSAGE} as const)
+export const addPostAC = () => ({type: ADD_POST} as const)
 
 export const store: StoreType = {
   _state: {
@@ -90,28 +88,30 @@ export const store: StoreType = {
     return this._state
   },
   dispatch(action) {
-    if (action.type === 'UPDATE-TEXTAREA') {
-      this._state.newMessageFromTextarea = action.newText
-      this._rerenderEntireTree(this._state)
-    } else if (action.type === 'ADD-MESSAGE') {
-      const newMessage: MessagesType = {
-        id: v1(),
-        message: this._state.newMessageFromTextarea
-      }
-
-      this._state.dialogPage.messages.push(newMessage)
-      this._state.newMessageFromTextarea = ''
-      this._rerenderEntireTree(this._state)
-    } else if (action.type === 'ADD-POST') {
-      const newPost: PostsType = {
-        id: v1(),
-        message: this._state.newMessageFromTextarea,
-        likesCount: 0
-      }
-
-      this._state.profilePage.posts.push(newPost)
-      this._state.newMessageFromTextarea = ''
-      this._rerenderEntireTree(this._state)
+    switch (action.type) {
+      case UPDATE_TEXTAREA:
+        this._state.newMessageFromTextarea = action.newText
+        this._rerenderEntireTree(this._state)
+        break
+      case ADD_MESSAGE:
+        const newMessage: MessagesType = {
+          id: v1(),
+          message: this._state.newMessageFromTextarea
+        }
+        this._state.dialogPage.messages.push(newMessage)
+        this._state.newMessageFromTextarea = ''
+        this._rerenderEntireTree(this._state)
+        break
+      case ADD_POST:
+        const newPost: PostsType = {
+          id: v1(),
+          message: this._state.newMessageFromTextarea,
+          likesCount: 0
+        }
+        this._state.profilePage.posts.push(newPost)
+        this._state.newMessageFromTextarea = ''
+        this._rerenderEntireTree(this._state)
+        break
     }
   }
 }

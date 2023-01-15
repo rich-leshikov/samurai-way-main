@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
-import {ActionsType, DialogsType, MessagesType} from '../../redux/store';
+import {ActionsType, addMessageAC, DialogsType, MessagesType, updateTextareaAC} from '../../redux/store';
 import {MessageForm} from '../EmbeddedModules/MessageForm';
 
 type DialogsPropsType = {
@@ -14,10 +14,10 @@ type DialogsPropsType = {
 
 export function Dialogs(props: DialogsPropsType) {
   const updateMessage = (message: string) => {
-    props.dispatch({type: 'UPDATE-TEXTAREA', newText: message})
+    props.dispatch(updateTextareaAC(message))
   }
 
-  const addMessage = () => props.dispatch({type: "ADD-MESSAGE"})
+  const addMessage = () => props.dispatch(addMessageAC())
 
   return (
     <div className={s.dialogs}>
@@ -30,7 +30,6 @@ export function Dialogs(props: DialogsPropsType) {
         {
           props.messages.map(m => <Message id={m.id} message={m.message}/>)
         }
-        {/*  Add dialogs and avatars for every user */}
         <MessageForm
           newMessageFromTextarea={props.newMessageFromTextarea}
           updateTextarea={updateMessage}

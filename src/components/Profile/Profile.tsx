@@ -10,7 +10,8 @@ type ProfilePropsType = {
   dispatch: (action: ActionsType) => void,
 }
 
-export function Profile(props: ProfilePropsType) {return (
+export function Profile(props: ProfilePropsType) {
+  return (
     <div className={s.profile}>
       <ProfileInfo/>
       <MyPosts

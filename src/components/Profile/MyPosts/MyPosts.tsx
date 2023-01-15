@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActionsType, PostsType} from '../../../redux/store';
+import {ActionsType, addPostAC, PostsType, updateTextareaAC} from '../../../redux/store';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MessageForm} from '../../EmbeddedModules/MessageForm';
@@ -12,10 +12,10 @@ type MyPostsPropsType = {
 
 export function MyPosts(props: MyPostsPropsType) {
   const updatePost = (post: string) => {
-    props.dispatch({type: 'UPDATE-TEXTAREA', newText: post})
+    props.dispatch(updateTextareaAC(post))
   }
 
-  const addPost = () => props.dispatch({type: 'ADD-POST'})
+  const addPost = () => props.dispatch(addPostAC())
 
   return (
     <div className={s.profile__posts}>
