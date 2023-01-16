@@ -6,7 +6,7 @@ import {ActionsType, PostsType} from '../../redux/store';
 
 type ProfilePropsType = {
   posts: Array<PostsType>,
-  newMessageFromTextarea: string,
+  newPostFromTextarea: string,
   dispatch: (action: ActionsType) => void,
 }
 
@@ -16,7 +16,7 @@ export function Profile(props: ProfilePropsType) {
       <ProfileInfo/>
       <MyPosts
         postsData={props.posts}
-        newMessageFromTextarea={props.newMessageFromTextarea}
+        newPostFromTextarea={props.newPostFromTextarea}
         dispatch={props.dispatch}
       />
     </div>

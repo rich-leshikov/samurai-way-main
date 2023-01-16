@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
-import {ActionsType, addMessageAC, DialogsType, MessagesType, updateTextareaAC} from '../../redux/store';
+import {ActionsType, addMessageAC, DialogsType, MessagesType, updateMessageTextareaAC} from '../../redux/store';
 import {MessageForm} from '../EmbeddedModules/MessageForm';
 
 type DialogsPropsType = {
@@ -14,7 +14,7 @@ type DialogsPropsType = {
 
 export function Dialogs(props: DialogsPropsType) {
   const updateMessage = (message: string) => {
-    props.dispatch(updateTextareaAC(message))
+    props.dispatch(updateMessageTextareaAC(message))
   }
 
   const addMessage = () => props.dispatch(addMessageAC())

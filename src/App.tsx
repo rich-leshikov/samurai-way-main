@@ -33,7 +33,7 @@ function App(props: AppPropsType) {
             render={() => <Dialogs
               dialogs={state.dialogPage.dialogs}
               messages={state.dialogPage.messages}
-              newMessageFromTextarea={state.newMessageFromTextarea}
+              newMessageFromTextarea={state.dialogPage.newMessageFromTextarea}
               dispatch={props.store.dispatch.bind(props.store)}
             />}
           />
@@ -45,7 +45,7 @@ function App(props: AppPropsType) {
             path={'/profile'}
             render={() => <Profile
               posts={state.profilePage.posts}
-              newMessageFromTextarea={state.newMessageFromTextarea}
+              newPostFromTextarea={state.profilePage.newPostFromTextarea}
               dispatch={props.store.dispatch.bind(props.store)}
             />}
           />

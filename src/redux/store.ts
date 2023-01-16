@@ -9,18 +9,19 @@ export type StoreType = {
 }
 
 export type RootStateType = {
-  newMessageFromTextarea: string,
   dialogPage: DialogPageType,
   profilePage: ProfilePageType,
 }
 
-export type ProfilePageType = {
-  posts: Array<PostsType>,
-}
-
 export type DialogPageType = {
+  newMessageFromTextarea: string,
   dialogs: Array<DialogsType>,
   messages: Array<MessagesType>,
+}
+
+export type ProfilePageType = {
+  newPostFromTextarea: string,
+  posts: Array<PostsType>,
 }
 
 export type DialogsType = {
@@ -40,22 +41,25 @@ export type PostsType = {
 }
 
 export type ActionsType =
-  ReturnType<typeof updateTextareaAC>
+  ReturnType<typeof updateMessageTextareaAC>
   | ReturnType<typeof addMessageAC>
+  | ReturnType<typeof updatePostTextareaAC>
   | ReturnType<typeof addPostAC>
 
-const UPDATE_TEXTAREA = 'UPDATE-TEXTAREA'
+const UPDATE_MESSAGE_TEXTAREA = 'UPDATE-MESSAGE-TEXTAREA'
 const ADD_MESSAGE = 'ADD-MESSAGE'
+const UPDATE_POST_TEXTAREA = 'UPDATE-POST-TEXTAREA'
 const ADD_POST = 'ADD-POST'
 
-export const updateTextareaAC = (userText: string) => ({type: UPDATE_TEXTAREA, newText: userText} as const)
+export const updateMessageTextareaAC = (userText: string) => ({type: UPDATE_MESSAGE_TEXTAREA, newText: userText} as const)
 export const addMessageAC = () => ({type: ADD_MESSAGE} as const)
+export const updatePostTextareaAC = (userText: string) => ({type: UPDATE_POST_TEXTAREA, newText: userText} as const)
 export const addPostAC = () => ({type: ADD_POST} as const)
 
 export const store: StoreType = {
   _state: {
-    newMessageFromTextarea: '',
     dialogPage: {
+      newMessageFromTextarea: '',
       dialogs: [
         {id: v1(), name: 'Dimych'},
         {id: v1(), name: 'Victor'},
@@ -72,6 +76,7 @@ export const store: StoreType = {
       ],
     },
     profilePage: {
+      newPostFromTextarea: '',
       posts: [
         {id: v1(), message: 'Hello!', likesCount: 3},
         {id: v1(), message: 'What a nice day!', likesCount: 5},
@@ -89,27 +94,31 @@ export const store: StoreType = {
   },
   dispatch(action) {
     switch (action.type) {
-      case UPDATE_TEXTAREA:
-        this._state.newMessageFromTextarea = action.newText
+      case UPDATE_MESSAGE_TEXTAREA:
+        this._state.dialogPage.newMessageFromTextarea = action.newText
         this._rerenderEntireTree(this._state)
         break
       case ADD_MESSAGE:
         const newMessage: MessagesType = {
           id: v1(),
-          message: this._state.newMessageFromTextarea
+          message: this._state.dialogPage.newMessageFromTextarea
         }
         this._state.dialogPage.messages.push(newMessage)
-        this._state.newMessageFromTextarea = ''
+        this._state.dialogPage.newMessageFromTextarea = ''
+        this._rerenderEntireTree(this._state)
+        break
+      case UPDATE_POST_TEXTAREA:
+        this._state.profilePage.newPostFromTextarea = action.newText
         this._rerenderEntireTree(this._state)
         break
       case ADD_POST:
         const newPost: PostsType = {
           id: v1(),
-          message: this._state.newMessageFromTextarea,
+          message: this._state.profilePage.newPostFromTextarea,
           likesCount: 0
         }
         this._state.profilePage.posts.push(newPost)
-        this._state.newMessageFromTextarea = ''
+        this._state.profilePage.newPostFromTextarea = ''
         this._rerenderEntireTree(this._state)
         break
     }
