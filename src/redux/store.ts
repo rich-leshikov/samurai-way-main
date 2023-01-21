@@ -1,9 +1,13 @@
 import {v1} from 'uuid';
+import {DialogsActionsType, dialogsReducer} from './dialogs-reducer';
+import {ProfileActionsType, profileReducer} from './profile-reducer';
+
+export type ActionsType = ProfileActionsType | DialogsActionsType
 
 export type StoreType = {
   _state: RootStateType,
   _rerenderEntireTree: (state: RootStateType) => void,
-  subscribe: (observer: () => void) => void, // Should I declare type for observer?
+  subscribe: (observer: () => void) => void,
   getState: () => RootStateType,
   dispatch: (action: ActionsType) => void,
 }
@@ -39,22 +43,6 @@ export type PostsType = {
   message: string,
   likesCount: number
 }
-
-export type ActionsType =
-  ReturnType<typeof updateMessageTextareaAC>
-  | ReturnType<typeof addMessageAC>
-  | ReturnType<typeof updatePostTextareaAC>
-  | ReturnType<typeof addPostAC>
-
-const UPDATE_MESSAGE_TEXTAREA = 'UPDATE-MESSAGE-TEXTAREA'
-const ADD_MESSAGE = 'ADD-MESSAGE'
-const UPDATE_POST_TEXTAREA = 'UPDATE-POST-TEXTAREA'
-const ADD_POST = 'ADD-POST'
-
-export const updateMessageTextareaAC = (userText: string) => ({type: UPDATE_MESSAGE_TEXTAREA, newText: userText} as const)
-export const addMessageAC = () => ({type: ADD_MESSAGE} as const)
-export const updatePostTextareaAC = (userText: string) => ({type: UPDATE_POST_TEXTAREA, newText: userText} as const)
-export const addPostAC = () => ({type: ADD_POST} as const)
 
 export const store: StoreType = {
   _state: {
@@ -93,34 +81,8 @@ export const store: StoreType = {
     return this._state
   },
   dispatch(action) {
-    switch (action.type) {
-      case UPDATE_MESSAGE_TEXTAREA:
-        this._state.dialogPage.newMessageFromTextarea = action.newText
-        this._rerenderEntireTree(this._state)
-        break
-      case ADD_MESSAGE:
-        const newMessage: MessagesType = {
-          id: v1(),
-          message: this._state.dialogPage.newMessageFromTextarea
-        }
-        this._state.dialogPage.messages.push(newMessage)
-        this._state.dialogPage.newMessageFromTextarea = ''
-        this._rerenderEntireTree(this._state)
-        break
-      case UPDATE_POST_TEXTAREA:
-        this._state.profilePage.newPostFromTextarea = action.newText
-        this._rerenderEntireTree(this._state)
-        break
-      case ADD_POST:
-        const newPost: PostsType = {
-          id: v1(),
-          message: this._state.profilePage.newPostFromTextarea,
-          likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostFromTextarea = ''
-        this._rerenderEntireTree(this._state)
-        break
-    }
+    this._state.dialogPage = dialogsReducer(this._state.dialogPage, action)
+    this._state.profilePage = profileReducer(this._state.profilePage, action)
+    this._rerenderEntireTree(this._state)
   }
 }

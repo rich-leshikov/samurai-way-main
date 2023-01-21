@@ -2,8 +2,9 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
-import {ActionsType, addMessageAC, DialogsType, MessagesType, updateMessageTextareaAC} from '../../redux/store';
+import {ActionsType, DialogsType, MessagesType} from '../../redux/store';
 import {MessageForm} from '../EmbeddedModules/MessageForm';
+import {addMessageAC, updateMessageTextareaAC} from '../../redux/dialogs-reducer';
 
 type DialogsPropsType = {
   dialogs: Array<DialogsType>,
