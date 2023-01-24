@@ -13,7 +13,7 @@ export type StoreType = {
 }
 
 export type RootStateType = {
-  dialogPage: DialogPageType,
+  dialogsPage: DialogPageType,
   profilePage: ProfilePageType,
 }
 
@@ -46,7 +46,7 @@ export type PostsType = {
 
 export const store: StoreType = {
   _state: {
-    dialogPage: {
+    dialogsPage: {
       newMessageFromTextarea: '',
       dialogs: [
         {id: v1(), name: 'Dimych'},
@@ -81,7 +81,7 @@ export const store: StoreType = {
     return this._state
   },
   dispatch(action) {
-    this._state.dialogPage = dialogsReducer(this._state.dialogPage, action)
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
     this._state.profilePage = profileReducer(this._state.profilePage, action)
     this._rerenderEntireTree(this._state)
   }

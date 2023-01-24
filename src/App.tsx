@@ -9,15 +9,15 @@ import {Dialogs} from './components/Dialogs/Dialogs';
 import {Feed} from './components/Feed/Feed';
 import {Audio} from './components/Audio/Audio';
 import {Settings} from './components/Settings/Settings';
-import {StoreType} from './redux/store';
+import {Dispatch} from 'redux';
+import {AppRootStateType} from './redux/redux-store';
 
 type AppPropsType = {
-  store: StoreType,
+  state: AppRootStateType,
+  dispatch: Dispatch
 }
 
 function App(props: AppPropsType) {
-  const state = props.store.getState()
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,10 +31,10 @@ function App(props: AppPropsType) {
           <Route
             path={'/dialogs'}
             render={() => <Dialogs
-              dialogs={state.dialogPage.dialogs}
-              messages={state.dialogPage.messages}
-              newMessageFromTextarea={state.dialogPage.newMessageFromTextarea}
-              dispatch={props.store.dispatch.bind(props.store)}
+              dialogs={props.state.dialogsPage.dialogs}
+              messages={props.state.dialogsPage.messages}
+              newMessageFromTextarea={props.state.dialogsPage.newMessageFromTextarea}
+              dispatch={props.dispatch}
             />}
           />
           <Route
@@ -44,9 +44,9 @@ function App(props: AppPropsType) {
           <Route
             path={'/profile'}
             render={() => <Profile
-              posts={state.profilePage.posts}
-              newPostFromTextarea={state.profilePage.newPostFromTextarea}
-              dispatch={props.store.dispatch.bind(props.store)}
+              posts={props.state.profilePage.posts}
+              newPostFromTextarea={props.state.profilePage.newPostFromTextarea}
+              dispatch={props.dispatch}
             />}
           />
           <Route
