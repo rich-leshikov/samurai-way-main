@@ -1,20 +1,18 @@
 import React from 'react';
+import {Store} from 'redux';
 import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
 import {Header} from './components/Header/Header';
 import {Navbar} from './components/Navbar/Navbar';
 import {Footer} from './components/Footer/Footer';
-import {Profile} from './components/Profile/Profile';
-import {Dialogs} from './components/Dialogs/Dialogs';
 import {Feed} from './components/Feed/Feed';
 import {Audio} from './components/Audio/Audio';
 import {Settings} from './components/Settings/Settings';
-import {Dispatch} from 'redux';
-import {AppRootStateType} from './redux/redux-store';
+import {DialogsContainer} from './components/Dialogs/DialogsContainer';
+import {Profile} from './components/Profile/Profile';
 
 type AppPropsType = {
-  state: AppRootStateType,
-  dispatch: Dispatch
+  store: Store
 }
 
 function App(props: AppPropsType) {
@@ -30,12 +28,7 @@ function App(props: AppPropsType) {
           />
           <Route
             path={'/dialogs'}
-            render={() => <Dialogs
-              dialogs={props.state.dialogsPage.dialogs}
-              messages={props.state.dialogsPage.messages}
-              newMessageFromTextarea={props.state.dialogsPage.newMessageFromTextarea}
-              dispatch={props.dispatch}
-            />}
+            render={() => <DialogsContainer store={props.store}/>}
           />
           <Route
             path={'/audio'}
@@ -43,11 +36,7 @@ function App(props: AppPropsType) {
           />
           <Route
             path={'/profile'}
-            render={() => <Profile
-              posts={props.state.profilePage.posts}
-              newPostFromTextarea={props.state.profilePage.newPostFromTextarea}
-              dispatch={props.dispatch}
-            />}
+            render={() => <Profile store={props.store}/>}
           />
           <Route
             path={'/settings'}

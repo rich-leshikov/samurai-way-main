@@ -13,11 +13,11 @@ export type StoreType = {
 }
 
 export type RootStateType = {
-  dialogsPage: DialogPageType,
+  dialogsPage: DialogsPageType,
   profilePage: ProfilePageType,
 }
 
-export type DialogPageType = {
+export type DialogsPageType = {
   newMessageFromTextarea: string,
   dialogs: Array<DialogsType>,
   messages: Array<MessagesType>,

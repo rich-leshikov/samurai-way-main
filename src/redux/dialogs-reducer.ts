@@ -1,4 +1,4 @@
-import {ActionsType, DialogPageType, MessagesType, RootStateType} from './store';
+import {ActionsType, DialogsPageType, MessagesType, RootStateType} from './store';
 import {v1} from 'uuid';
 
 export type DialogsActionsType = ReturnType<typeof updateMessageTextareaAC> | ReturnType<typeof addMessageAC>
@@ -12,7 +12,7 @@ export const updateMessageTextareaAC = (userText: string) => ({
 } as const)
 export const addMessageAC = () => ({type: ADD_MESSAGE} as const)
 
-let initialState: DialogPageType = { // need import DialogPageType to this file?? + let or const??
+let initialState: DialogsPageType = { // need import DialogsPageType to this file?? + let or const??
   newMessageFromTextarea: '',
   dialogs: [
     {id: v1(), name: 'Dimych'},
@@ -29,8 +29,8 @@ let initialState: DialogPageType = { // need import DialogPageType to this file?
     {id: v1(), message: 'Yo!'},
   ],
 }
-// right returning of DialogPageType??
-export const dialogsReducer = (state: DialogPageType = initialState, action: ActionsType): DialogPageType => {
+// right returning of DialogsPageType??
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): DialogsPageType => {
   switch (action.type) {
     case UPDATE_MESSAGE_TEXTAREA:
       state.newMessageFromTextarea = action.newText

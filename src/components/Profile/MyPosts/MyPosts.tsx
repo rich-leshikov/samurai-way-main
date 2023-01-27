@@ -1,22 +1,20 @@
 import React from 'react';
-import {ActionsType, PostsType} from '../../../redux/store';
+import {PostsType} from '../../../redux/store';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MessageForm} from '../../EmbeddedModules/MessageForm';
-import {addPostAC, updatePostTextareaAC} from '../../../redux/profile-reducer';
 
 type MyPostsPropsType = {
   postsData: Array<PostsType>,
   newPostFromTextarea: string,
-  dispatch: (action: ActionsType) => void,
+  updatePost: (post: string) => void,
+  addPost: () => void,
 }
 
 export function MyPosts(props: MyPostsPropsType) {
-  const updatePost = (post: string) => {
-    props.dispatch(updatePostTextareaAC(post))
-  }
+  const updatePost = (post: string) => props.updatePost(post)
 
-  const addPost = () => props.dispatch(addPostAC())
+  const addPost = () => props.addPost()
 
   return (
     <div className={s.profile__posts}>

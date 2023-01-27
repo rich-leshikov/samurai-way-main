@@ -2,37 +2,35 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
-import {ActionsType, DialogsType, MessagesType} from '../../redux/store';
+import {DialogsPageType} from '../../redux/store';
 import {MessageForm} from '../EmbeddedModules/MessageForm';
-import {addMessageAC, updateMessageTextareaAC} from '../../redux/dialogs-reducer';
 
 type DialogsPropsType = {
-  dialogs: Array<DialogsType>,
-  messages: Array<MessagesType>,
-  newMessageFromTextarea: string,
-  dispatch: (action: ActionsType) => void,
+  dialogsPage: DialogsPageType,
+  updateMessage: (message: string) => void,
+  addMessage: () => void,
 }
 
 export function Dialogs(props: DialogsPropsType) {
   const updateMessage = (message: string) => {
-    props.dispatch(updateMessageTextareaAC(message))
+    props.updateMessage(message)
   }
 
-  const addMessage = () => props.dispatch(addMessageAC())
+  const addMessage = () => props.addMessage()
 
   return (
     <div className={s.dialogs}>
       <div className={s.dialogs__items}>
         {
-          props.dialogs.map(d => <Dialog id={d.id} name={d.name}/>)
+          props.dialogsPage.dialogs.map(d => <Dialog id={d.id} name={d.name}/>)
         }
       </div>
       <div className={s.dialogs__chats}>
         {
-          props.messages.map(m => <Message id={m.id} message={m.message}/>)
+          props.dialogsPage.messages.map(m => <Message id={m.id} message={m.message}/>)
         }
         <MessageForm
-          newMessageFromTextarea={props.newMessageFromTextarea}
+          newMessageFromTextarea={props.dialogsPage.newMessageFromTextarea}
           updateTextarea={updateMessage}
           addMessage={addMessage}
         />
