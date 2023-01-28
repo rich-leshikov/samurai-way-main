@@ -1,5 +1,4 @@
 import React from 'react';
-import {Store} from 'redux';
 import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
 import {Header} from './components/Header/Header';
@@ -11,9 +10,7 @@ import {Settings} from './components/Settings/Settings';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import {Profile} from './components/Profile/Profile';
 
-type AppPropsType = {
-  store: Store
-}
+type AppPropsType = {}
 
 function App(props: AppPropsType) {
   return (
@@ -28,7 +25,7 @@ function App(props: AppPropsType) {
           />
           <Route
             path={'/dialogs'}
-            render={() => <DialogsContainer store={props.store}/>}
+            render={() => <DialogsContainer/>}
           />
           <Route
             path={'/audio'}
@@ -36,7 +33,7 @@ function App(props: AppPropsType) {
           />
           <Route
             path={'/profile'}
-            render={() => <Profile store={props.store}/>}
+            render={() => <Profile/>}
           />
           <Route
             path={'/settings'}
