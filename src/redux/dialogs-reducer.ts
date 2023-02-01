@@ -1,5 +1,6 @@
 import {ActionsType, DialogsPageType, MessagesType, RootStateType} from './store';
 import {v1} from 'uuid';
+import {message} from 'antd';
 
 export type DialogsActionsType = ReturnType<typeof updateMessageTextareaAC> | ReturnType<typeof addMessageAC>
 
@@ -33,16 +34,20 @@ let initialState: DialogsPageType = { // need import DialogsPageType to this fil
 export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): DialogsPageType => {
   switch (action.type) {
     case UPDATE_MESSAGE_TEXTAREA:
-      state.newMessageFromTextarea = action.newText
-      return state
+      return {
+        ...state,
+        newMessageFromTextarea: action.newText
+      } as DialogsPageType
     case ADD_MESSAGE:
       const newMessage: MessagesType = {
         id: v1(),
         message: state.newMessageFromTextarea
       }
-      state.messages.push(newMessage)
-      state.newMessageFromTextarea = ''
-      return state
+      return {
+        ...state,
+        newMessageFromTextarea: '',
+        messages: [...state.messages, newMessage]
+      } as DialogsPageType
     default:
       return state
   }
