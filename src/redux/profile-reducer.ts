@@ -1,4 +1,4 @@
-import {ActionsType, PostsType, ProfilePageType, RootStateType} from './store';
+import {ActionsType, PostsType, ProfilePageType} from './store';
 import {v1} from 'uuid';
 
 export type ProfileActionsType = ReturnType<typeof updatePostTextareaAC> | ReturnType<typeof addPostAC>
@@ -24,7 +24,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
       return {
         ...state,
         newPostFromTextarea: action.newText
-      }
+      } as ProfilePageType
     case ADD_POST:
       const newPost: PostsType = {
         id: v1(),
@@ -35,8 +35,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         ...state,
         newPostFromTextarea: '',
         posts: [newPost, ...state.posts]
-      }
+      } as ProfilePageType
     default:
-      return state
+      return state as ProfilePageType
   }
 }

@@ -1,8 +1,9 @@
 import {v1} from 'uuid';
 import {DialogsActionsType, dialogsReducer} from './dialogs-reducer';
 import {ProfileActionsType, profileReducer} from './profile-reducer';
+import {SearchActionsType} from './search-reducer';
 
-export type ActionsType = ProfileActionsType | DialogsActionsType
+export type ActionsType = ProfileActionsType | DialogsActionsType | SearchActionsType
 
 export type StoreType = {
   _state: RootStateType,
@@ -28,6 +29,10 @@ export type ProfilePageType = {
   posts: Array<PostsType>,
 }
 
+export type SearchPageType = {
+  users: Array<UsersType>
+}
+
 export type DialogsType = {
   id: string,
   name: string
@@ -44,7 +49,21 @@ export type PostsType = {
   likesCount: number
 }
 
-export const store: StoreType = {
+export type UsersType = {
+  id: string,
+  followed: boolean,
+  avatarURL: string,
+  fullName: string,
+  status: string,
+  location: LocationType
+}
+
+export type LocationType = {
+  state: string,
+  city: string,
+}
+
+const oldStore: StoreType = {
   _state: {
     dialogsPage: {
       newMessageFromTextarea: '',

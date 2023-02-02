@@ -8,7 +8,7 @@ export function Navbar(props: NavigationPropsType) {
   return (
     <nav className={s.navigation}>
       <div className={`${s.nav__item} ${s.nav__feed} ${s.active}`}>
-        <NavLink to={'feed'} activeClassName={s.active}>Feed</NavLink>
+        <NavLink to={'/feed'} activeClassName={s.active}>Feed</NavLink>
       </div>
       <div className={`${s.nav__item} ${s.nav__messages}`}>
         <NavLink to={'/dialogs'} activeClassName={s.active}>Messages</NavLink>
@@ -17,7 +17,10 @@ export function Navbar(props: NavigationPropsType) {
         <NavLink to={'/audio'} activeClassName={s.active}>Music</NavLink>
       </div>
       <div className={`${s.nav__item} ${s.nav__profile}`}>
-        <NavLink to={'profile'} activeClassName={s.active}>Profile</NavLink>
+        <NavLink to={'/profile'} activeClassName={s.active}>Profile</NavLink>
+      </div>
+      <div className={`${s.nav__item} ${s.nav__search}`}>
+        <NavLink to={'/search'} activeClassName={s.active}>Search</NavLink>
       </div>
       <div className={`${s.nav__item} ${s.nav__settings}`}>
         <NavLink to={'/settings'} activeClassName={s.active}>Settings</NavLink>

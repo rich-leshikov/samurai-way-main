@@ -49,6 +49,6 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
         messages: [...state.messages, newMessage]
       } as DialogsPageType
     default:
-      return state
+      return state as DialogsPageType
   }
 }

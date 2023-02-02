@@ -13,9 +13,7 @@ const mapStateToProps = (state: AppRootStateType) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    updatePost: (post: string) => {
-      dispatch(updatePostTextareaAC(post))
-    },
+    updatePost: (post: string) => dispatch(updatePostTextareaAC(post)),
     addPost: () => dispatch(addPostAC())
   }
 }

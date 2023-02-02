@@ -7,7 +7,7 @@ import {MessageForm} from '../../EmbeddedModules/MessageForm';
 type MyPostsPropsType = {
   postsData: Array<PostsType>,
   newPostFromTextarea: string,
-  updatePost: (post: string) => void,
+  updatePost: (post: string) => void, //return dispatch or void??
   addPost: () => void,
 }
 
