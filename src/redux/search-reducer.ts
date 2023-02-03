@@ -1,9 +1,25 @@
-import {ActionsType, SearchPageType, UsersType} from './store';
-import {v1} from 'uuid';
+import {ActionType} from './redux-store';
+// import {v1} from 'uuid';
 
-export type SearchActionsType = ReturnType<typeof subscribeAC>
+export type SearchActionType = ReturnType<typeof subscribeAC>
   | ReturnType<typeof unsubscribeAC>
   | ReturnType<typeof setUsersAC>
+
+export type SearchPageType = {
+  users: Array<UserType>
+}
+export type UserType = {
+  id: string
+  followed: boolean
+  avatarURL: string
+  fullName: string
+  status: string
+  location: LocationType
+}
+export type LocationType = {
+  state: string
+  city: string
+}
 
 export const SUBSCRIBE = 'SUBSCRIBE'
 export const UNSUBSCRIBE = 'UNSUBSCRIBE'
@@ -11,7 +27,7 @@ export const SET_USERS = 'SET-USERS'
 
 export const subscribeAC = (userID: string) => ({type: SUBSCRIBE, userID: userID} as const)
 export const unsubscribeAC = (userID: string) => ({type: UNSUBSCRIBE, userID: userID} as const)
-export const setUsersAC = (users: Array<UsersType>) => ({type: SET_USERS, users: users} as const)
+export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users: users} as const)
 
 let initialState: SearchPageType = {
   // users: [
@@ -51,7 +67,7 @@ let initialState: SearchPageType = {
   users: []
 }
 
-export const searchReducer = (state: SearchPageType = initialState, action: ActionsType): SearchPageType => {
+export const searchReducer = (state: SearchPageType = initialState, action: ActionType): SearchPageType => {
   switch (action.type) {
     // should combine un- and subscribe??
     case SUBSCRIBE:

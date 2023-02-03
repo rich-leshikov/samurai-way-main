@@ -1,17 +1,25 @@
 import React from 'react';
-import {addPostAC, updatePostTextareaAC} from '../../../redux/profile-reducer';
+import {addPostAC, ProfilePageType, updatePostTextareaAC} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../../redux/redux-store';
+import {Dispatch} from 'redux';
 
-const mapStateToProps = (state: AppRootStateType) => {
+type MapStatePropsType = ProfilePageType
+type MapDispatchPropsType = {
+  updatePost: (post: string) => void
+  addPost: () => void
+}
+export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
+
+const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
   return {
-    postsData: state.profilePage.posts,
     newPostFromTextarea: state.profilePage.newPostFromTextarea,
+    posts: state.profilePage.posts,
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
   return {
     updatePost: (post: string) => dispatch(updatePostTextareaAC(post)),
     addPost: () => dispatch(addPostAC())

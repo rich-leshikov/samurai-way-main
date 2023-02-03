@@ -1,15 +1,8 @@
 import React from 'react';
 import s from './Search.module.css'
-import {UsersType} from '../../redux/store';
 import {SearchUserItem} from './SearchUserItem/SearchUserItem';
 import {v1} from 'uuid';
-
-type SearchPropsType = {
-  users: Array<UsersType>,
-  subscribe: (userID: string) => void,
-  unsubscribe: (userID: string) => void,
-  setUsers: (users: Array<UsersType>) => void,
-};
+import {SearchPropsType} from './SearchContainer';
 
 export function Search(props: SearchPropsType) {
   const subscribe = (userID: string) => props.subscribe(userID)

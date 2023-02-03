@@ -1,16 +1,16 @@
 import React from 'react';
 import s from './SearchUserItem.module.css'
-import {LocationType} from '../../../redux/store';
+import {LocationType} from '../../../redux/search-reducer';
 
 type SearchUserItemPropsType = {
-  id: string,
-  followed: boolean,
-  avatarURL: string, // can't send props.avatarURL to require()
-  fullName: string,
-  status: string,
-  location: LocationType,
-  subscribe: (userID: string) => void,
-  unsubscribe: (userID: string) => void,
+  id: string
+  followed: boolean
+  avatarURL: string // can't send props.avatarURL to require()
+  fullName: string
+  status: string
+  location: LocationType
+  subscribe: (userID: string) => void
+  unsubscribe: (userID: string) => void
 }
 
 export function SearchUserItem(props: SearchUserItemPropsType) {

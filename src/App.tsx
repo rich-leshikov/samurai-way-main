@@ -9,7 +9,6 @@ import {Audio} from './components/Audio/Audio';
 import {Settings} from './components/Settings/Settings';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import {Profile} from './components/Profile/Profile';
-import {Search} from './components/Search/Search';
 import {SearchContainer} from './components/Search/SearchContainer';
 
 type AppPropsType = {}

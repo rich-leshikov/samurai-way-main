@@ -1,66 +1,19 @@
 import {v1} from 'uuid';
-import {DialogsActionsType, dialogsReducer} from './dialogs-reducer';
-import {ProfileActionsType, profileReducer} from './profile-reducer';
-import {SearchActionsType} from './search-reducer';
+import {DialogsPageType, dialogsReducer} from './dialogs-reducer';
+import {ProfilePageType, profileReducer} from './profile-reducer';
+import {ActionType} from './redux-store';
 
-export type ActionsType = ProfileActionsType | DialogsActionsType | SearchActionsType
-
-export type StoreType = {
+type StoreType = {
   _state: RootStateType,
   _rerenderEntireTree: (state: RootStateType) => void,
   subscribe: (observer: () => void) => void,
   getState: () => RootStateType,
-  dispatch: (action: ActionsType) => void,
+  dispatch: (action: ActionType) => void,
 }
 
-export type RootStateType = {
+type RootStateType = {
   dialogsPage: DialogsPageType,
   profilePage: ProfilePageType,
-}
-
-export type DialogsPageType = {
-  newMessageFromTextarea: string,
-  dialogs: Array<DialogsType>,
-  messages: Array<MessagesType>,
-}
-
-export type ProfilePageType = {
-  newPostFromTextarea: string,
-  posts: Array<PostsType>,
-}
-
-export type SearchPageType = {
-  users: Array<UsersType>
-}
-
-export type DialogsType = {
-  id: string,
-  name: string
-}
-
-export type MessagesType = {
-  id: string,
-  message: string
-}
-
-export type PostsType = {
-  id: string,
-  message: string,
-  likesCount: number
-}
-
-export type UsersType = {
-  id: string,
-  followed: boolean,
-  avatarURL: string,
-  fullName: string,
-  status: string,
-  location: LocationType
-}
-
-export type LocationType = {
-  state: string,
-  city: string,
 }
 
 const oldStore: StoreType = {

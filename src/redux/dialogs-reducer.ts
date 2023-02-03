@@ -1,8 +1,21 @@
-import {ActionsType, DialogsPageType, MessagesType, RootStateType} from './store';
 import {v1} from 'uuid';
-import {message} from 'antd';
+import {ActionType} from './redux-store';
 
-export type DialogsActionsType = ReturnType<typeof updateMessageTextareaAC> | ReturnType<typeof addMessageAC>
+export type DialogsActionType = ReturnType<typeof updateMessageTextareaAC> | ReturnType<typeof addMessageAC>
+
+export type DialogsPageType = {
+  newMessageFromTextarea: string
+  dialogs: Array<DialogType>
+  messages: Array<MessageType>
+}
+export type DialogType = {
+  id: string
+  name: string
+}
+export type MessageType = {
+  id: string
+  message: string
+}
 
 export const UPDATE_MESSAGE_TEXTAREA = 'UPDATE-MESSAGE-TEXTAREA'
 export const ADD_MESSAGE = 'ADD-MESSAGE'
@@ -31,7 +44,7 @@ let initialState: DialogsPageType = { // need import DialogsPageType to this fil
   ],
 }
 // right returning of DialogsPageType??
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsType): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
   switch (action.type) {
     case UPDATE_MESSAGE_TEXTAREA:
       return {
@@ -39,7 +52,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
         newMessageFromTextarea: action.newText
       } as DialogsPageType
     case ADD_MESSAGE:
-      const newMessage: MessagesType = {
+      const newMessage: MessageType = {
         id: v1(),
         message: state.newMessageFromTextarea
       }
