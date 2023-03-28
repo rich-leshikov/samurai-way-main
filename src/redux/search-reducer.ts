@@ -12,9 +12,14 @@ export type UserType = {
   id: string
   followed: boolean
   avatarURL: string
-  fullName: string
+  name: string
   status: string
-  location: LocationType
+  photos: PhotosType
+  // location: LocationType
+}
+export type PhotosType = {
+  small: string
+  large: string
 }
 export type LocationType = {
   state: string
@@ -35,7 +40,7 @@ let initialState: SearchPageType = {
   //     id: v1(),
   //     followed: true,
   //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     fullName: 'Billy',
+  //     name: 'Billy',
   //     status: 'Happy!',
   //     location: {state: 'USA', city: 'Miami'}
   //   },
@@ -43,7 +48,7 @@ let initialState: SearchPageType = {
   //     id: v1(),
   //     followed: true,
   //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     fullName: 'Van',
+  //     name: 'Van',
   //     status: 'Happy!',
   //     location: {state: 'Japan', city: 'Kyoto'}
   //   },
@@ -51,7 +56,7 @@ let initialState: SearchPageType = {
   //     id: v1(),
   //     followed: true,
   //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     fullName: 'Steve',
+  //     name: 'Steve',
   //     status: 'Happy!',
   //     location: {state: 'USA', city: 'Austin'}
   //   },
@@ -59,7 +64,7 @@ let initialState: SearchPageType = {
   //     id: v1(),
   //     followed: false,
   //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     fullName: 'Mark',
+  //     name: 'Mark',
   //     status: 'Happy!',
   //     location: {state: 'USA', city: 'LA'}
   //   },

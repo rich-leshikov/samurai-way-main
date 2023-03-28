@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Search.module.css'
 import {SearchUserItem} from './SearchUserItem/SearchUserItem';
-import {v1} from 'uuid';
+import axios from 'axios';
 import {SearchPropsType} from './SearchContainer';
 
 export function Search(props: SearchPropsType) {
@@ -9,46 +9,17 @@ export function Search(props: SearchPropsType) {
   const unsubscribe = (userID: string) => props.unsubscribe(userID)
 
   if (!props.users.length) {
-    props.setUsers([
-      {
-        id: v1(),
-        followed: true,
-        avatarURL: './../../../img/users_avatars/rambo.jpg',
-        fullName: 'Billy',
-        status: 'Happy!',
-        location: {state: 'USA', city: 'Miami'}
-      },
-      {
-        id: v1(),
-        followed: true,
-        avatarURL: './../../../img/users_avatars/rambo.jpg',
-        fullName: 'Van',
-        status: 'Happy!',
-        location: {state: 'Japan', city: 'Kyoto'}
-      },
-      {
-        id: v1(),
-        followed: true,
-        avatarURL: './../../../img/users_avatars/rambo.jpg',
-        fullName: 'Steve',
-        status: 'Happy!',
-        location: {state: 'USA', city: 'Austin'}
-      },
-      {
-        id: v1(),
-        followed: false,
-        avatarURL: './../../../img/users_avatars/rambo.jpg',
-        fullName: 'Mark',
-        status: 'Happy!',
-        location: {state: 'USA', city: 'LA'}
-      },
-    ],)
+    axios
+      .get('https://social-network.samuraijs.com/api/1.0/users')
+      .then((response) => {
+      props.setUsers(response.data.items)
+    })
   }
 
   return (
     <div className={s.feed}>
       {props.users.map(u => <SearchUserItem key={u.id} id={u.id} followed={u.followed} avatarURL={u.avatarURL}
-                                            fullName={u.fullName} status={u.status} location={u.location}
+                                            name={u.name} status={u.status} smallAva={u.photos.small}
                                             subscribe={subscribe} unsubscribe={unsubscribe}/>)}
     </div>
   );
