@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Search} from './Search';
 import {AppRootStateType} from '../../redux/redux-store';
 import {SearchPageType, setUsersAC, subscribeAC, unsubscribeAC, UserType} from '../../redux/search-reducer';
 import {Dispatch} from 'redux';
+import {Search} from './Search';
 
 type MapStatePropsType = SearchPageType
 type MapDispatchPropsType = {
