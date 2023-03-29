@@ -12,10 +12,7 @@ import {SearchPropsType} from './SearchContainer';
 // }
 
 export class Search extends React.Component<SearchPropsType> {
-
-  constructor(props: SearchPropsType) {
-    super(props)
-    console.log(this.props, 'props')
+  componentDidMount() {
     axios
       .get('https://social-network.samuraijs.com/api/1.0/users')
       .then((response) => {
