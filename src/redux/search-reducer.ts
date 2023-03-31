@@ -4,9 +4,14 @@ import {ActionType} from './redux-store';
 export type SearchActionType = ReturnType<typeof subscribeAC>
   | ReturnType<typeof unsubscribeAC>
   | ReturnType<typeof setUsersAC>
+  | ReturnType<typeof setCurrentPageAC>
+  | ReturnType<typeof setTotalUsersCountAC>
 
 export type SearchPageType = {
   users: Array<UserType>
+  usersOnPageCount: number
+  usersTotalCount: number
+  currentPage: number
 }
 export type UserType = {
   id: string
@@ -29,10 +34,14 @@ export type LocationType = {
 export const SUBSCRIBE = 'SUBSCRIBE'
 export const UNSUBSCRIBE = 'UNSUBSCRIBE'
 export const SET_USERS = 'SET-USERS'
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+export const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
-export const subscribeAC = (userID: string) => ({type: SUBSCRIBE, userID: userID} as const)
-export const unsubscribeAC = (userID: string) => ({type: UNSUBSCRIBE, userID: userID} as const)
-export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users: users} as const)
+export const subscribeAC = (userID: string) => ({type: SUBSCRIBE, userID} as const)
+export const unsubscribeAC = (userID: string) => ({type: UNSUBSCRIBE, userID} as const)
+export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
+export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setTotalUsersCountAC = (usersCount: number) => ({type: SET_TOTAL_USERS_COUNT, usersCount} as const)
 
 let initialState: SearchPageType = {
   // users: [
@@ -69,7 +78,10 @@ let initialState: SearchPageType = {
   //     location: {state: 'USA', city: 'LA'}
   //   },
   // ],
-  users: []
+  users: [],
+  usersOnPageCount: 10,
+  usersTotalCount: 0, //23607
+  currentPage: 1
 }
 
 export const searchReducer = (state: SearchPageType = initialState, action: ActionType): SearchPageType => {
@@ -86,7 +98,11 @@ export const searchReducer = (state: SearchPageType = initialState, action: Acti
         users: state.users.map(u => u.id !== action.userID ? u : {...u, followed: u.followed = !u.followed})
       } as SearchPageType
     case SET_USERS:
-      return {...state, users: [...state.users, ...action.users]} as SearchPageType
+      return {...state, users: [...action.users]} as SearchPageType
+    case SET_CURRENT_PAGE:
+      return {...state, currentPage: action.currentPage} as SearchPageType
+    case SET_TOTAL_USERS_COUNT:
+      return {...state, usersTotalCount: action.usersCount} as SearchPageType
     default:
       return state as SearchPageType
   }
