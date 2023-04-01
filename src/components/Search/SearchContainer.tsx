@@ -10,7 +10,8 @@ import {
   UserType
 } from '../../redux/search-reducer';
 import {Dispatch} from 'redux';
-import {Search} from './Search';
+import axios from 'axios';
+import {SearchUsers} from './SearchUsers';
 
 type MapStatePropsType = SearchPageType
 type MapDispatchPropsType = {
@@ -41,4 +42,40 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
   }
 }
 
-export const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(Search)
+class SearchAPI extends React.Component<SearchPropsType> {
+
+  componentDidMount() {
+    axios
+      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPageCount}`)
+      .then((response) => {
+        this.props.setUsers(response.data.items)
+        this.props.setTotalUsersCount(Math.ceil(response.data.totalCount / 100)) //23607 without Math.ceil
+      })
+
+  }
+  onPageChanged(pageNumber: number) {
+    this.props.setCurrentPage(pageNumber)
+    axios
+      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.usersOnPageCount}`)
+      .then((response) => {
+        this.props.setUsers(response.data.items)
+      })
+  }
+
+
+  render() {
+    return (
+      <SearchUsers
+        users={this.props.users}
+        usersOnPageCount={this.props.usersOnPageCount}
+        usersTotalCount={this.props.usersTotalCount}
+        currentPage={this.props.currentPage}
+        subscribe={this.props.subscribe}
+        unsubscribe={this.props.unsubscribe}
+        onPageChanged={this.onPageChanged.bind(this)}
+      />
+    )
+  }
+}
+
+export const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(SearchAPI)
