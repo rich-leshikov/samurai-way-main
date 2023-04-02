@@ -1,12 +1,12 @@
 import {ActionType} from './redux-store';
 // import {v1} from 'uuid';
 
-export type SearchActionType = ReturnType<typeof subscribeAC>
-  | ReturnType<typeof unsubscribeAC>
-  | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof setCurrentPageAC>
-  | ReturnType<typeof setTotalUsersCountAC>
-  | ReturnType<typeof switchFetchingAC>
+export type SearchActionType = ReturnType<typeof subscribe>
+  | ReturnType<typeof unsubscribe>
+  | ReturnType<typeof setUsers>
+  | ReturnType<typeof setCurrentPage>
+  | ReturnType<typeof setTotalUsersCount>
+  | ReturnType<typeof switchFetching>
 
 export type SearchPageType = {
   users: Array<UserType>
@@ -40,12 +40,12 @@ export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 export const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 export const SWITCH_FETCHING = 'SWITCH_FETCHING'
 
-export const subscribeAC = (userID: string) => ({type: SUBSCRIBE, userID} as const)
-export const unsubscribeAC = (userID: string) => ({type: UNSUBSCRIBE, userID} as const)
-export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
-export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
-export const setTotalUsersCountAC = (usersCount: number) => ({type: SET_TOTAL_USERS_COUNT, usersCount} as const)
-export const switchFetchingAC = () => ({type: SWITCH_FETCHING} as const)
+export const subscribe = (userID: string) => ({type: SUBSCRIBE, userID} as const)
+export const unsubscribe = (userID: string) => ({type: UNSUBSCRIBE, userID} as const)
+export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
+export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setTotalUsersCount = (usersCount: number) => ({type: SET_TOTAL_USERS_COUNT, usersCount} as const)
+export const switchFetching = () => ({type: SWITCH_FETCHING} as const)
 
 let initialState: SearchPageType = {
   // users: [

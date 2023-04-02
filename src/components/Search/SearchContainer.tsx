@@ -3,13 +3,12 @@ import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux-store';
 import {
   SearchPageType,
-  setCurrentPageAC, setTotalUsersCountAC,
-  setUsersAC,
-  subscribeAC, switchFetchingAC,
-  unsubscribeAC,
+  setCurrentPage, setTotalUsersCount,
+  setUsers,
+  subscribe, switchFetching,
+  unsubscribe,
   UserType
 } from '../../redux/search-reducer';
-import {Dispatch} from 'redux';
 import axios from 'axios';
 import {SearchUsers} from './SearchUsers';
 import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
@@ -32,17 +31,6 @@ const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
     usersTotalCount: state.searchPage.usersTotalCount,
     currentPage: state.searchPage.currentPage,
     isFetching: state.searchPage.isFetching
-  }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-  return {
-    subscribe: (userID: string) => dispatch(subscribeAC(userID)),
-    unsubscribe: (userID: string) => dispatch(unsubscribeAC(userID)),
-    setUsers: (users: Array<UserType>) => dispatch(setUsersAC(users)),
-    setCurrentPage: (pageNumber: number) => dispatch(setCurrentPageAC(pageNumber)),
-    setTotalUsersCount: (usersCount: number) => dispatch(setTotalUsersCountAC(usersCount)),
-    switchFetching: () => dispatch(switchFetchingAC())
   }
 }
 
@@ -93,4 +81,5 @@ class SearchAPI extends React.Component<SearchPropsType> {
   }
 }
 
-export const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(SearchAPI)
+export const SearchContainer = connect(mapStateToProps,
+  {subscribe, unsubscribe, setUsers, setCurrentPage, setTotalUsersCount, switchFetching})(SearchAPI)
