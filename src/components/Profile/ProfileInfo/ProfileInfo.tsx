@@ -7,7 +7,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
   return (
     <div className={s.profileInfo}>
       <div className={s.profile__image}>
-        <img src={require('./../../../img/venice_rooftops.jpg')} alt="main-img"/>
+        <img src={require('../../../assets/img/venice_rooftops.jpg')} alt="main-img"/>
       </div>
       <div className={s.profile__description}>
         avatar + desc

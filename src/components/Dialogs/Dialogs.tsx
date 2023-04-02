@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
-import {MessageForm} from '../EmbeddedModules/MessageForm';
+import {MessageForm} from '../EmbeddedModules/MessageForm/MessageForm';
 import {DialogsPropsType} from './DialogsContainer';
 
 export function Dialogs(props: DialogsPropsType) {

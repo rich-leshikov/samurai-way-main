@@ -8,7 +8,7 @@ type HeaderPropsType = {
 export function Header(props: HeaderPropsType) {
   return (
     <header className={s.header}>
-      <img src={require('../../img/logo192.png')} alt="favicon"/>
+      <img src={require('../../assets/img/logo192.png')} alt="favicon"/>
     </header>
   );
 }

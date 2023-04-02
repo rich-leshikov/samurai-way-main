@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {MessageForm} from '../../EmbeddedModules/MessageForm';
+import {MessageForm} from '../../EmbeddedModules/MessageForm/MessageForm';
 import {MyPostsPropsType} from './MyPostsContainer';
 
 export function MyPosts(props: MyPostsPropsType) {

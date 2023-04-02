@@ -19,7 +19,7 @@ export function SearchUserItem(props: SearchUserItemPropsType) {
     <div className={s.search__user} key={props.id}>
       <div className={s.icon}>
         <div className={s.avatar}>
-          <img src={props.smallAva ? props.smallAva : require('./../../../img/doomer.jpg')} alt="user avatar"/>
+          <img src={props.smallAva ? props.smallAva : require('../../../assets/img/doomer.jpg')} alt="user avatar"/>
         </div>
         <div>
           {props.followed ?
