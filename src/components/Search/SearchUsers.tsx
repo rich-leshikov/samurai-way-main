@@ -1,14 +1,13 @@
 import React from 'react';
+import { UserType } from '../../redux/search-reducer';
 import s from './Search.module.css';
 import {SearchUserItem} from './SearchUserItem/SearchUserItem';
-import {SearchPageType} from '../../redux/search-reducer';
 
-type UsersPropsType = SearchPageType & {
-  // witch practice is better
-  // usersTotalCount: number
-  // usersOnPageCount: number
-  // currentPage: number
-  // users: Array<UserType>
+type UsersPropsType = {
+  usersTotalCount: number
+  usersOnPageCount: number
+  currentPage: number
+  users: Array<UserType>
   subscribe: (userID: string) => void
   unsubscribe: (userID: string) => void
   onPageChanged: (pageNumber: number) => void
