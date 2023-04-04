@@ -33,7 +33,7 @@ function App(props: AppPropsType) {
             render={() => <Audio/>}
           />
           <Route
-            path={'/profile'}
+            path={'/profile/:userId?'}
             render={() => <ProfileContainer/>}
           />
           <Route

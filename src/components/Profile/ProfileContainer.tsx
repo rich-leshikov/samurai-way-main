@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {Profile} from './Profile';
 import {ProfilePageType, updatePostTextarea, addPost, setUserProfile} from '../../redux/profile-reducer';
 import {AppRootStateType} from '../../redux/redux-store';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 type MapStatePropsType = ProfilePageType
 type MapDispatchPropsType = {
@@ -11,7 +12,10 @@ type MapDispatchPropsType = {
   addPost: () => void
   setUserProfile: (profile: any) => void
 }
-export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType
+type PathParamsType = {
+  userId: string
+}
+type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
 
 const mapStateToProps = (state: AppRootStateType): MapStatePropsType => ({
   newPostFromTextarea: state.profilePage.newPostFromTextarea,
@@ -21,8 +25,12 @@ const mapStateToProps = (state: AppRootStateType): MapStatePropsType => ({
 
 class ProfileAPI extends React.Component<ProfilePropsType> {
   componentDidMount() {
+    let userId = this.props.match.params.userId
+    if (!userId) {
+      userId = '2'
+    }
     axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
       .then((response) => {
         this.props.setUserProfile(response.data)
       })
@@ -30,15 +38,12 @@ class ProfileAPI extends React.Component<ProfilePropsType> {
 
   render() {
     return (
-      <Profile
-        newPostFromTextarea={this.props.newPostFromTextarea}
-        posts={this.props.posts}
-        profile={this.props.profile}
-        updatePostTextarea={this.props.updatePostTextarea}
-        addPost={this.props.addPost}
-      />
+      <Profile {...this.props}/>
     )
   }
 }
 
-export const ProfileContainer = connect(mapStateToProps, {updatePostTextarea, addPost, setUserProfile})(ProfileAPI)
+const ProfileAPIWithRouter = withRouter(ProfileAPI)
+
+export const ProfileContainer =
+  connect(mapStateToProps, {updatePostTextarea, addPost, setUserProfile})(ProfileAPIWithRouter)
