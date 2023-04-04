@@ -2,11 +2,15 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MessageForm} from '../../EmbeddedModules/MessageForm/MessageForm';
-import {MyPostsPropsType} from './MyPostsContainer';
+import {ProfilePageType} from '../../../redux/profile-reducer';
+
+export type MyPostsPropsType = ProfilePageType & {
+  updatePostTextarea: (post: string) => void
+  addPost: () => void
+}
 
 export function MyPosts(props: MyPostsPropsType) {
-  const updatePost = (post: string) => props.updatePost(post)
-
+  const updatePost = (post: string) => props.updatePostTextarea(post)
   const addPost = () => props.addPost()
 
   return (
@@ -21,7 +25,13 @@ export function MyPosts(props: MyPostsPropsType) {
       </div>
       <div className="profile__posts-feed">
         {
-          props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
+          props.posts.map(p => (
+            <Post
+              key={p.id}
+              message={p.message}
+              likesCount={p.likesCount}
+              profile={props.profile}
+            />))
         }
       </div>
     </div>

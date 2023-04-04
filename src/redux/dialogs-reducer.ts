@@ -1,7 +1,7 @@
 import {v1} from 'uuid';
 import {ActionType} from './redux-store';
 
-export type DialogsActionType = ReturnType<typeof updateMessageTextareaAC> | ReturnType<typeof addMessageAC>
+export type DialogsActionType = ReturnType<typeof updateMessageTextarea> | ReturnType<typeof addMessage>
 
 export type DialogsPageType = {
   newMessageFromTextarea: string
@@ -20,11 +20,11 @@ export type MessageType = {
 export const UPDATE_MESSAGE_TEXTAREA = 'UPDATE-MESSAGE-TEXTAREA'
 export const ADD_MESSAGE = 'ADD-MESSAGE'
 
-export const updateMessageTextareaAC = (userText: string) => ({
+export const updateMessageTextarea = (userText: string) => ({
   type: UPDATE_MESSAGE_TEXTAREA,
   newText: userText
 } as const)
-export const addMessageAC = () => ({type: ADD_MESSAGE} as const)
+export const addMessage = () => ({type: ADD_MESSAGE} as const)
 
 let initialState: DialogsPageType = { // need import DialogsPageType to this file?? + let or const??
   newMessageFromTextarea: '',

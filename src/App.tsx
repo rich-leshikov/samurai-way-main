@@ -8,8 +8,8 @@ import {Feed} from './components/Feed/Feed';
 import {Audio} from './components/Audio/Audio';
 import {Settings} from './components/Settings/Settings';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
-import {Profile} from './components/Profile/Profile';
 import {SearchContainer} from './components/Search/SearchContainer';
+import {ProfileContainer} from './components/Profile/ProfileContainer';
 
 type AppPropsType = {}
 
@@ -34,7 +34,7 @@ function App(props: AppPropsType) {
           />
           <Route
             path={'/profile'}
-            render={() => <Profile/>}
+            render={() => <ProfileContainer/>}
           />
           <Route
             path={'/search'}

@@ -7,7 +7,7 @@ import {DialogsPropsType} from './DialogsContainer';
 
 export function Dialogs(props: DialogsPropsType) {
   const updateMessage = (message: string) => {
-    props.updateMessage(message)
+    props.updateMessageTextarea(message)
   }
 
   const addMessage = () => props.addMessage()

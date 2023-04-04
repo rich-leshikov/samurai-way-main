@@ -3,7 +3,7 @@ import { UserType } from '../../redux/search-reducer';
 import s from './Search.module.css';
 import {SearchUserItem} from './SearchUserItem/SearchUserItem';
 
-type UsersPropsType = {
+type SearchUsersPropsType = {
   usersTotalCount: number
   usersOnPageCount: number
   currentPage: number
@@ -13,7 +13,7 @@ type UsersPropsType = {
   onPageChanged: (pageNumber: number) => void
 }
 
-export function SearchUsers(props: UsersPropsType) {
+export function SearchUsers(props: SearchUsersPropsType) {
   let pagesCount = Math.ceil(props.usersTotalCount / props.usersOnPageCount)
 
   const pages = []

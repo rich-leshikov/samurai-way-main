@@ -41,7 +41,8 @@ const oldStore: StoreType = {
         {id: v1(), message: 'Hello!', likesCount: 3},
         {id: v1(), message: 'What a nice day!', likesCount: 5},
         {id: v1(), message: 'Today I\'m playing guitar!', likesCount: 6},
-      ]
+      ],
+      profile: null
     },
   },
   _rerenderEntireTree() {

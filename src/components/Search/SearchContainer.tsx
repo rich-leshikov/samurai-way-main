@@ -45,7 +45,6 @@ class SearchAPI extends React.Component<SearchPropsType> {
         this.props.setUsers(response.data.items)
         this.props.setTotalUsersCount(Math.ceil(response.data.totalCount / 100)) //23607 without Math.ceil
       })
-
   }
 
   onPageChanged(pageNumber: number) {
@@ -62,21 +61,19 @@ class SearchAPI extends React.Component<SearchPropsType> {
 
   render() {
     return (
-      <>
-        {
-          this.props.isFetching
-            ? <Preloader/>
-            : <SearchUsers
-              users={this.props.users}
-              usersOnPageCount={this.props.usersOnPageCount}
-              usersTotalCount={this.props.usersTotalCount}
-              currentPage={this.props.currentPage}
-              subscribe={this.props.subscribe}
-              unsubscribe={this.props.unsubscribe}
-              onPageChanged={this.onPageChanged.bind(this)}
-            />
-        }
-      </>
+      <>{
+        this.props.isFetching ?
+          <Preloader/> :
+          <SearchUsers
+            users={this.props.users}
+            usersOnPageCount={this.props.usersOnPageCount}
+            usersTotalCount={this.props.usersTotalCount}
+            currentPage={this.props.currentPage}
+            subscribe={this.props.subscribe}
+            unsubscribe={this.props.unsubscribe}
+            onPageChanged={this.onPageChanged.bind(this)}
+          />
+      }</>
     )
   }
 }

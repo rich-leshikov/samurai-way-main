@@ -1,11 +1,14 @@
 import {v1} from 'uuid';
 import {ActionType} from './redux-store';
 
-export type ProfileActionType = ReturnType<typeof updatePostTextareaAC> | ReturnType<typeof addPostAC>
+export type ProfileActionType = ReturnType<typeof updatePostTextarea>
+  | ReturnType<typeof addPost>
+  | ReturnType<typeof setUserProfile>
 
 export type ProfilePageType = {
   posts: Array<PostType>
   newPostFromTextarea: string
+  profile: any
 }
 export type PostType = {
   id: string
@@ -15,9 +18,11 @@ export type PostType = {
 
 export const UPDATE_POST_TEXTAREA = 'UPDATE-POST-TEXTAREA'
 export const ADD_POST = 'ADD-POST'
+export const SET_USER_PROFILE = 'SET-USER-PROFILE'
 
-export const updatePostTextareaAC = (userText: string) => ({type: UPDATE_POST_TEXTAREA, newText: userText} as const)
-export const addPostAC = () => ({type: ADD_POST} as const)
+export const updatePostTextarea = (userText: string) => ({type: UPDATE_POST_TEXTAREA, newText: userText} as const)
+export const addPost = () => ({type: ADD_POST} as const)
+export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
 
 let initialState: ProfilePageType = {
   newPostFromTextarea: '',
@@ -25,7 +30,8 @@ let initialState: ProfilePageType = {
     {id: v1(), message: 'Today I\'m playing guitar!', likesCount: 6},
     {id: v1(), message: 'What a nice day!', likesCount: 5},
     {id: v1(), message: 'Hello!', likesCount: 3},
-  ]
+  ],
+  profile: null
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
@@ -46,6 +52,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         newPostFromTextarea: '',
         posts: [newPost, ...state.posts]
       } as ProfilePageType
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        profile: action.profile
+      }
     default:
       return state as ProfilePageType
   }

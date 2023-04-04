@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addMessageAC, DialogsPageType, updateMessageTextareaAC} from '../../redux/dialogs-reducer';
+import {DialogsPageType, updateMessageTextarea, addMessage} from '../../redux/dialogs-reducer';
 import {Dialogs} from './Dialogs';
 import {AppRootStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
 
 type MapStatePropsType = DialogsPageType
 type MapDispatchPropsType = {
-  updateMessage: (message: string) => void
+  updateMessageTextarea: (message: string) => void
   addMessage: () => void
 }
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -20,11 +20,11 @@ const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-  return {
-    updateMessage: (message: string) => dispatch(updateMessageTextareaAC(message)),
-    addMessage: () => dispatch(addMessageAC())
-  }
-}
+// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+//   return {
+//     updateMessage: (message: string) => dispatch(updateMessageTextarea(message)),
+//     addMessage: () => dispatch(addMessage())
+//   }
+// }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export const DialogsContainer = connect(mapStateToProps, {updateMessageTextarea, addMessage})(Dialogs)

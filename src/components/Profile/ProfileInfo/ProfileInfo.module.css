@@ -2,10 +2,21 @@
 
 }
 
-.profile__image img {
+.profile__wallpaper img {
   width: 1220px;
 }
 
 .profile__description {
-  padding: 30px;
+  padding: 20px;
+  display: flex;
+  justify-content: left;
+}
+
+.profile__description__avatar img {
+  width: 200px;
+  border-radius: 5px;
+}
+
+.profile__description__info {
+  margin-left: 30px;
 }

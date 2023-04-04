@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './SearchUserItem.module.css'
-import {LocationType, PhotosType} from '../../../redux/search-reducer';
+import {NavLink} from 'react-router-dom';
 
 type SearchUserItemPropsType = {
   id: string
@@ -18,9 +18,11 @@ export function SearchUserItem(props: SearchUserItemPropsType) {
   return (
     <div className={s.search__user} key={props.id}>
       <div className={s.icon}>
-        <div className={s.avatar}>
-          <img src={props.smallAva ? props.smallAva : require('../../../assets/img/doomer.jpg')} alt="user avatar"/>
-        </div>
+        <NavLink to={'/profile/' + props.id}>
+          <div className={s.avatar}>
+            <img src={props.smallAva ? props.smallAva : require('../../../assets/img/doomer.jpg')} alt="user avatar"/>
+          </div>
+        </NavLink>
         <div>
           {props.followed ?
             <button onClick={() => props.unsubscribe(props.id)}>Unsubscribe</button> :
