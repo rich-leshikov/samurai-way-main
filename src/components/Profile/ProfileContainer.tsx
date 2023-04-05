@@ -17,12 +17,6 @@ type PathParamsType = {
 }
 type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
 
-const mapStateToProps = (state: AppRootStateType): MapStatePropsType => ({
-  newPostFromTextarea: state.profilePage.newPostFromTextarea,
-  posts: state.profilePage.posts,
-  profile: state.profilePage.profile
-})
-
 class ProfileAPI extends React.Component<ProfilePropsType> {
   componentDidMount() {
     let userId = this.props.match.params.userId
@@ -44,6 +38,12 @@ class ProfileAPI extends React.Component<ProfilePropsType> {
 }
 
 const ProfileAPIWithRouter = withRouter(ProfileAPI)
+
+const mapStateToProps = (state: AppRootStateType): MapStatePropsType => ({
+  newPostFromTextarea: state.profilePage.newPostFromTextarea,
+  posts: state.profilePage.posts,
+  profile: state.profilePage.profile
+})
 
 export const ProfileContainer =
   connect(mapStateToProps, {updatePostTextarea, addPost, setUserProfile})(ProfileAPIWithRouter)

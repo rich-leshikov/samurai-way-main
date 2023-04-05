@@ -22,17 +22,7 @@ type MapDispatchPropsType = {
   setTotalUsersCount: (usersCount: number) => void
   switchFetching: () => void
 }
-export type SearchPropsType = MapStatePropsType & MapDispatchPropsType
-
-const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
-  return {
-    users: state.searchPage.users,
-    usersOnPageCount: state.searchPage.usersOnPageCount,
-    usersTotalCount: state.searchPage.usersTotalCount,
-    currentPage: state.searchPage.currentPage,
-    isFetching: state.searchPage.isFetching
-  }
-}
+type SearchPropsType = MapStatePropsType & MapDispatchPropsType
 
 class SearchAPI extends React.Component<SearchPropsType> {
 
@@ -75,6 +65,16 @@ class SearchAPI extends React.Component<SearchPropsType> {
           />
       }</>
     )
+  }
+}
+
+const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
+  return {
+    users: state.searchPage.users,
+    usersOnPageCount: state.searchPage.usersOnPageCount,
+    usersTotalCount: state.searchPage.usersTotalCount,
+    currentPage: state.searchPage.currentPage,
+    isFetching: state.searchPage.isFetching
   }
 }
 
