@@ -3,15 +3,17 @@ import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux-store';
 import {
   SearchPageType,
-  setCurrentPage, setTotalUsersCount,
+  setCurrentPage,
+  setTotalUsersCount,
   setUsers,
-  subscribe, switchFetching,
+  subscribe,
+  switchFetching,
   unsubscribe,
   UserType
 } from '../../redux/search-reducer';
-import axios from 'axios';
 import {SearchUsers} from './SearchUsers';
 import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
+import {userAPI} from '../../api/api';
 
 type MapStatePropsType = SearchPageType
 type MapDispatchPropsType = {
@@ -26,28 +28,41 @@ type SearchPropsType = MapStatePropsType & MapDispatchPropsType
 
 class SearchAPI extends React.Component<SearchPropsType> {
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.props.switchFetching()
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPageCount}`)
-      .then((response) => {
+    userAPI.getUsers(this.props.currentPage, this.props.usersOnPageCount)
+      .then((data) => {
         this.props.switchFetching()
-        this.props.setUsers(response.data.items)
-        this.props.setTotalUsersCount(Math.ceil(response.data.totalCount / 100)) //23607 without Math.ceil
+        this.props.setUsers(data.items)
+        this.props.setTotalUsersCount(Math.ceil(data.totalCount / 100)) //23607 without Math.ceil
       })
   }
 
-  onPageChanged(pageNumber: number) {
+  onPageChanged(pageNumber: number): void {
     this.props.setCurrentPage(pageNumber)
     this.props.switchFetching()
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.usersOnPageCount}`)
-      .then((response) => {
+    userAPI.getUsers(pageNumber, this.props.usersOnPageCount)
+      .then((data) => {
         this.props.switchFetching()
-        this.props.setUsers(response.data.items)
+        this.props.setUsers(data.items)
       })
   }
 
+  subscribe(userID: string): void {
+    userAPI.postSubscribeUser(userID)
+      .then((data) => {
+        if (!data.resultCode) {
+          this.props.subscribe(userID)
+        }
+      })
+  }
+
+  unsubscribe(userID: string): void {
+    userAPI.deleteUnsubscribeUser(userID)
+      .then((response) => {
+        !response.data.resultCode && this.props.unsubscribe(userID)
+      })
+  }
 
   render() {
     return (
@@ -59,8 +74,8 @@ class SearchAPI extends React.Component<SearchPropsType> {
             usersOnPageCount={this.props.usersOnPageCount}
             usersTotalCount={this.props.usersTotalCount}
             currentPage={this.props.currentPage}
-            subscribe={this.props.subscribe}
-            unsubscribe={this.props.unsubscribe}
+            subscribe={this.subscribe.bind(this)}
+            unsubscribe={this.unsubscribe.bind(this)}
             onPageChanged={this.onPageChanged.bind(this)}
           />
       }</>
