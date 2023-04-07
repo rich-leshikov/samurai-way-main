@@ -1,10 +1,11 @@
 import {v1} from 'uuid';
-import {ActionType} from './redux-store';
+import {ActionType, ThunkType} from './redux-store';
+import {profileAPI} from '../api/api';
+
 
 export type ProfileActionType = ReturnType<typeof updatePostTextarea>
   | ReturnType<typeof addPost>
   | ReturnType<typeof setUserProfile>
-
 export type ProfilePageType = {
   posts: Array<PostType>
   newPostFromTextarea: string
@@ -16,13 +17,25 @@ export type PostType = {
   likesCount: number
 }
 
+
 export const UPDATE_POST_TEXTAREA = 'UPDATE-POST-TEXTAREA'
 export const ADD_POST = 'ADD-POST'
 export const SET_USER_PROFILE = 'SET-USER-PROFILE'
 
+
 export const updatePostTextarea = (userText: string) => ({type: UPDATE_POST_TEXTAREA, newText: userText} as const)
 export const addPost = () => ({type: ADD_POST} as const)
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
+
+export const getUserProfile = (userId: string): ThunkType => {
+  return (dispatch, getState) => {
+    profileAPI.getUserProfile(userId)
+      .then((data) => {
+        dispatch(setUserProfile(data))
+      })
+  }
+}
+
 
 let initialState: ProfilePageType = {
   newPostFromTextarea: '',

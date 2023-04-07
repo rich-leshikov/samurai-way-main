@@ -93,6 +93,7 @@ export const unsubscribe = (userID: string): ThunkType => {
   }
 }
 
+
 let initialState: SearchPageType = {
   users: [],
   pageSize: 10,

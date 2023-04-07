@@ -34,6 +34,7 @@ export const getUserData = (): ThunkType => {
   }
 }
 
+
 let initialState: AuthType = {
   id: null,
   email: null,
