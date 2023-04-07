@@ -1,11 +1,18 @@
 import axios from 'axios';
 
 
+export type HeaderAPIType = {
+  getUserData: () => Promise<any>
+}
+export type ProfileAPIType = {
+  getUserProfile: (userId: string) => Promise<any>
+}
 export type UserAPIType = {
   getUsers: (currentPage: number, usersOnPageCount: number) => Promise<any>
   postSubscribeUser: (userID: string) => Promise<any>
   deleteUnsubscribeUser: (userID: string) => Promise<any>
 }
+
 
 const instance = axios.create({
   withCredentials: true,
@@ -14,6 +21,22 @@ const instance = axios.create({
     'API-KEY': '101da96a-cbc9-42cf-b1c0-5fe635234205'
   }
 })
+
+export const headerAPI: HeaderAPIType = {
+  getUserData: () => {
+    return instance
+      .get(`auth/me`)
+      .then(response => response.data)
+  }
+}
+
+export const profileAPI: ProfileAPIType = {
+  getUserProfile: (userId: string = '2') => {
+    return instance
+      .get(`profile/${userId}`)
+      .then(response => response.data)
+  }
+}
 
 export const userAPI: UserAPIType = {
   getUsers: (currentPage: number = 1, usersOnPageCount: number = 10) => {

@@ -5,6 +5,7 @@ import {Profile} from './Profile';
 import {ProfilePageType, updatePostTextarea, addPost, setUserProfile} from '../../redux/profile-reducer';
 import {AppRootStateType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {profileAPI} from '../../api/api';
 
 type MapStatePropsType = ProfilePageType
 type MapDispatchPropsType = {
@@ -17,16 +18,12 @@ type PathParamsType = {
 }
 type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
 
-class ProfileAPI extends React.Component<ProfilePropsType> {
+class ProfileAPIContainer extends React.Component<ProfilePropsType> {
   componentDidMount() {
     let userId = this.props.match.params.userId
-    if (!userId) {
-      userId = '2'
-    }
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-      .then((response) => {
-        this.props.setUserProfile(response.data)
+    profileAPI.getUserProfile(userId)
+      .then((data) => {
+        this.props.setUserProfile(data)
       })
   }
 
@@ -37,7 +34,7 @@ class ProfileAPI extends React.Component<ProfilePropsType> {
   }
 }
 
-const ProfileAPIWithRouter = withRouter(ProfileAPI)
+const ProfileAPIWithRouter = withRouter(ProfileAPIContainer)
 
 const mapStateToProps = (state: AppRootStateType): MapStatePropsType => ({
   newPostFromTextarea: state.profilePage.newPostFromTextarea,
