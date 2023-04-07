@@ -7,13 +7,14 @@ import {
   setTotalUsersCount,
   setUsers,
   subscribe,
-  switchFetching,
+  switchFetching, switchSubscribingInProgress,
   unsubscribe,
   UserType
 } from '../../redux/search-reducer';
 import {SearchUsers} from './SearchUsers';
 import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
 import {userAPI} from '../../api/api';
+
 
 type MapStatePropsType = SearchPageType
 type MapDispatchPropsType = {
@@ -23,11 +24,12 @@ type MapDispatchPropsType = {
   setCurrentPage: (page: number) => void
   setTotalUsersCount: (usersCount: number) => void
   switchFetching: () => void
+  switchSubscribingInProgress: (isFetching: boolean, userId: string) => void
 }
 type SearchPropsType = MapStatePropsType & MapDispatchPropsType
 
-class SearchAPI extends React.Component<SearchPropsType> {
 
+class SearchAPI extends React.Component<SearchPropsType> {
   componentDidMount(): void {
     this.props.switchFetching()
     userAPI.getUsers(this.props.currentPage, this.props.usersOnPageCount)
@@ -49,39 +51,45 @@ class SearchAPI extends React.Component<SearchPropsType> {
   }
 
   subscribe(userID: string): void {
+    this.props.switchSubscribingInProgress(true, userID)
     userAPI.postSubscribeUser(userID)
       .then((data) => {
         if (!data.resultCode) {
           this.props.subscribe(userID)
         }
       })
+      .finally(() => this.props.switchSubscribingInProgress(false, userID))
   }
 
   unsubscribe(userID: string): void {
+    this.props.switchSubscribingInProgress(true, userID)
     userAPI.deleteUnsubscribeUser(userID)
       .then((response) => {
         !response.data.resultCode && this.props.unsubscribe(userID)
       })
+      .finally(() => this.props.switchSubscribingInProgress(false, userID))
   }
 
   render() {
     return (
-      <>{
-        this.props.isFetching ?
+      <>
+        {this.props.isFetching ?
           <Preloader/> :
           <SearchUsers
             users={this.props.users}
             usersOnPageCount={this.props.usersOnPageCount}
             usersTotalCount={this.props.usersTotalCount}
             currentPage={this.props.currentPage}
+            subscribingInProgress={this.props.subscribingInProgress}
             subscribe={this.subscribe.bind(this)}
             unsubscribe={this.unsubscribe.bind(this)}
             onPageChanged={this.onPageChanged.bind(this)}
-          />
-      }</>
+          />}
+      </>
     )
   }
 }
+
 
 const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
   return {
@@ -89,9 +97,19 @@ const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
     usersOnPageCount: state.searchPage.usersOnPageCount,
     usersTotalCount: state.searchPage.usersTotalCount,
     currentPage: state.searchPage.currentPage,
-    isFetching: state.searchPage.isFetching
+    isFetching: state.searchPage.isFetching,
+    subscribingInProgress: state.searchPage.subscribingInProgress
   }
 }
 
+
 export const SearchContainer = connect(mapStateToProps,
-  {subscribe, unsubscribe, setUsers, setCurrentPage, setTotalUsersCount, switchFetching})(SearchAPI)
+  {
+    subscribe,
+    unsubscribe,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    switchFetching,
+    switchSubscribingInProgress
+  })(SearchAPI)

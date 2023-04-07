@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserType } from '../../redux/search-reducer';
+import {UserType} from '../../redux/search-reducer';
 import s from './Search.module.css';
 import {SearchUserItem} from './SearchUserItem/SearchUserItem';
 
@@ -7,6 +7,7 @@ type SearchUsersPropsType = {
   usersTotalCount: number
   usersOnPageCount: number
   currentPage: number
+  subscribingInProgress: Array<string>
   users: Array<UserType>
   subscribe: (userID: string) => void
   unsubscribe: (userID: string) => void
@@ -30,10 +31,18 @@ export function SearchUsers(props: SearchUsersPropsType) {
       >{p}</div>)}
     </div>
 
-    {props.users.map(u => <SearchUserItem key={u.id} id={u.id} followed={u.followed}
-                                          avatarURL={u.avatarURL} name={u.name}
-                                          status={u.status} smallAva={u.photos.small}
-                                          subscribe={props.subscribe}
-                                          unsubscribe={props.unsubscribe}/>)}
+    {props.users.map(u => (
+      <SearchUserItem
+        key={u.id} id={u.id}
+        followed={u.followed}
+        avatarURL={u.avatarURL}
+        name={u.name}
+        status={u.status}
+        smallAva={u.photos.small}
+        subscribingInProgress={props.subscribingInProgress}
+        subscribe={props.subscribe}
+        unsubscribe={props.unsubscribe}
+      />
+    ))}
   </div>
 }

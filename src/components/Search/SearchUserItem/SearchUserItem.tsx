@@ -9,12 +9,18 @@ type SearchUserItemPropsType = {
   name: string
   status: string
   smallAva: string
+  subscribingInProgress: Array<string>
   // location: LocationType
   subscribe: (userID: string) => void
   unsubscribe: (userID: string) => void
 }
 
 export function SearchUserItem(props: SearchUserItemPropsType) {
+  const isDisabled = props.subscribingInProgress.some(id => props.id === id)
+
+  const onClickSubscribe = () => props.unsubscribe(props.id)
+  const onClickUnsubscribe = () => props.unsubscribe(props.id)
+
   return (
     <div className={s.search__user} key={props.id}>
       <div className={s.icon}>
@@ -25,8 +31,22 @@ export function SearchUserItem(props: SearchUserItemPropsType) {
         </NavLink>
         <div>
           {props.followed ?
-            <button onClick={() => props.unsubscribe(props.id)}>Unsubscribe</button> :
-            <button onClick={() => props.subscribe(props.id)}>Subscribe</button>}
+            <button
+              onClick={onClickSubscribe}
+              disabled={isDisabled}
+              style={isDisabled ? {
+                backgroundColor: '#d5d4d4',
+                cursor: 'text'
+              } : {}}
+            >Unsubscribe</button> :
+            <button
+              onClick={onClickUnsubscribe}
+              disabled={isDisabled}
+              style={isDisabled ? {
+                backgroundColor: '#d5d4d4',
+                cursor: 'text'
+              } : {}}
+            >Subscribe</button>}
         </div>
       </div>
       <div className={s.info}>

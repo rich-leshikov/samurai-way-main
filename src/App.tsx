@@ -11,7 +11,9 @@ import {SearchContainer} from './components/Search/SearchContainer';
 import {ProfileContainer} from './components/Profile/ProfileContainer';
 import {HeaderContainer} from './components/Header/HeaderContainer';
 
+
 type AppPropsType = {}
+
 
 function App(props: AppPropsType) {
   return (

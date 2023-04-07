@@ -1,5 +1,4 @@
 import {ActionType} from './redux-store';
-// import {v1} from 'uuid';
 
 export type SearchActionType = ReturnType<typeof subscribe>
   | ReturnType<typeof unsubscribe>
@@ -7,6 +6,7 @@ export type SearchActionType = ReturnType<typeof subscribe>
   | ReturnType<typeof setCurrentPage>
   | ReturnType<typeof setTotalUsersCount>
   | ReturnType<typeof switchFetching>
+  | ReturnType<typeof switchSubscribingInProgress>
 
 export type SearchPageType = {
   users: Array<UserType>
@@ -14,6 +14,7 @@ export type SearchPageType = {
   usersTotalCount: number
   currentPage: number
   isFetching: boolean
+  subscribingInProgress: Array<string>
 }
 export type UserType = {
   id: string
@@ -36,57 +37,32 @@ export type LocationType = {
 export const SUBSCRIBE = 'SUBSCRIBE'
 export const UNSUBSCRIBE = 'UNSUBSCRIBE'
 export const SET_USERS = 'SET-USERS'
-export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-export const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
-export const SWITCH_FETCHING = 'SWITCH_FETCHING'
+export const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
+export const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
+export const SWITCH_IS_FETCHING = 'SWITCH-IS-FETCHING'
+export const SWITCH_IS_SUBSCRIBING_PROGRESS = 'SWITCH-IS-SUBSCRIBING-PROGRESS'
 
 export const subscribe = (userID: string) => ({type: SUBSCRIBE, userID} as const)
 export const unsubscribe = (userID: string) => ({type: UNSUBSCRIBE, userID} as const)
 export const setUsers = (users: Array<UserType>) => ({type: SET_USERS, users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 export const setTotalUsersCount = (usersCount: number) => ({type: SET_TOTAL_USERS_COUNT, usersCount} as const)
-export const switchFetching = () => ({type: SWITCH_FETCHING} as const)
+export const switchFetching = () => ({type: SWITCH_IS_FETCHING} as const)
+export const switchSubscribingInProgress = (isFetching: boolean, userId: string) => {
+  return {
+    type: SWITCH_IS_SUBSCRIBING_PROGRESS,
+    isFetching,
+    userId
+  } as const
+}
 
 let initialState: SearchPageType = {
-  // users: [
-  //   {
-  //     id: v1(),
-  //     followed: true,
-  //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     name: 'Billy',
-  //     status: 'Happy!',
-  //     location: {state: 'USA', city: 'Miami'}
-  //   },
-  //   {
-  //     id: v1(),
-  //     followed: true,
-  //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     name: 'Van',
-  //     status: 'Happy!',
-  //     location: {state: 'Japan', city: 'Kyoto'}
-  //   },
-  //   {
-  //     id: v1(),
-  //     followed: true,
-  //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     name: 'Steve',
-  //     status: 'Happy!',
-  //     location: {state: 'USA', city: 'Austin'}
-  //   },
-  //   {
-  //     id: v1(),
-  //     followed: false,
-  //     avatarURL: './../../../img/users_avatars/rambo.jpg',
-  //     name: 'Mark',
-  //     status: 'Happy!',
-  //     location: {state: 'USA', city: 'LA'}
-  //   },
-  // ],
   users: [],
   usersOnPageCount: 10,
-  usersTotalCount: 0, //23607
+  usersTotalCount: 0, //>23607
   currentPage: 1,
-  isFetching: false
+  isFetching: false,
+  subscribingInProgress: []
 }
 
 export const searchReducer = (state: SearchPageType = initialState, action: ActionType): SearchPageType => {
@@ -96,20 +72,27 @@ export const searchReducer = (state: SearchPageType = initialState, action: Acti
       return {
         ...state,
         users: state.users.map(u => u.id !== action.userID ? u : {...u, followed: u.followed = !u.followed})
-      } as SearchPageType
+      }
     case UNSUBSCRIBE:
       return {
         ...state,
         users: state.users.map(u => u.id !== action.userID ? u : {...u, followed: u.followed = !u.followed})
-      } as SearchPageType
+      }
     case SET_USERS:
-      return {...state, users: [...action.users]} as SearchPageType
+      return {...state, users: [...action.users]}
     case SET_CURRENT_PAGE:
-      return {...state, currentPage: action.currentPage} as SearchPageType
+      return {...state, currentPage: action.currentPage}
     case SET_TOTAL_USERS_COUNT:
-      return {...state, usersTotalCount: action.usersCount} as SearchPageType
-    case SWITCH_FETCHING:
-      return {...state, isFetching: !state.isFetching} as SearchPageType
+      return {...state, usersTotalCount: action.usersCount}
+    case SWITCH_IS_FETCHING:
+      return {...state, isFetching: !state.isFetching}
+    case SWITCH_IS_SUBSCRIBING_PROGRESS:
+      return {
+        ...state,
+        subscribingInProgress: action.isFetching ?
+          [...state.subscribingInProgress, action.userId] :
+          state.subscribingInProgress.filter(id => action.userId !== id)
+      }
     default:
       return state as SearchPageType
   }
