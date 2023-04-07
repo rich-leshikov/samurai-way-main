@@ -1,4 +1,5 @@
-import {ActionType} from './redux-store';
+import {ActionType, ThunkType} from './redux-store';
+import {authAPI} from '../api/api';
 
 
 export type AuthActionType = ReturnType<typeof setAuthUserData>
@@ -22,7 +23,16 @@ export const setAuthUserData = (data: DataAuthType) => {
   return {type: SET_USER_DATA, data} as const
 }
 
-
+export const getUserData = (): ThunkType => {
+  return (dispatch, getState) => {
+    authAPI.getUserData()
+      .then(data => {
+        if (data.resultCode === 0) {
+          dispatch(setAuthUserData(data.data))
+        }
+      })
+  }
+}
 
 let initialState: AuthType = {
   id: null,
