@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {DialogsPageType, updateMessageTextarea, addMessage} from '../../redux/dialogs-reducer';
 import {Dialogs} from './Dialogs';
-import {AppRootStateType} from '../../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
 
 type MapStatePropsType = DialogsPageType
@@ -12,7 +12,7 @@ type MapDispatchPropsType = {
 }
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
 
-const mapStateToProps = (state: AppRootStateType): MapStatePropsType => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     newMessageFromTextarea: state.dialogsPage.newMessageFromTextarea,
     dialogs: state.dialogsPage.dialogs,

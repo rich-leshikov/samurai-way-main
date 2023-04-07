@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-export type HeaderAPIType = {
+export type AuthAPIType = {
   getUserData: () => Promise<any>
 }
 export type ProfileAPIType = {
@@ -9,8 +9,8 @@ export type ProfileAPIType = {
 }
 export type UserAPIType = {
   getUsers: (currentPage: number, usersOnPageCount: number) => Promise<any>
-  postSubscribeUser: (userID: string) => Promise<any>
-  deleteUnsubscribeUser: (userID: string) => Promise<any>
+  subscribe: (userID: string) => Promise<any>
+  unsubscribe: (userID: string) => Promise<any>
 }
 
 
@@ -22,7 +22,7 @@ const instance = axios.create({
   }
 })
 
-export const headerAPI: HeaderAPIType = {
+export const authAPI: AuthAPIType = {
   getUserData: () => {
     return instance
       .get(`auth/me`)
@@ -44,12 +44,12 @@ export const userAPI: UserAPIType = {
       .get(`users?page=${currentPage}&count=${usersOnPageCount}`)
       .then(response => response.data)
   },
-  postSubscribeUser: (userID: string) => {
+  subscribe: (userID: string) => {
     return instance
       .post(`follow/${userID}`, {})
       .then(response => response.data)
   },
-  deleteUnsubscribeUser: (userID: string) => {
+  unsubscribe: (userID: string) => {
     return instance
       .delete(`follow/${userID}`)
       .then(response => response.data)

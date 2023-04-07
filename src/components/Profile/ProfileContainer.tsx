@@ -3,7 +3,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {Profile} from './Profile';
 import {ProfilePageType, updatePostTextarea, addPost, setUserProfile} from '../../redux/profile-reducer';
-import {AppRootStateType} from '../../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {profileAPI} from '../../api/api';
 
@@ -36,7 +36,7 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
 
 const ProfileAPIWithRouter = withRouter(ProfileAPIContainer)
 
-const mapStateToProps = (state: AppRootStateType): MapStatePropsType => ({
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   newPostFromTextarea: state.profilePage.newPostFromTextarea,
   posts: state.profilePage.posts,
   profile: state.profilePage.profile
