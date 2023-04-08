@@ -2,12 +2,10 @@ import axios from 'axios';
 
 
 export type AuthAPIType = {
-  getUserData: () => Promise<any>
-}
-export type ProfileAPIType = {
-  getUserProfile: (userId: string) => Promise<any>
+  me: () => Promise<any>
 }
 export type UserAPIType = {
+  getUserProfile: (userId: string) => Promise<any>
   getUsers: (currentPage: number, usersOnPageCount: number) => Promise<any>
   subscribe: (userID: string) => Promise<any>
   unsubscribe: (userID: string) => Promise<any>
@@ -22,23 +20,20 @@ const instance = axios.create({
   }
 })
 
+
 export const authAPI: AuthAPIType = {
-  getUserData: () => {
+  me: () => {
     return instance
       .get(`auth/me`)
       .then(response => response.data)
   }
 }
-
-export const profileAPI: ProfileAPIType = {
+export const userAPI: UserAPIType = {
   getUserProfile: (userId: string = '2') => {
     return instance
       .get(`profile/${userId}`)
       .then(response => response.data)
-  }
-}
-
-export const userAPI: UserAPIType = {
+  },
   getUsers: (currentPage: number = 1, usersOnPageCount: number = 10) => {
     return instance
       .get(`users?page=${currentPage}&count=${usersOnPageCount}`)

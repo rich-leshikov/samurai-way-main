@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {ActionType, ThunkType} from './redux-store';
-import {profileAPI} from '../api/api';
+import {userAPI} from '../api/api';
 
 
 export type ProfileActionType = ReturnType<typeof updatePostTextarea>
@@ -29,7 +29,7 @@ export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profil
 
 export const getUserProfile = (userId: string): ThunkType => {
   return (dispatch, getState) => {
-    profileAPI.getUserProfile(userId)
+    userAPI.getUserProfile(userId)
       .then((data) => {
         dispatch(setUserProfile(data))
       })

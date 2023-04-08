@@ -23,9 +23,9 @@ export const setAuthUserData = (data: DataAuthType) => {
   return {type: SET_USER_DATA, data} as const
 }
 
-export const getUserData = (): ThunkType => {
+export const getAuthUserData = (): ThunkType => {
   return (dispatch, getState) => {
-    authAPI.getUserData()
+    authAPI.me()
       .then(data => {
         if (data.resultCode === 0) {
           dispatch(setAuthUserData(data.data))

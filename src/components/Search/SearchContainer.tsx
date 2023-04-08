@@ -26,20 +26,16 @@ class SearchAPIContainer extends React.Component<SearchPropsType> {
   componentDidMount(): void {
     this.props.getUsers(this.props.currentPage, this.props.pageSize)
   }
-
   onPageChanged(pageNumber: number): void {
     this.props.setCurrentPage(pageNumber)
     this.props.getUsers(pageNumber, this.props.pageSize)
   }
-
   subscribe(userID: string): void {
     this.props.subscribe(userID)
   }
-
   unsubscribe(userID: string): void {
     this.props.unsubscribe(userID)
   }
-
   render() {
     return (
       <>

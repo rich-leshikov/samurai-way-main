@@ -22,7 +22,6 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
   componentDidMount() {
     this.props.getUserProfile(this.props.match.params.userId)
   }
-
   render() {
     return (
       <Profile {...this.props}/>
