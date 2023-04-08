@@ -5,26 +5,28 @@ import {Dialogs} from './Dialogs';
 import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
 
-type MapStatePropsType = DialogsPageType
+
+type MapStatePropsType = DialogsPageType & {
+  isAuth: boolean
+}
 type MapDispatchPropsType = {
   updateMessageTextarea: (message: string) => void
   addMessage: () => void
 }
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
 
+
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     newMessageFromTextarea: state.dialogsPage.newMessageFromTextarea,
     dialogs: state.dialogsPage.dialogs,
-    messages: state.dialogsPage.messages
+    messages: state.dialogsPage.messages,
+    isAuth: state.auth.isAuth
   }
 }
 
-// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-//   return {
-//     updateMessage: (message: string) => dispatch(updateMessageTextarea(message)),
-//     addMessage: () => dispatch(addMessage())
-//   }
-// }
 
-export const DialogsContainer = connect(mapStateToProps, {updateMessageTextarea, addMessage})(Dialogs)
+export const DialogsContainer = connect(mapStateToProps, {
+  updateMessageTextarea,
+  addMessage
+})(Dialogs)

@@ -3,10 +3,12 @@ import {connect} from 'react-redux';
 import {Profile} from './Profile';
 import {addPost, getUserProfile, ProfilePageType, updatePostTextarea} from '../../redux/profile-reducer';
 import {AppStateType} from '../../redux/redux-store';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 
 
-type MapStatePropsType = ProfilePageType
+type MapStatePropsType = ProfilePageType & {
+  isAuth: boolean
+}
 type MapDispatchPropsType = {
   updatePostTextarea: (post: string) => void
   addPost: () => void
@@ -23,6 +25,10 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
     this.props.getUserProfile(this.props.match.params.userId)
   }
   render() {
+    if (!this.props.isAuth) {
+      return <Redirect to={'/login'}/>
+    }
+
     return (
       <Profile {...this.props}/>
     )
@@ -35,9 +41,14 @@ const ProfileAPIWithRouter = withRouter(ProfileAPIContainer)
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   newPostFromTextarea: state.profilePage.newPostFromTextarea,
   posts: state.profilePage.posts,
-  profile: state.profilePage.profile
+  profile: state.profilePage.profile,
+  isAuth: state.auth.isAuth
 })
 
 
 export const ProfileContainer =
-  connect(mapStateToProps, {updatePostTextarea, addPost, getUserProfile})(ProfileAPIWithRouter)
+  connect(mapStateToProps, {
+    updatePostTextarea,
+    addPost,
+    getUserProfile
+  })(ProfileAPIWithRouter)
