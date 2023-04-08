@@ -18,7 +18,7 @@ type SearchUserItemPropsType = {
 export function SearchUserItem(props: SearchUserItemPropsType) {
   const isDisabled = props.subscribingInProgress.some(id => props.id === id)
 
-  const onClickSubscribe = () => props.unsubscribe(props.id)
+  const onClickSubscribe = () => props.subscribe(props.id)
   const onClickUnsubscribe = () => props.unsubscribe(props.id)
 
   return (
@@ -32,7 +32,7 @@ export function SearchUserItem(props: SearchUserItemPropsType) {
         <div>
           {props.followed ?
             <button
-              onClick={onClickSubscribe}
+              onClick={onClickUnsubscribe}
               disabled={isDisabled}
               style={isDisabled ? {
                 backgroundColor: '#d5d4d4',
@@ -40,7 +40,7 @@ export function SearchUserItem(props: SearchUserItemPropsType) {
               } : {}}
             >Unsubscribe</button> :
             <button
-              onClick={onClickUnsubscribe}
+              onClick={onClickSubscribe}
               disabled={isDisabled}
               style={isDisabled ? {
                 backgroundColor: '#d5d4d4',
