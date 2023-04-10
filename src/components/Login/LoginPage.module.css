@@ -1,3 +1,7 @@
 .login {
   padding: 10px;
 }
+
+.login__wallpaper img {
+  width: 800px;
+}
