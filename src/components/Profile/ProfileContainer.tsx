@@ -5,6 +5,7 @@ import {addPost, getUserProfile, ProfilePageType, updatePostTextarea} from '../.
 import {AppStateType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {WithAuthReducer} from '../../hoc/withAuthReducer';
+import {compose} from 'redux';
 
 
 type MapStatePropsType = ProfilePageType
@@ -23,6 +24,7 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
   componentDidMount() {
     this.props.getUserProfile(this.props.match.params.userId)
   }
+
   render() {
     return (
       <Profile {...this.props}/>
@@ -31,17 +33,18 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
 }
 
 
-const ProfileAPIWithRouter = withRouter(ProfileAPIContainer)
-
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   newPostFromTextarea: state.profilePage.newPostFromTextarea,
   posts: state.profilePage.posts,
   profile: state.profilePage.profile
 })
 
-
-export const ProfileContainer = WithAuthReducer(connect(mapStateToProps, {
+export const ProfileContainer = compose<React.ComponentType>(
+  WithAuthReducer,
+  withRouter,
+  connect(mapStateToProps, {
     updatePostTextarea,
     addPost,
     getUserProfile
-  })(ProfileAPIWithRouter))
+  })
+)(ProfileAPIContainer)

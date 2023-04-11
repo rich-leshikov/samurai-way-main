@@ -4,6 +4,7 @@ import {addMessage, DialogsPageType, updateMessageTextarea} from '../../redux/di
 import {Dialogs} from './Dialogs';
 import {AppStateType} from '../../redux/redux-store';
 import {WithAuthReducer} from '../../hoc/withAuthReducer';
+import {compose} from 'redux';
 
 
 type MapStatePropsType = DialogsPageType
@@ -23,7 +24,10 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 
-export const DialogsContainer = WithAuthReducer(connect(mapStateToProps, {
-  updateMessageTextarea,
-  addMessage
-})(Dialogs))
+export const DialogsContainer = compose<React.ComponentType>(
+  WithAuthReducer,
+  connect(mapStateToProps, {
+    updateMessageTextarea,
+    addMessage
+  })
+)(Dialogs)

@@ -10,6 +10,7 @@ import {
 } from '../../redux/search-reducer';
 import {SearchUsers} from './SearchUsers';
 import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
+import {compose} from 'redux';
 
 
 type MapStatePropsType = SearchPageType
@@ -69,10 +70,11 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 }
 
 
-export const SearchContainer = connect(mapStateToProps,
-  {
+export const SearchContainer = compose<React.ComponentType>(
+  connect(mapStateToProps, {
     setCurrentPage,
     getUsers,
     subscribe,
     unsubscribe
-  })(SearchAPIContainer)
+  })
+)(SearchAPIContainer)
