@@ -2,9 +2,12 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MessageForm} from '../../EmbeddedModules/MessageForm/MessageForm';
-import {ProfilePageType} from '../../../redux/profile-reducer';
+import {PostType} from '../../../redux/profile-reducer';
 
-export type MyPostsPropsType = ProfilePageType & {
+export type MyPostsPropsType = {
+  posts: Array<PostType>
+  newPostFromTextarea: string
+  profile: any
   updatePostTextarea: (post: string) => void
   addPost: () => void
 }

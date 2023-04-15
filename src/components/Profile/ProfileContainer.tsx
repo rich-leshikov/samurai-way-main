@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Profile} from './Profile';
-import {addPost, getUserProfile, ProfilePageType, updatePostTextarea} from '../../redux/profile-reducer';
-import {AppStateType} from '../../redux/redux-store';
+import {addPost, ProfilePageType, updatePostTextarea, getProfile, getStatus, changeStatus} from '../../redux/profile-reducer';
+import {AppStateType, ThunkType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {WithAuthReducer} from '../../hoc/withAuthReducer';
 import {compose} from 'redux';
@@ -12,17 +12,22 @@ type MapStatePropsType = ProfilePageType
 type MapDispatchPropsType = {
   updatePostTextarea: (post: string) => void
   addPost: () => void
-  getUserProfile: (profile: any) => void
+  getProfile: (profile: any) => void
+  getStatus: (status: string) => void
+  changeStatus: (status: string) => ThunkType
 }
 type PathParamsType = {
   userId: string
 }
-type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>
+type ProfilePropsType = MapStatePropsType &
+  MapDispatchPropsType &
+  RouteComponentProps<PathParamsType>
 
 
 class ProfileAPIContainer extends React.Component<ProfilePropsType> {
   componentDidMount() {
-    this.props.getUserProfile(this.props.match.params.userId)
+    this.props.getProfile(this.props.match.params.userId)
+    this.props.getStatus(this.props.match.params.userId)
   }
 
   render() {
@@ -36,7 +41,8 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   newPostFromTextarea: state.profilePage.newPostFromTextarea,
   posts: state.profilePage.posts,
-  profile: state.profilePage.profile
+  profile: state.profilePage.profile,
+  status: state.profilePage.status
 })
 
 export const ProfileContainer = compose<React.ComponentType>(
@@ -45,6 +51,8 @@ export const ProfileContainer = compose<React.ComponentType>(
   connect(mapStateToProps, {
     updatePostTextarea,
     addPost,
-    getUserProfile
+    getProfile,
+    getStatus,
+    changeStatus
   })
 )(ProfileAPIContainer)

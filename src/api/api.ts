@@ -5,10 +5,14 @@ export type AuthAPIType = {
   me: () => Promise<any>
 }
 export type UserAPIType = {
-  getUserProfile: (userId: string) => Promise<any>
   getUsers: (currentPage: number, usersOnPageCount: number) => Promise<any>
   subscribe: (userID: string) => Promise<any>
   unsubscribe: (userID: string) => Promise<any>
+}
+export type ProfileAPIType = {
+  getProfile: (userId: string) => Promise<any>
+  getStatus: (userId: string) => Promise<any>
+  changeStatus: (status: string) => Promise<any>
 }
 
 
@@ -29,11 +33,6 @@ export const authAPI: AuthAPIType = {
   }
 }
 export const userAPI: UserAPIType = {
-  getUserProfile: (userId: string = '2') => {
-    return instance
-      .get(`profile/${userId}`)
-      .then(response => response.data)
-  },
   getUsers: (currentPage: number = 1, usersOnPageCount: number = 10) => {
     return instance
       .get(`users?page=${currentPage}&count=${usersOnPageCount}`)
@@ -47,6 +46,23 @@ export const userAPI: UserAPIType = {
   unsubscribe: (userID: string) => {
     return instance
       .delete(`follow/${userID}`)
+      .then(response => response.data)
+  }
+}
+export const profileAPI: ProfileAPIType = {
+  getProfile: (userId: string = '2') => {
+    return instance
+      .get(`profile/${userId}`)
+      .then(response => response.data)
+  },
+  getStatus: (userId: string = '2') => {
+    return instance
+      .get(`profile/status/${userId}`)
+      .then(response => response.data)
+  },
+  changeStatus: (status: string) => {
+    return instance
+      .put(`profile/status`, {status})
       .then(response => response.data)
   }
 }

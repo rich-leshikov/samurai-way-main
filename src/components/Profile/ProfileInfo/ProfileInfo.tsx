@@ -1,9 +1,12 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
 import {ProfileStatus} from './ProfileStatus/ProfileStatus';
+import {ThunkType} from '../../../redux/redux-store';
 
 type ProfileInfoPropsType = {
   profile: any
+  status: string
+  changeStatus: (status: string) => ThunkType
 }
 
 export function ProfileInfo(props: ProfileInfoPropsType) {
@@ -15,11 +18,14 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
       <div className={s.profile__description}>
         <div className={s.profile__description__avatar}>
           <img src={props.profile.photos.small ?
-            props.profile.photos.small : require("../../../assets/img/doomer.jpg")}/>
+            props.profile.photos.small : require('../../../assets/img/doomer.jpg')}/>
         </div>
         <div className={s.profile__description__info}>
-          <h3>About me</h3>
-          <ProfileStatus aboutMe={props.profile.aboutMe}/>
+          <h4>Thinking about</h4>
+          <ProfileStatus
+            status={props.status}
+            changeStatus={props.changeStatus}
+          />
         </div>
       </div>
     </div>
