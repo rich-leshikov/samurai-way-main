@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './ProfileStatus.module.css'
 import {ThunkType} from '../../../../redux/redux-store';
 
@@ -21,14 +21,22 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
   activateEditMode = () => {
     this.setState({
+      ...this.state,
       editMode: true
     })
   }
-  deactivateEditMode = (status: string) => {
+  deactivateEditMode = () => {
     this.setState({
+      ...this.state,
       editMode: false
     })
-    this.props.changeStatus(status)
+    this.props.changeStatus(this.state.status)
+  }
+  onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+    this.setState({
+      ...this.state,
+      status: e.currentTarget.value
+    })
   }
 
   render() {
@@ -36,14 +44,14 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
       <div className={s.profileStatus}>
         {
           !this.state.editMode &&
-          <p onDoubleClick={this.activateEditMode}>{this.state.status}</p>
+          <p onDoubleClick={this.activateEditMode}>{this.props.status}</p>
         }
         {
           this.state.editMode &&
           <input
             autoFocus={true}
-            onChange={(e) => this.setState({...this.state, status: e.currentTarget.value})}
-            onBlur={(e) => this.deactivateEditMode(e.currentTarget.value)}
+            onChange={(e) => this.onStatusChange(e)}
+            onBlur={this.deactivateEditMode}
             value={this.state.status}
           />
         }

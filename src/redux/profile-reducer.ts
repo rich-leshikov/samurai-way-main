@@ -52,7 +52,7 @@ export const changeStatus = (status: string): ThunkType => {
     profileAPI.changeStatus(status)
       .then((data) => {
         if (!data.resultCode) {
-          dispatch(setStatus(data))
+          dispatch(setStatus(status))
         }
       })
   }
@@ -67,7 +67,7 @@ let initialState: ProfilePageType = {
     {id: v1(), message: 'Hello!', likesCount: 3},
   ],
   profile: null,
-  status: "'      '"
+  status: ''
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {

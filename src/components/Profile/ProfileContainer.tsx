@@ -13,7 +13,7 @@ type MapDispatchPropsType = {
   updatePostTextarea: (post: string) => void
   addPost: () => void
   getProfile: (profile: any) => void
-  getStatus: (status: string) => void
+  getStatus: (userId: string) => void
   changeStatus: (status: string) => ThunkType
 }
 type PathParamsType = {
