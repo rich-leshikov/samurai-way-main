@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import s from './ProfileStatus.module.css'
 import {ThunkType} from '../../../../redux/redux-store';
+import {setStatus} from '../../../../redux/profile-reducer';
 
 
 type ProfileStatusPropsType = {
@@ -39,6 +40,14 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     })
   }
 
+  componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot?: any) {
+    if (prevProps.status !== this.props.status) {
+      this.setState({
+        ...this.state,
+        status: this.props.status
+      })
+    }
+  }
   render() {
     return (
       <div className={s.profileStatus}>
