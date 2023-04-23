@@ -4,13 +4,15 @@ import {ProfileActionType, profileReducer} from './profile-reducer';
 import {SearchActionType, searchReducer} from './search-reducer';
 import {AuthActionType, authReducer} from './auth-reducer';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
+import {reducer as formReducer} from 'redux-form';
 
 
 let rootReducer = combineReducers({
   dialogsPage: dialogsReducer,
   profilePage: profileReducer,
   searchPage: searchReducer,
-  auth: authReducer
+  auth: authReducer,
+  form: formReducer
 })
 
 
