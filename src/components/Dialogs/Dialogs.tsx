@@ -2,15 +2,14 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Dialog} from './Dialog/Dialog';
 import {Message} from './Message/Message';
-import {MessageForm} from '../EmbeddedModules/MessageForm/MessageForm';
+import {MessageDataType, MessageReduxForm} from '../EmbeddedModules/MessageForm/MessageForm';
 import {DialogsPropsType} from './DialogsContainer';
 
 
 export function Dialogs(props: DialogsPropsType) {
-  const updateMessage = (message: string) => {
-    props.updateMessageTextarea(message)
+  const addMessage = (formData: MessageDataType) => {
+    props.addMessage(formData.message)
   }
-  const addMessage = () => props.addMessage()
 
   return (
     <div className={s.dialogs}>
@@ -23,11 +22,7 @@ export function Dialogs(props: DialogsPropsType) {
         {
           props.messages.map(m => <Message id={m.id} message={m.message}/>)
         }
-        <MessageForm
-          newMessageFromTextarea={props.newMessageFromTextarea}
-          updateTextarea={updateMessage}
-          addMessage={addMessage}
-        />
+        <MessageReduxForm onSubmit={addMessage}/>
       </div>
     </div>
   )

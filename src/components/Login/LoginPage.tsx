@@ -1,15 +1,10 @@
 import React from 'react';
 import s from './LoginPage.module.css'
-import {LoginReduxForm} from './LoginForm/LoginForm';
+import {FormDataType, LoginReduxForm} from './LoginForm/LoginForm';
 
 
 type LoginPropsType = {
 
-}
-export type FormDataType = {
-  login: string
-  password: string
-  rememberMe: boolean
 }
 
 

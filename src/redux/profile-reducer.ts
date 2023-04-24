@@ -3,13 +3,11 @@ import {ActionType, ThunkType} from './redux-store';
 import {profileAPI} from '../api/api';
 
 
-export type ProfileActionType = ReturnType<typeof updatePostTextarea>
-  | ReturnType<typeof addPost>
+export type ProfileActionType = ReturnType<typeof addPost>
   | ReturnType<typeof setProfile>
   | ReturnType<typeof setStatus>
 export type ProfilePageType = {
   posts: Array<PostType>
-  newPostFromTextarea: string
   profile: any
   status: string
 }
@@ -20,14 +18,12 @@ export type PostType = {
 }
 
 
-export const UPDATE_POST_TEXTAREA = 'UPDATE-POST-TEXTAREA'
 export const ADD_POST = 'ADD-POST'
 export const SET_PROFILE = 'SET-PROFILE'
 export const SET_STATUS = 'SET-STATUS'
 
 
-export const updatePostTextarea = (userText: string) => ({type: UPDATE_POST_TEXTAREA, newText: userText} as const)
-export const addPost = () => ({type: ADD_POST} as const)
+export const addPost = (newPostFromTextarea: string) => ({type: ADD_POST, newPostFromTextarea} as const)
 export const setProfile = (profile: any) => ({type: SET_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
@@ -60,7 +56,6 @@ export const changeStatus = (status: string): ThunkType => {
 
 
 let initialState: ProfilePageType = {
-  newPostFromTextarea: '',
   posts: [
     {id: v1(), message: 'Today I\'m playing guitar!', likesCount: 6},
     {id: v1(), message: 'What a nice day!', likesCount: 5},
@@ -72,20 +67,14 @@ let initialState: ProfilePageType = {
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
   switch (action.type) {
-    case UPDATE_POST_TEXTAREA:
-      return {
-        ...state,
-        newPostFromTextarea: action.newText
-      }
     case ADD_POST:
       const newPost: PostType = {
         id: v1(),
-        message: state.newPostFromTextarea,
+        message: action.newPostFromTextarea,
         likesCount: 0
       }
       return {
         ...state,
-        newPostFromTextarea: '',
         posts: [newPost, ...state.posts]
       }
     case SET_PROFILE:

@@ -1,31 +1,36 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
+import s from './MessageForm.module.css';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {maxLengthCreator, minLength} from '../../../utils/validators';
+import {Textarea} from '../FormControls/FormControls';
 
-type MessageFormPropsType = {
-  newMessageFromTextarea: string,
-  updateTextarea: (message: string) => void,
-  addMessage: () => void,
+
+export type MessageDataType = {
+  message: string
 }
 
-export function MessageForm(props: MessageFormPropsType) {
 
-  const newMessageElement = React.createRef<HTMLTextAreaElement>()
+const maxLength140 = maxLengthCreator(140)
 
-  const updateTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    props.updateTextarea(e.currentTarget.value)
-  }
 
-  const addMessage = () => {
-    props.addMessage()
-  }
-
+function MessageForm(props: InjectedFormProps<MessageDataType>) {
   return (
-    <div>
-      <div className="">
-        <textarea value={props.newMessageFromTextarea} onChange={updateTextarea} ref={newMessageElement}/>
+    <form onSubmit={props.handleSubmit}>
+      <div className={s.messageForm__textarea}>
+        <Field
+          type='message'
+          placeholder={'your message...'}
+          component={Textarea}
+          name={'message'}
+          validate={[minLength, maxLength140]}
+        />
       </div>
-      <div className="">
-        <button onClick={addMessage}>Send</button>
+      <div className={s.messageForm__button}>
+        <button>Send</button>
       </div>
-    </div>
-  );
+    </form>
+  )
 }
+
+
+export const MessageReduxForm = reduxForm<MessageDataType>({form: 'message'})(MessageForm)

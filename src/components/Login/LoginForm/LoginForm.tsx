@@ -1,20 +1,47 @@
 import React from 'react';
 import s from './LoginForm.module.css'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {FormDataType} from '../LoginPage';
+import {Input} from '../../EmbeddedModules/FormControls/FormControls';
+import {maxLengthCreator, required} from '../../../utils/validators';
+
+
+export type FormDataType = {
+  login: string
+  password: string
+  rememberMe: boolean
+}
+
+
+const maxLength12 = maxLengthCreator(12)
 
 
 function LoginForm(props: InjectedFormProps<FormDataType>) {
   return (
     <form onSubmit={props.handleSubmit}>
       <div className={s.loginForm__login}>
-        <Field type="login" placeholder={'Login'} component={'input'} name={'login'}/>
+        <Field
+          type="login"
+          placeholder={'Login'}
+          component={Input}
+          name={'login'}
+          validate={[required, maxLength12]}
+        />
       </div>
       <div className={s.loginForm__password}>
-        <Field type="password" placeholder={'Password'} component={'input'} name={'password'}/>
+        <Field
+          type="password"
+          placeholder={'Password'}
+          component={Input}
+          name={'password'}
+          validate={[required, maxLength12]}
+        />
       </div>
       <div className={s.loginForm__rememberMe}>
-        <Field type="checkbox" component={'input'} name={'rememberMe'}/>
+        <Field
+          type="checkbox"
+          component={'input'}
+          name={'rememberMe'}
+        />
         <span>remember me</span>
       </div>
       <div className={s.loginForm__button}>

@@ -6,11 +6,12 @@ import {ProfilePageType} from '../../redux/profile-reducer';
 import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
 import {ThunkType} from '../../redux/redux-store';
 
+
 type ProfilePropsType = ProfilePageType & {
-  updatePostTextarea: (post: string) => void
-  addPost: () => void
+  addPost: (postText: string) => void
   changeStatus: (status: string) => ThunkType
 }
+
 
 export function Profile(props: ProfilePropsType) {
   if (!props.profile) {
@@ -27,8 +28,6 @@ export function Profile(props: ProfilePropsType) {
       <MyPosts
         profile={props.profile}
         posts={props.posts}
-        newPostFromTextarea={props.newPostFromTextarea}
-        updatePostTextarea={props.updatePostTextarea}
         addPost={props.addPost}
       />
     </div>

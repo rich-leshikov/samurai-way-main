@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addMessage, DialogsPageType, updateMessageTextarea} from '../../redux/dialogs-reducer';
+import {addMessage, DialogsPageType} from '../../redux/dialogs-reducer';
 import {Dialogs} from './Dialogs';
 import {AppStateType} from '../../redux/redux-store';
 import {WithAuthReducer} from '../../hoc/withAuthReducer';
@@ -9,15 +9,13 @@ import {compose} from 'redux';
 
 type MapStatePropsType = DialogsPageType
 type MapDispatchPropsType = {
-  updateMessageTextarea: (message: string) => void
-  addMessage: () => void
+  addMessage: (message: string) => void
 }
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
 
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    newMessageFromTextarea: state.dialogsPage.newMessageFromTextarea,
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages
   }
@@ -27,7 +25,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export const DialogsContainer = compose<React.ComponentType>(
   WithAuthReducer,
   connect(mapStateToProps, {
-    updateMessageTextarea,
     addMessage
   })
 )(Dialogs)

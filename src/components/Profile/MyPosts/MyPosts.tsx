@@ -1,30 +1,25 @@
 import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {MessageForm} from '../../EmbeddedModules/MessageForm/MessageForm';
+import {MessageDataType, MessageReduxForm} from '../../EmbeddedModules/MessageForm/MessageForm';
 import {PostType} from '../../../redux/profile-reducer';
+
 
 export type MyPostsPropsType = {
   posts: Array<PostType>
-  newPostFromTextarea: string
   profile: any
-  updatePostTextarea: (post: string) => void
-  addPost: () => void
+  addPost: (postText: string) => void
 }
 
+
 export function MyPosts(props: MyPostsPropsType) {
-  const updatePost = (post: string) => props.updatePostTextarea(post)
-  const addPost = () => props.addPost()
+  const addPost = (formData: MessageDataType) => props.addPost(formData.message)
 
   return (
     <div className={s.profile__posts}>
       <h3>My posts</h3>
       <div className="profile__new-post">
-        <MessageForm
-          newMessageFromTextarea={props.newPostFromTextarea}
-          updateTextarea={updatePost}
-          addMessage={addPost}
-        />
+        <MessageReduxForm onSubmit={addPost}/>
       </div>
       <div className="profile__posts-feed">
         {
@@ -38,5 +33,5 @@ export function MyPosts(props: MyPostsPropsType) {
         }
       </div>
     </div>
-  );
+  )
 }

@@ -1,10 +1,9 @@
 import {v1} from 'uuid';
 import {ActionType} from './redux-store';
 
-export type DialogsActionType = ReturnType<typeof updateMessageTextarea> | ReturnType<typeof addMessage>
+export type DialogsActionType = ReturnType<typeof addMessage>
 
 export type DialogsPageType = {
-  newMessageFromTextarea: string
   dialogs: Array<DialogType>
   messages: Array<MessageType>
 }
@@ -17,17 +16,14 @@ export type MessageType = {
   message: string
 }
 
-export const UPDATE_MESSAGE_TEXTAREA = 'UPDATE-MESSAGE-TEXTAREA'
+
 export const ADD_MESSAGE = 'ADD-MESSAGE'
 
-export const updateMessageTextarea = (userText: string) => ({
-  type: UPDATE_MESSAGE_TEXTAREA,
-  newText: userText
-} as const)
-export const addMessage = () => ({type: ADD_MESSAGE} as const)
 
-let initialState: DialogsPageType = { // need import DialogsPageType to this file?? + let or const??
-  newMessageFromTextarea: '',
+export const addMessage = (newMessageFromTextarea: string) => ({type: ADD_MESSAGE, newMessageFromTextarea} as const)
+
+
+const initialState: DialogsPageType = {
   dialogs: [
     {id: v1(), name: 'Dimych'},
     {id: v1(), name: 'Victor'},
@@ -41,26 +37,20 @@ let initialState: DialogsPageType = { // need import DialogsPageType to this fil
     {id: v1(), message: 'Hi!'},
     {id: v1(), message: 'What\'s good?'},
     {id: v1(), message: 'Yo!'},
-  ],
+  ]
 }
-// right returning of DialogsPageType??
+
 export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
   switch (action.type) {
-    case UPDATE_MESSAGE_TEXTAREA:
-      return {
-        ...state,
-        newMessageFromTextarea: action.newText
-      } as DialogsPageType
     case ADD_MESSAGE:
       const newMessage: MessageType = {
         id: v1(),
-        message: state.newMessageFromTextarea
+        message: action.newMessageFromTextarea
       }
       return {
         ...state,
-        newMessageFromTextarea: '',
         messages: [...state.messages, newMessage]
-      } as DialogsPageType
+      }
     default:
       return state as DialogsPageType
   }
