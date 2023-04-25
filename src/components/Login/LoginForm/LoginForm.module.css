@@ -1,0 +1,5 @@
+.loginForm__summaryError {
+  border: 2px solid #c20a0a;
+  border-radius: 5px;
+  color: #c20a0a;
+}

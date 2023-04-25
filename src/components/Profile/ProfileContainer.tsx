@@ -8,7 +8,10 @@ import {WithAuthReducer} from '../../hoc/withAuthReducer';
 import {compose} from 'redux';
 
 
-type MapStatePropsType = ProfilePageType
+type MapStatePropsType = ProfilePageType & {
+  id: number | null
+  isAuth: boolean
+}
 type MapDispatchPropsType = {
   addPost: () => void
   getProfile: (profile: any) => void
@@ -25,8 +28,14 @@ type ProfilePropsType = MapStatePropsType &
 
 class ProfileAPIContainer extends React.Component<ProfilePropsType> {
   componentDidMount() {
-    this.props.getProfile(this.props.match.params.userId)
-    this.props.getStatus(this.props.match.params.userId)
+    let userId = this.props.match.params.userId
+
+    if (!userId && this.props.id) {
+      userId = this.props.id.toString()
+    }
+
+    this.props.getProfile(userId)
+    this.props.getStatus(userId)
   }
 
   render() {
@@ -40,7 +49,9 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   posts: state.profilePage.posts,
   profile: state.profilePage.profile,
-  status: state.profilePage.status
+  status: state.profilePage.status,
+  id: state.auth.id,
+  isAuth: state.auth.isAuth
 })
 
 export const ProfileContainer = compose<React.ComponentType>(

@@ -4,10 +4,10 @@
   flex-direction: column;
 }
 .formControl.error input,
-.formControl.error textarea {
+.formControl.error textarea{
   border: 2px solid #c20a0a;
   border-radius: 5px;
 }
-.formControl.error span {
+.formControl.error span{
   color: #c20a0a;
 }

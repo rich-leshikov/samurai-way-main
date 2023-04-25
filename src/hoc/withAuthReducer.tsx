@@ -21,7 +21,7 @@ export function WithAuthReducer<T>(Component: ComponentType<T>) {
     let {isAuth, ...restProps} = props
 
     if (!isAuth) {
-      return <Redirect to={'/email'}/>
+      return <Redirect to={'/login'}/>
     }
 
     return <Component {...restProps as T}/>

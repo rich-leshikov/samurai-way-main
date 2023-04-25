@@ -44,6 +44,7 @@ function LoginForm(props: InjectedFormProps<FormDataType>) {
         />
         <span>remember me</span>
       </div>
+      {props.error && <div className={s.loginForm__summaryError}>{props.error}</div>}
       <div className={s.loginForm__button}>
         <button>Login</button>
       </div>
