@@ -6,13 +6,13 @@ import {maxLengthCreator, required} from '../../../utils/validators';
 
 
 export type FormDataType = {
-  login: string
+  email: string
   password: string
   rememberMe: boolean
 }
 
 
-const maxLength12 = maxLengthCreator(12)
+const maxLength12 = maxLengthCreator(30)
 
 
 function LoginForm(props: InjectedFormProps<FormDataType>) {
@@ -23,7 +23,7 @@ function LoginForm(props: InjectedFormProps<FormDataType>) {
           type="login"
           placeholder={'Login'}
           component={Input}
-          name={'login'}
+          name={'email'}
           validate={[required, maxLength12]}
         />
       </div>

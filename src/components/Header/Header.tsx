@@ -2,8 +2,8 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './Header.module.css'
 import {AuthType} from '../../redux/auth-reducer';
+import { HeaderPropsType } from './HeaderContainer';
 
-type HeaderPropsType = AuthType
 
 export function Header(props: HeaderPropsType) {
   return (
@@ -14,7 +14,10 @@ export function Header(props: HeaderPropsType) {
         <div className={s.loginBlock}>
           {
             props.isAuth ?
-              <div className={s.loginBlock__login}>{props.login}</div> :
+              <div className={s.loginBlock__login}>
+                <span>{props.login} </span>
+                <button onClick={props.logout}>Log Out</button>
+              </div> :
               <NavLink to={'/login'}>Log In</NavLink>
           }
         </div>

@@ -1,16 +1,27 @@
 import React from 'react';
 import s from './LoginPage.module.css'
 import {FormDataType, LoginReduxForm} from './LoginForm/LoginForm';
+import {connect} from 'react-redux';
+import {login} from '../../redux/auth-reducer';
+import {Redirect} from 'react-router-dom';
+import {AppStateType} from '../../redux/redux-store';
 
-
-type LoginPropsType = {
-
+type MapStatePropsType = {
+  isAuth: boolean
 }
+type MapDispatchPropsType = {
+  login: (email: string, password: string, rememberMe: boolean) => void
+}
+type LoginPropsType = MapStatePropsType & MapDispatchPropsType
 
 
-export function LoginPage(props: LoginPropsType) {
+function Login(props: LoginPropsType) {
   const onSubmit = (formData: FormDataType) => {
-    console.log(formData)
+    props.login(formData.email, formData.password, formData.rememberMe)
+  }
+
+  if (props.isAuth) {
+    return <Redirect to={'/profile'}/>
   }
 
   return (
@@ -24,3 +35,11 @@ export function LoginPage(props: LoginPropsType) {
     </div>
   )
 }
+
+
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+  isAuth: state.auth.isAuth
+})
+
+
+export const LoginPage = connect(mapStateToProps, {login})(Login)
