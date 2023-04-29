@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
 import {Footer} from './components/Footer/Footer';
@@ -11,30 +11,60 @@ import {SearchContainer} from './components/Search/SearchContainer';
 import {ProfileContainer} from './components/Profile/ProfileContainer';
 import {HeaderContainer} from './components/Header/HeaderContainer';
 import {LoginPage} from './components/Login/LoginPage';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {initializeApp} from './redux/app-reducer';
+import {AppStateType} from './redux/redux-store';
+import {Preloader} from './components/EmbeddedModules/Preloader/Preloader';
 
 
-type AppPropsType = {}
+type MapStatePropsType = {
+  initialized: boolean
+}
+type MapDispatchPropsType = {
+  initializeApp: () => void
+}
+type AppPropsType = MapStatePropsType & MapDispatchPropsType
 
 
-function App(props: AppPropsType) {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <HeaderContainer/>
-        <Navbar/>
-        <div className="app-wrapper-content">
-          <Route path={'/feed'} render={() => <Feed/>}/>
-          <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
-          <Route path={'/audio'} render={() => <Audio/>}/>
-          <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
-          <Route path={'/search'} render={() => <SearchContainer/>}/>
-          <Route path={'/settings'} render={() => <Settings/>}/>
-          <Route path={'/login'} render={() => <LoginPage/>}/>
-        </div>
-        <Footer/>
-      </BrowserRouter>
-    </div>
-  )
+class AppContainer extends React.Component<AppPropsType> {
+  componentDidMount() {
+    this.props.initializeApp()
+  }
+
+  render() {
+    if (!this.props.initialized) {
+      return <Preloader/>
+    }
+
+    return (
+      <div className="App">
+          <HeaderContainer/>
+          <Navbar/>
+          <div className="app-wrapper-content">
+            <Route path={'/feed'} render={() => <Feed/>}/>
+            <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
+            <Route path={'/audio'} render={() => <Audio/>}/>
+            <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
+            <Route path={'/search'} render={() => <SearchContainer/>}/>
+            <Route path={'/settings'} render={() => <Settings/>}/>
+            <Route path={'/login'} render={() => <LoginPage/>}/>
+          </div>
+          <Footer/>
+      </div>
+    )
+  }
 }
 
-export default App
+
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+  initialized: state.app.initialized
+})
+
+
+export const App = compose<React.ComponentType>(
+  withRouter,
+  connect(mapStateToProps, {
+    initializeApp
+  })
+)(AppContainer)

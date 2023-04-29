@@ -59,7 +59,7 @@ export const switchSubscribingInProgress = (isFetching: boolean, userId: string)
   } as const
 }
 
-export const getUsers = (currentPage: number, pageSize: number): ThunkType => {
+export const requestUsers = (currentPage: number, pageSize: number): ThunkType => {
   return (dispatch, getState) => {
     dispatch(switchFetching())
     userAPI.getUsers(currentPage, pageSize)

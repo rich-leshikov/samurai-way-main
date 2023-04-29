@@ -4,7 +4,7 @@ import {Profile} from './Profile';
 import {addPost, ProfilePageType, getProfile, getStatus, changeStatus} from '../../redux/profile-reducer';
 import {AppStateType, ThunkType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {WithAuthReducer} from '../../hoc/withAuthReducer';
+import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
 
@@ -14,7 +14,7 @@ type MapStatePropsType = ProfilePageType & {
 }
 type MapDispatchPropsType = {
   addPost: () => void
-  getProfile: (profile: any) => void
+  getProfile: (userId: string) => void
   getStatus: (userId: string) => void
   changeStatus: (status: string) => ThunkType
 }
@@ -55,7 +55,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 })
 
 export const ProfileContainer = compose<React.ComponentType>(
-  WithAuthReducer,
+  WithAuthRedirect,
   withRouter,
   connect(mapStateToProps, {
     addPost,

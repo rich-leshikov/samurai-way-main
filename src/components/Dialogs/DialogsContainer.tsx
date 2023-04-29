@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {addMessage, DialogsPageType} from '../../redux/dialogs-reducer';
 import {Dialogs} from './Dialogs';
 import {AppStateType} from '../../redux/redux-store';
-import {WithAuthReducer} from '../../hoc/withAuthReducer';
+import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
 
@@ -23,7 +23,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 
 export const DialogsContainer = compose<React.ComponentType>(
-  WithAuthReducer,
+  WithAuthRedirect,
   connect(mapStateToProps, {
     addMessage
   })

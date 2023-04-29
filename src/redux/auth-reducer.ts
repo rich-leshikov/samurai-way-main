@@ -19,9 +19,8 @@ export const setAuthUserData = (id: number | null, email: string | null, login: 
   return {type: SET_USER_DATA, payload: {id, email, login, isAuth}} as const
 }
 
-export const getAuthUserData = (): ThunkType => {
-  return (dispatch) => {
-    authAPI.me()
+export const getAuthUserData = (): ThunkType<Promise<any>> => (dispatch) => {
+    return authAPI.me()
       .then(data => {
         if (data.resultCode === 0) {
           const {id, email, login} = data.data
@@ -29,7 +28,6 @@ export const getAuthUserData = (): ThunkType => {
         }
       })
   }
-}
 export const login = (email: string, password: string, rememberMe: boolean): ThunkType => {
   return (dispatch) => {
     authAPI.login(email, password, rememberMe)

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
-  getUsers,
+  requestUsers,
   SearchPageType,
   setCurrentPage,
   subscribe,
@@ -16,7 +16,7 @@ import {compose} from 'redux';
 type MapStatePropsType = SearchPageType
 type MapDispatchPropsType = { // why return void??
   setCurrentPage: (page: number) => void
-  getUsers: (currentPage: number, pageSize: number) => void
+  requestUsers: (currentPage: number, pageSize: number) => void
   subscribe: (userID: string) => void
   unsubscribe: (userID: string) => void
 }
@@ -25,11 +25,11 @@ type SearchPropsType = MapStatePropsType & MapDispatchPropsType
 
 class SearchAPIContainer extends React.Component<SearchPropsType> {
   componentDidMount(): void {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize)
+    this.props.requestUsers(this.props.currentPage, this.props.pageSize)
   }
   onPageChanged(pageNumber: number): void {
     this.props.setCurrentPage(pageNumber)
-    this.props.getUsers(pageNumber, this.props.pageSize)
+    this.props.requestUsers(pageNumber, this.props.pageSize)
   }
   subscribe(userID: string): void {
     this.props.subscribe(userID)
@@ -73,7 +73,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 export const SearchContainer = compose<React.ComponentType>(
   connect(mapStateToProps, {
     setCurrentPage,
-    getUsers,
+    requestUsers,
     subscribe,
     unsubscribe
   })
