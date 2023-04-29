@@ -11,6 +11,14 @@ import {
 import {SearchUsers} from './SearchUsers';
 import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
 import {compose} from 'redux';
+import {
+  getCurrentPage,
+  getIsFetching,
+  getPageSize,
+  getSubscribingInProgress,
+  getUsers,
+  getUsersTotalCount
+} from '../../redux/search-selectors';
 
 
 type MapStatePropsType = SearchPageType
@@ -28,7 +36,6 @@ class SearchAPIContainer extends React.Component<SearchPropsType> {
     this.props.requestUsers(this.props.currentPage, this.props.pageSize)
   }
   onPageChanged(pageNumber: number): void {
-    this.props.setCurrentPage(pageNumber)
     this.props.requestUsers(pageNumber, this.props.pageSize)
   }
   subscribe(userID: string): void {
@@ -60,12 +67,12 @@ class SearchAPIContainer extends React.Component<SearchPropsType> {
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    users: state.searchPage.users,
-    pageSize: state.searchPage.pageSize,
-    usersTotalCount: state.searchPage.usersTotalCount,
-    currentPage: state.searchPage.currentPage,
-    isFetching: state.searchPage.isFetching,
-    subscribingInProgress: state.searchPage.subscribingInProgress
+    users: getUsers(state),
+    pageSize: getPageSize(state),
+    usersTotalCount: getUsersTotalCount(state),
+    currentPage: getCurrentPage(state),
+    isFetching: getIsFetching(state),
+    subscribingInProgress: getSubscribingInProgress(state)
   }
 }
 

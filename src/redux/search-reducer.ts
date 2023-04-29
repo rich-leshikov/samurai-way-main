@@ -59,10 +59,12 @@ export const switchSubscribingInProgress = (isFetching: boolean, userId: string)
   } as const
 }
 
-export const requestUsers = (currentPage: number, pageSize: number): ThunkType => {
-  return (dispatch, getState) => {
+export const requestUsers = (page: number, pageSize: number): ThunkType => {
+  return (dispatch) => {
     dispatch(switchFetching())
-    userAPI.getUsers(currentPage, pageSize)
+    dispatch(setCurrentPage(page))
+
+    userAPI.getUsers(page, pageSize)
       .then((data) => {
         dispatch(switchFetching())
         dispatch(setUsers(data.items))
@@ -71,7 +73,7 @@ export const requestUsers = (currentPage: number, pageSize: number): ThunkType =
   }
 }
 export const subscribe = (userID: string): ThunkType => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(switchSubscribingInProgress(true, userID))
     userAPI.subscribe(userID)
       .then((data) => {
@@ -83,7 +85,7 @@ export const subscribe = (userID: string): ThunkType => {
   }
 }
 export const unsubscribe = (userID: string): ThunkType => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(switchSubscribingInProgress(true, userID))
     userAPI.unsubscribe(userID)
       .then((data) => {
