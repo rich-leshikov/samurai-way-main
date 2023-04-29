@@ -18,7 +18,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
       <div className={s.profile__description}>
         <div className={s.profile__description__avatar}>
           <img src={props.profile.photos.small ?
-            props.profile.photos.small : require('../../../assets/img/doomer.jpg')}/>
+            props.profile.photos.small : require('../../../assets/img/no_data_avatar.png')}/>
         </div>
         <div className={s.profile__description__info}>
           <h4>Thinking about</h4>

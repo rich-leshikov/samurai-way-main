@@ -26,7 +26,7 @@ export function SearchUserItem(props: SearchUserItemPropsType) {
       <div className={s.icon}>
         <NavLink to={'/profile/' + props.id}>
           <div className={s.avatar}>
-            <img src={props.smallAva ? props.smallAva : require('../../../assets/img/doomer.jpg')} alt="user avatar"/>
+            <img src={props.smallAva ? props.smallAva : require('../../../assets/img/no_data_avatar.png')} alt="user avatar"/>
           </div>
         </NavLink>
         <div>
