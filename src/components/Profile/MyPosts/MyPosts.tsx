@@ -12,7 +12,7 @@ export type MyPostsPropsType = {
 }
 
 
-export function MyPosts(props: MyPostsPropsType) {
+export const MyPosts = React.memo((props: MyPostsPropsType) => {
   const addPost = (formData: MessageDataType) => props.addPost(formData.message)
 
   return (
@@ -34,4 +34,4 @@ export function MyPosts(props: MyPostsPropsType) {
       </div>
     </div>
   )
-}
+})
