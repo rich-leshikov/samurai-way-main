@@ -1,70 +1,49 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileStatus.module.css'
 import {ThunkType} from '../../../../redux/redux-store';
-import {setStatus} from '../../../../redux/profile-reducer';
 
 
 type ProfileStatusPropsType = {
   status: string
   changeStatus: (status: string) => ThunkType
 }
-type ProfileStatusStateType = {
-  editMode: boolean
-  status: string
-}
+// type ProfileStatusStateType = {
+//   editMode: boolean
+//   status: string
+// }
 
 
-export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
-  state: ProfileStatusStateType = {
-    editMode: false,
-    status: this.props.status
-  }
+export const ProfileStatus = (props: ProfileStatusPropsType) => {
+  const [editMode, setEditMode] = useState<boolean>(false)
+  const [status, changeStatus] = useState<string>(props.status)
 
-  activateEditMode = () => {
-    this.setState({
-      ...this.state,
-      editMode: true
-    })
+  const activateEditMode = () => setEditMode(true)
+  const deactivateEditMode = () => {
+    setEditMode(false)
+    props.changeStatus(status)
   }
-  deactivateEditMode = () => {
-    this.setState({
-      ...this.state,
-      editMode: false
-    })
-    this.props.changeStatus(this.state.status)
-  }
-  onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      ...this.state,
-      status: e.currentTarget.value
-    })
-  }
+  const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => changeStatus(e.currentTarget.value)
 
-  componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot?: any) {
-    if (prevProps.status !== this.props.status) {
-      this.setState({
-        ...this.state,
-        status: this.props.status
-      })
-    }
-  }
-  render() {
-    return (
-      <div className={s.profileStatus}>
-        {
-          !this.state.editMode &&
-          <p onDoubleClick={this.activateEditMode}>{this.props.status}</p>
-        }
-        {
-          this.state.editMode &&
-          <input
-            autoFocus={true}
-            onChange={(e) => this.onStatusChange(e)}
-            onBlur={this.deactivateEditMode}
-            value={this.state.status}
-          />
-        }
-      </div>
-    )
-  }
+  // const componentDidUpdate = (prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot ?: any) => {
+  //   if (prevProps.status !== props.status) {
+  //     changeStatus(props.status)
+  //   }
+  // }
+
+  return (
+    <div className={s.profileStatus}>
+      {
+        !editMode && <p onDoubleClick={activateEditMode}>{status}</p>
+      }
+      {
+        editMode &&
+        <input
+          autoFocus={true}
+          onChange={(e) => onStatusChange(e)}
+          onBlur={deactivateEditMode}
+          value={status}
+        />
+      }
+    </div>
+  )
 }
