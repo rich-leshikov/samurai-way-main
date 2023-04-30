@@ -23,7 +23,9 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
       </div>
       <div className="profile__posts-feed">
         {
-          props.posts.map(p => (
+          [...props.posts]
+            .reverse()
+            .map(p => (
             <Post
               key={p.id}
               message={p.message}

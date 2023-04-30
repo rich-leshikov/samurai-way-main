@@ -57,9 +57,9 @@ export const changeStatus = (status: string): ThunkType => {
 
 let initialState: ProfilePageType = {
   posts: [
-    {id: v1(), message: 'Today I\'m playing guitar!', likesCount: 6},
-    {id: v1(), message: 'What a nice day!', likesCount: 5},
     {id: v1(), message: 'Hello!', likesCount: 3},
+    {id: v1(), message: 'What a nice day!', likesCount: 5},
+    {id: v1(), message: 'Today I\'m playing guitar!', likesCount: 6},
   ],
   profile: null,
   status: ''
@@ -75,7 +75,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
       }
       return {
         ...state,
-        posts: [newPost, ...state.posts]
+        posts: [...state.posts, newPost]
       }
     case SET_PROFILE:
       return {
