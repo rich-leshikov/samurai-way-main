@@ -4,6 +4,7 @@ import {profileAPI} from '../api/api';
 
 
 export type ProfileActionType = ReturnType<typeof addPost>
+  | ReturnType<typeof deletePost>
   | ReturnType<typeof setProfile>
   | ReturnType<typeof setStatus>
 export type ProfilePageType = {
@@ -19,16 +20,18 @@ export type PostType = {
 
 
 export const ADD_POST = 'ADD-POST'
+export const DELETE_POST = 'DELETE-POST'
 export const SET_PROFILE = 'SET-PROFILE'
 export const SET_STATUS = 'SET-STATUS'
 
 
 export const addPost = (newPostFromTextarea: string) => ({type: ADD_POST, newPostFromTextarea} as const)
+export const deletePost = (postId: string) => ({type: DELETE_POST, postId} as const)
 export const setProfile = (profile: any) => ({type: SET_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
 export const getProfile = (userId: string): ThunkType => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     profileAPI.getProfile(userId)
       .then((data) => {
         dispatch(setProfile(data))
@@ -36,7 +39,7 @@ export const getProfile = (userId: string): ThunkType => {
   }
 }
 export const getStatus = (userId: string): ThunkType => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     profileAPI.getStatus(userId)
       .then((data) => {
         dispatch(setStatus(data))
@@ -44,7 +47,7 @@ export const getStatus = (userId: string): ThunkType => {
   }
 }
 export const changeStatus = (status: string): ThunkType => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     profileAPI.changeStatus(status)
       .then((data) => {
         if (!data.resultCode) {
@@ -76,6 +79,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
       return {
         ...state,
         posts: [...state.posts, newPost]
+      }
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(p => p.id !== action.postId)
       }
     case SET_PROFILE:
       return {
