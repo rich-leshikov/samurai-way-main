@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './LoginForm.module.css'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {Input} from '../../EmbeddedModules/FormControls/FormControls';
+import {Input} from '../../common/FormControls/FormControls';
 import {maxLengthCreator, required} from '../../../utils/validators';
 
 
@@ -15,9 +15,9 @@ export type FormDataType = {
 const maxLength12 = maxLengthCreator(30)
 
 
-function LoginForm(props: InjectedFormProps<FormDataType>) {
+function LoginForm({handleSubmit, error}: InjectedFormProps<FormDataType>) {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className={s.loginForm__login}>
         <Field
           type="login"
@@ -44,7 +44,7 @@ function LoginForm(props: InjectedFormProps<FormDataType>) {
         />
         <span>remember me</span>
       </div>
-      {props.error && <div className={s.loginForm__summaryError}>{props.error}</div>}
+      {error && <div className={s.loginForm__summaryError}>{error}</div>}
       <div className={s.loginForm__button}>
         <button>Login</button>
       </div>

@@ -19,10 +19,10 @@ export type PostType = {
 }
 
 
-export const ADD_POST = 'ADD-POST'
-export const DELETE_POST = 'DELETE-POST'
-export const SET_PROFILE = 'SET-PROFILE'
-export const SET_STATUS = 'SET-STATUS'
+export const ADD_POST = 'samurai-network/profile/ADD-POST'
+export const DELETE_POST = 'samurai-network/profile/DELETE-POST'
+export const SET_PROFILE = 'samurai-network/profile/SET-PROFILE'
+export const SET_STATUS = 'samurai-network/profile/SET-STATUS'
 
 
 export const addPost = (newPostFromTextarea: string) => ({type: ADD_POST, newPostFromTextarea} as const)
@@ -31,29 +31,26 @@ export const setProfile = (profile: any) => ({type: SET_PROFILE, profile} as con
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
 export const getProfile = (userId: string): ThunkType => {
-  return (dispatch) => {
-    profileAPI.getProfile(userId)
-      .then((data) => {
-        dispatch(setProfile(data))
-      })
+  return async (dispatch) => {
+    let data = await profileAPI.getProfile(userId)
+
+    dispatch(setProfile(data))
   }
 }
 export const getStatus = (userId: string): ThunkType => {
-  return (dispatch) => {
-    profileAPI.getStatus(userId)
-      .then((data) => {
-        dispatch(setStatus(data))
-      })
+  return async (dispatch) => {
+    let data = await profileAPI.getStatus(userId)
+
+    dispatch(setStatus(data))
   }
 }
 export const changeStatus = (status: string): ThunkType => {
-  return (dispatch) => {
-    profileAPI.changeStatus(status)
-      .then((data) => {
-        if (!data.resultCode) {
-          dispatch(setStatus(status))
-        }
-      })
+  return async (dispatch) => {
+    let data = await profileAPI.changeStatus(status)
+
+    if (!data.resultCode) {
+      dispatch(setStatus(status))
+    }
   }
 }
 

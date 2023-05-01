@@ -9,7 +9,7 @@ import {
   unsubscribe
 } from '../../redux/search-reducer';
 import {SearchUsers} from './SearchUsers';
-import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
+import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
 import {
   getCurrentPage,

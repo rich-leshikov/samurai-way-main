@@ -1,5 +1,7 @@
 import {ActionType, ThunkType} from './redux-store';
 import {userAPI} from '../api/api';
+import {ThunkDispatch} from 'redux-thunk';
+import {updateObjectInArray} from '../utils/object-helpers';
 
 
 export type SearchActionType = ReturnType<typeof subscribeSuccess>
@@ -36,13 +38,13 @@ export type LocationType = {
 }
 
 
-export const SUBSCRIBE = 'SUBSCRIBE'
-export const UNSUBSCRIBE = 'UNSUBSCRIBE'
-export const SET_USERS = 'SET-USERS'
-export const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
-export const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
-export const SWITCH_IS_FETCHING = 'SWITCH-IS-FETCHING'
-export const SWITCH_IS_SUBSCRIBING_PROGRESS = 'SWITCH-IS-SUBSCRIBING-PROGRESS'
+export const SUBSCRIBE = 'samurai-network/search/SUBSCRIBE'
+export const UNSUBSCRIBE = 'samurai-network/search/UNSUBSCRIBE'
+export const SET_USERS = 'samurai-network/search/SET-USERS'
+export const SET_CURRENT_PAGE = 'samurai-network/search/SET-CURRENT-PAGE'
+export const SET_TOTAL_USERS_COUNT = 'samurai-network/search/SET-TOTAL-USERS-COUNT'
+export const SWITCH_IS_FETCHING = 'samurai-network/search/SWITCH-IS-FETCHING'
+export const SWITCH_IS_SUBSCRIBING_PROGRESS = 'samurai-network/search/SWITCH-IS-SUBSCRIBING-PROGRESS'
 
 
 export const subscribeSuccess = (userID: string) => ({type: SUBSCRIBE, userID} as const)
@@ -60,38 +62,36 @@ export const switchSubscribingInProgress = (isFetching: boolean, userId: string)
 }
 
 export const requestUsers = (page: number, pageSize: number): ThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(switchFetching())
     dispatch(setCurrentPage(page))
 
-    userAPI.getUsers(page, pageSize)
-      .then((data) => {
-        dispatch(switchFetching())
-        dispatch(setUsers(data.items))
-        dispatch(setTotalUsersCount(Math.ceil(data.totalCount / 200))) //23607 without Math.ceil
-      })
+    let data = await userAPI.getUsers(page, pageSize)
+
+    dispatch(switchFetching())
+    dispatch(setUsers(data.items))
+    dispatch(setTotalUsersCount(Math.ceil(data.totalCount / 200))) //23607 without Math.ceil
   }
 }
+const subscribeUnsubscribeFlow = async (dispatch: ThunkDispatch<any, any, any>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => any) => {
+  dispatch(switchSubscribingInProgress(true, userId))
+
+  let data = await apiMethod(userId)
+
+  if (!data.resultCode) {
+    dispatch(actionCreator(userId))
+  }
+
+  dispatch(switchSubscribingInProgress(false, userId))
+}
 export const subscribe = (userID: string): ThunkType => {
-  return (dispatch) => {
-    dispatch(switchSubscribingInProgress(true, userID))
-    userAPI.subscribe(userID)
-      .then((data) => {
-        if (!data.resultCode) {
-          dispatch(subscribeSuccess(userID))
-        }
-      })
-      .finally(() => dispatch(switchSubscribingInProgress(false, userID)))
+  return async (dispatch) => {
+    await subscribeUnsubscribeFlow(dispatch, userID, userAPI.subscribe.bind(userAPI), subscribeSuccess)
   }
 }
 export const unsubscribe = (userID: string): ThunkType => {
-  return (dispatch) => {
-    dispatch(switchSubscribingInProgress(true, userID))
-    userAPI.unsubscribe(userID)
-      .then((data) => {
-        !data.resultCode && dispatch(unsubscribeSuccess(userID))
-      })
-      .finally(() => dispatch(switchSubscribingInProgress(false, userID)))
+  return async (dispatch) => {
+    await subscribeUnsubscribeFlow(dispatch,userID,userAPI.unsubscribe.bind(userAPI), unsubscribeSuccess)
   }
 }
 
@@ -107,16 +107,15 @@ let initialState: SearchPageType = {
 
 export const searchReducer = (state: SearchPageType = initialState, action: ActionType): SearchPageType => {
   switch (action.type) {
-    // should combine un- and subscribeSuccess??
     case SUBSCRIBE:
       return {
         ...state,
-        users: state.users.map(u => u.id !== action.userID ? u : {...u, followed: u.followed = !u.followed})
+        users: updateObjectInArray(state.users, action.userID, 'id', {followed: true})
       }
     case UNSUBSCRIBE:
       return {
         ...state,
-        users: state.users.map(u => u.id !== action.userID ? u : {...u, followed: u.followed = !u.followed})
+        users: updateObjectInArray(state.users, action.userID, 'id', {followed: false})
       }
     case SET_USERS:
       return {...state, users: [...action.users]}

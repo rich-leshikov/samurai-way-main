@@ -1,0 +1,18 @@
+.pages {
+  display: flex;
+  flex-direction: row;
+}
+
+.page {
+  margin: 3px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background-color: #d0e7e3;
+  cursor: pointer;
+}
+
+.selected {
+  border-radius: 3px;
+  background-color: #97c5be;
+  cursor: unset;
+}

@@ -3,7 +3,7 @@ import s from './Profile.module.css'
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfilePageType} from '../../redux/profile-reducer';
-import {Preloader} from '../EmbeddedModules/Preloader/Preloader';
+import {Preloader} from '../common/Preloader/Preloader';
 import {ThunkType} from '../../redux/redux-store';
 
 

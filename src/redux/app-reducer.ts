@@ -8,7 +8,7 @@ export type AppType = {
 }
 
 
-export const INITIALIZED_SUCCESS = 'INITIALIZED-SUCCESS'
+export const INITIALIZED_SUCCESS = 'samurai-network/app/INITIALIZED-SUCCESS'
 
 
 export const initializedSuccess = () => {

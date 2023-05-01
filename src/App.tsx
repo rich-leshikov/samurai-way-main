@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {initializeApp} from './redux/app-reducer';
 import {AppStateType} from './redux/redux-store';
-import {Preloader} from './components/EmbeddedModules/Preloader/Preloader';
+import {Preloader} from './components/common/Preloader/Preloader';
 
 
 type MapStatePropsType = {

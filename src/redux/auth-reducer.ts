@@ -12,43 +12,40 @@ export type AuthType = {
 }
 
 
-export const SET_USER_DATA = 'SET-USER-DATA'
+export const SET_USER_DATA = 'samurai-network/auth/SET-USER-DATA'
 
 
 export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => {
   return {type: SET_USER_DATA, payload: {id, email, login, isAuth}} as const
 }
 
-export const getAuthUserData = (): ThunkType<Promise<any>> => (dispatch) => {
-    return authAPI.me()
-      .then(data => {
-        if (data.resultCode === 0) {
-          const {id, email, login} = data.data
-          dispatch(setAuthUserData(id, email, login, true))
-        }
-      })
+export const getAuthUserData = (): ThunkType => async (dispatch) => {
+  let data = await authAPI.me()
+
+  if (data.resultCode === 0) {
+    const {id, email, login} = data.data
+    dispatch(setAuthUserData(id, email, login, true))
   }
+}
 export const login = (email: string, password: string, rememberMe: boolean): ThunkType => {
-  return (dispatch) => {
-    authAPI.login(email, password, rememberMe)
-      .then(data => {
-        if (data.resultCode === 0) {
-          dispatch(getAuthUserData())
-        } else {
-          const errorMessage = data.messages.length > 0 ? data.messages[0] : 'Email or password is wrong'
-          dispatch(stopSubmit('login', {_error: errorMessage}))
-        }
-      })
+  return async (dispatch) => {
+    let data = await authAPI.login(email, password, rememberMe)
+
+    if (data.resultCode === 0) {
+      dispatch(getAuthUserData())
+    } else {
+      const errorMessage = data.messages.length > 0 ? data.messages[0] : 'Email or password is wrong'
+      dispatch(stopSubmit('login', {_error: errorMessage}))
+    }
   }
 }
 export const logout = (): ThunkType => {
-  return (dispatch) => {
-    authAPI.logout()
-      .then(data => {
-        if (data.resultCode === 0) {
-          dispatch(setAuthUserData(null, null, null, false))
-        }
-      })
+  return async (dispatch) => {
+    let data = await authAPI.logout()
+
+    if (data.resultCode === 0) {
+      dispatch(setAuthUserData(null, null, null, false))
+    }
   }
 }
 

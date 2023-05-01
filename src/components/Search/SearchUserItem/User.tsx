@@ -2,7 +2,7 @@ import React from 'react';
 import s from './SearchUserItem.module.css'
 import {NavLink} from 'react-router-dom';
 
-type SearchUserItemPropsType = {
+type UserPropsType = {
   id: string
   followed: boolean
   avatarURL: string // can't send props.avatarURL to require()
@@ -15,7 +15,7 @@ type SearchUserItemPropsType = {
   unsubscribe: (userID: string) => void
 }
 
-export function SearchUserItem(props: SearchUserItemPropsType) {
+export function User(props: UserPropsType) {
   const isDisabled = props.subscribingInProgress.some(id => props.id === id)
 
   const onClickSubscribe = () => props.subscribe(props.id)

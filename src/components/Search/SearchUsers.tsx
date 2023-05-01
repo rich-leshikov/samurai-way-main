@@ -1,7 +1,8 @@
 import React from 'react';
 import {UserType} from '../../redux/search-reducer';
 import s from './Search.module.css';
-import {SearchUserItem} from './SearchUserItem/SearchUserItem';
+import {User} from './SearchUserItem/User';
+import {Paginator} from '../common/Paginator/Paginator';
 
 type SearchUsersPropsType = {
   usersTotalCount: number
@@ -15,34 +16,28 @@ type SearchUsersPropsType = {
 }
 
 export function SearchUsers(props: SearchUsersPropsType) {
-  let pagesCount = Math.ceil(props.usersTotalCount / props.usersOnPageCount)
-
-  const pages = []
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i)
-  }
-
-  return <div className={s.feed}>
-    <div className={s.pages}>
-      {pages.map(p => <div
-        key={p}
-        className={props.currentPage === p ? `${s.page} ${s.selected}` : s.page}
-        onClick={(e) => props.onPageChanged(p)}
-      >{p}</div>)}
-    </div>
-
-    {props.users.map(u => (
-      <SearchUserItem
-        key={u.id} id={u.id}
-        followed={u.followed}
-        avatarURL={u.avatarURL}
-        name={u.name}
-        status={u.status}
-        smallAva={u.photos.small}
-        subscribingInProgress={props.subscribingInProgress}
-        subscribe={props.subscribe}
-        unsubscribe={props.unsubscribe}
+  return (
+    <div className={s.feed}>
+      <Paginator
+        usersTotalCount={props.usersTotalCount}
+        usersOnPageCount={props.usersOnPageCount}
+        currentPage={props.currentPage}
+        onPageChanged={props.onPageChanged}
       />
-    ))}
-  </div>
+
+      {props.users.map(u => (
+        <User
+          key={u.id} id={u.id}
+          followed={u.followed}
+          avatarURL={u.avatarURL}
+          name={u.name}
+          status={u.status}
+          smallAva={u.photos.small}
+          subscribingInProgress={props.subscribingInProgress}
+          subscribe={props.subscribe}
+          unsubscribe={props.unsubscribe}
+        />
+      ))}
+    </div>
+  )
 }

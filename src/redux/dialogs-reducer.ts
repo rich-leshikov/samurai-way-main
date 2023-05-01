@@ -17,7 +17,7 @@ export type MessageType = {
 }
 
 
-export const ADD_MESSAGE = 'ADD-MESSAGE'
+export const ADD_MESSAGE = 'samurai-network/dialogs/ADD-MESSAGE'
 
 
 export const addMessage = (newMessageFromTextarea: string) => ({type: ADD_MESSAGE, newMessageFromTextarea} as const)
