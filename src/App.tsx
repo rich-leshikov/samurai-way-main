@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {HashRouter, Route, withRouter} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
 import {Footer} from './components/Footer/Footer';
@@ -81,9 +81,9 @@ let AppContainer = compose<React.ComponentType>(
 export const SamuraiJSApp = () => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <AppContainer/>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   )
 }
