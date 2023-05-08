@@ -14,7 +14,7 @@ import {compose} from 'redux';
 import {
   getCurrentPage,
   getIsFetching,
-  getPageSize,
+  getPageSize, getPortionSize,
   getSubscribingInProgress,
   getUsers,
   getUsersTotalCount
@@ -54,6 +54,7 @@ class SearchAPIContainer extends React.Component<SearchPropsType> {
             usersOnPageCount={this.props.pageSize}
             usersTotalCount={this.props.usersTotalCount}
             currentPage={this.props.currentPage}
+            portionSize={this.props.portionSize}
             subscribingInProgress={this.props.subscribingInProgress}
             subscribe={this.subscribe.bind(this)}
             unsubscribe={this.unsubscribe.bind(this)}
@@ -71,6 +72,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     pageSize: getPageSize(state),
     usersTotalCount: getUsersTotalCount(state),
     currentPage: getCurrentPage(state),
+    portionSize: getPortionSize(state),
     isFetching: getIsFetching(state),
     subscribingInProgress: getSubscribingInProgress(state)
   }

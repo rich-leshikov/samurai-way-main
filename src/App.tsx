@@ -1,21 +1,30 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
 import {Footer} from './components/Footer/Footer';
-import {Feed} from './components/Feed/Feed';
-import {Audio} from './components/Audio/Audio';
-import {Settings} from './components/Settings/Settings';
-import {DialogsContainer} from './components/Dialogs/DialogsContainer';
-import {SearchContainer} from './components/Search/SearchContainer';
-import {ProfileContainer} from './components/Profile/ProfileContainer';
 import {HeaderContainer} from './components/Header/HeaderContainer';
-import {LoginPage} from './components/Login/LoginPage';
 import {connect, Provider} from 'react-redux';
 import {compose} from 'redux';
 import {initializeApp} from './redux/app-reducer';
 import {AppStateType, store} from './redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
+import {WithSuspense} from './hoc/withSuspense';
+
+const Feed = React.lazy(() => import('./components/Feed/Feed')
+  .then(({Feed}) => ({default: Feed})))
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')
+  .then(({DialogsContainer}) => ({default: DialogsContainer})))
+const Audio = React.lazy(() => import('./components/Audio/Audio')
+  .then(({Audio}) => ({default: Audio})))
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer')
+  .then(({ProfileContainer}) => ({default: ProfileContainer})))
+const SearchContainer = React.lazy(() => import('./components/Search/SearchContainer')
+  .then(({SearchContainer}) => ({default: SearchContainer})))
+const Settings = React.lazy(() => import('./components/Settings/Settings')
+  .then(({Settings}) => ({default: Settings})))
+const LoginPage = React.lazy(() => import('./components/Login/LoginPage')
+  .then(({LoginPage}) => ({default: LoginPage})))
 
 
 type MapStatePropsType = {
@@ -42,13 +51,13 @@ class App extends React.Component<AppPropsType> {
         <HeaderContainer/>
         <Navbar/>
         <div className="app-wrapper-content">
-          <Route path={'/feed'} render={() => <Feed/>}/>
-          <Route path={'/dialogs'} render={() => <DialogsContainer/>}/>
-          <Route path={'/audio'} render={() => <Audio/>}/>
-          <Route path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
-          <Route path={'/search'} render={() => <SearchContainer/>}/>
-          <Route path={'/settings'} render={() => <Settings/>}/>
-          <Route path={'/login'} render={() => <LoginPage/>}/>
+          <Route path={'/audio'} render={WithSuspense(Feed)}/>
+          <Route path={'/audio'} render={WithSuspense(Feed)}/>
+          <Route path={'/audio'} render={WithSuspense(Audio)}/>
+          <Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>
+          <Route path={'/search'} render={WithSuspense(SearchContainer)}/>
+          <Route path={'/search'} render={WithSuspense(Settings)}/>
+          <Route path={'/search'} render={WithSuspense(LoginPage)}/>
         </div>
         <Footer/>
       </div>
@@ -72,9 +81,9 @@ let AppContainer = compose<React.ComponentType>(
 export const SamuraiJSApp = () => {
   return (
     <Provider store={store}>
-    <BrowserRouter>
-      <AppContainer/>
-    </BrowserRouter>
-  </Provider>
+      <BrowserRouter>
+        <AppContainer/>
+      </BrowserRouter>
+    </Provider>
   )
 }

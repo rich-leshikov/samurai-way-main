@@ -1,6 +1,12 @@
 .pages {
+  margin: 10px 0;
   display: flex;
   flex-direction: row;
+}
+
+.pages button {
+  width: auto;
+  padding: 8px;
 }
 
 .page {

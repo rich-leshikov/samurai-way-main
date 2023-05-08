@@ -16,6 +16,7 @@ export type SearchPageType = {
   pageSize: number
   usersTotalCount: number
   currentPage: number
+  portionSize: number
   isFetching: boolean
   subscribingInProgress: Array<string>
 }
@@ -70,7 +71,7 @@ export const requestUsers = (page: number, pageSize: number): ThunkType => {
 
     dispatch(switchFetching())
     dispatch(setUsers(data.items))
-    dispatch(setTotalUsersCount(Math.ceil(data.totalCount / 200))) //23607 without Math.ceil
+    dispatch(setTotalUsersCount(data.totalCount))
   }
 }
 const subscribeUnsubscribeFlow = async (dispatch: ThunkDispatch<any, any, any>, userId: string, apiMethod: (userId: string) => Promise<any>, actionCreator: (userID: string) => any) => {
@@ -99,8 +100,9 @@ export const unsubscribe = (userID: string): ThunkType => {
 let initialState: SearchPageType = {
   users: [],
   pageSize: 10,
-  usersTotalCount: 0, //>23607
+  usersTotalCount: 0,
   currentPage: 1,
+  portionSize: 11,
   isFetching: false,
   subscribingInProgress: []
 }

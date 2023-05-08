@@ -8,6 +8,7 @@ type SearchUsersPropsType = {
   usersTotalCount: number
   usersOnPageCount: number
   currentPage: number
+  portionSize: number
   subscribingInProgress: Array<string>
   users: Array<UserType>
   subscribe: (userID: string) => void
@@ -15,12 +16,12 @@ type SearchUsersPropsType = {
   onPageChanged: (pageNumber: number) => void
 }
 
-export function SearchUsers(props: SearchUsersPropsType) {
+export const SearchUsers = (props: SearchUsersPropsType) => {
   return (
     <div className={s.feed}>
       <Paginator
-        usersTotalCount={props.usersTotalCount}
-        usersOnPageCount={props.usersOnPageCount}
+        itemsTotalCount={props.usersTotalCount}
+        pageSize={props.usersOnPageCount}
         currentPage={props.currentPage}
         onPageChanged={props.onPageChanged}
       />
