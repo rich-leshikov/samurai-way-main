@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksamurai_way=self.webpackChunksamurai_way||[]).push([[172],{7172:function(s,n,t){t.r(n),t.d(n,{Settings:function(){return a}});t(2791);var e="Settings_settings__GsGSV",i=t(184);function a(s){return(0,i.jsx)("div",{className:e,children:"Settings"})}}}]);
+//# sourceMappingURL=172.09636c92.chunk.js.map
