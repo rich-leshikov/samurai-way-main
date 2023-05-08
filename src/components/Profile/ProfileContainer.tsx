@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Profile} from './Profile';
-import {addPost, ProfilePageType, getProfile, getStatus, changeStatus} from '../../redux/profile-reducer';
+import {addPost, ProfilePageType, getProfile, getStatus, changeStatus, savePhoto} from '../../redux/profile-reducer';
 import {AppStateType, ThunkType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
@@ -13,10 +13,11 @@ type MapStatePropsType = ProfilePageType & {
   isAuth: boolean
 }
 type MapDispatchPropsType = {
-  addPost: () => void
   getProfile: (userId: string) => void
   getStatus: (userId: string) => void
+  addPost: () => void
   changeStatus: (status: string) => ThunkType
+  savePhoto: (file: any) => void
 }
 type PathParamsType = {
   userId: string
@@ -27,20 +28,43 @@ type ProfilePropsType = MapStatePropsType &
 
 
 class ProfileAPIContainer extends React.Component<ProfilePropsType> {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId
 
     if (!userId && this.props.id) {
       userId = this.props.id.toString()
+      if (!userId) {
+        this.props.history.push('/login')
+      }
     }
 
     this.props.getProfile(userId)
     this.props.getStatus(userId)
   }
 
+  componentDidMount() {
+    this.refreshProfile()
+  }
+
+  componentDidUpdate(prevProps: Readonly<ProfilePropsType>, prevState: Readonly<{}>, snapshot?: any) {
+    console.log(this.props.match.params.userId)
+    // debugger
+    // if (prevProps.id && (this.props.match.params.userId !== prevProps.id.toString())) {
+    //   this.refreshProfile()
+    // }
+  }
+
   render() {
     return (
-      <Profile {...this.props}/>
+      <Profile
+        {...this.props}
+        profile={this.props.profile}
+        status={this.props.status}
+        isOwner={!this.props.match.params.userId}
+        addPost={this.props.addPost}
+        changeStatus={this.props.changeStatus}
+        savePhoto={this.props.savePhoto}
+      />
     )
   }
 }
@@ -61,6 +85,7 @@ export const ProfileContainer = compose<React.ComponentType>(
     addPost,
     getProfile,
     getStatus,
-    changeStatus
+    changeStatus,
+    savePhoto
   })
 )(ProfileAPIContainer)

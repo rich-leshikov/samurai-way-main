@@ -8,8 +8,10 @@ import {ThunkType} from '../../redux/redux-store';
 
 
 type ProfilePropsType = ProfilePageType & {
+  isOwner: boolean
   addPost: (postText: string) => void
   changeStatus: (status: string) => ThunkType
+  savePhoto: (file: any) => void
 }
 
 
@@ -23,7 +25,9 @@ export function Profile(props: ProfilePropsType) {
       <ProfileInfo
         profile={props.profile}
         status={props.status}
+        isOwner={props.isOwner}
         changeStatus={props.changeStatus}
+        savePhoto={props.savePhoto}
       />
       <MyPosts
         profile={props.profile}

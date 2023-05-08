@@ -15,6 +15,7 @@ export type ProfileAPIType = {
   getProfile: (userId: string) => Promise<any>
   getStatus: (userId: string) => Promise<any>
   changeStatus: (status: string) => Promise<any>
+  savePhoto: (file: any) => Promise<any>
 }
 
 
@@ -75,6 +76,17 @@ export const profileAPI: ProfileAPIType = {
   changeStatus: (status: string) => {
     return instance
       .put(`profile/status`, {status})
+      .then(response => response.data)
+  },
+  savePhoto: (photoFile: any) => {
+    const formData = new FormData()
+    formData.append('image', photoFile)
+    return instance
+      .put(`profile/photo`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
       .then(response => response.data)
   }
 }

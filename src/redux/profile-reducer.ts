@@ -7,6 +7,7 @@ export type ProfileActionType = ReturnType<typeof addPost>
   | ReturnType<typeof deletePost>
   | ReturnType<typeof setProfile>
   | ReturnType<typeof setStatus>
+  | ReturnType<typeof savePhotoSuccess>
 export type ProfilePageType = {
   posts: Array<PostType>
   profile: any
@@ -23,12 +24,14 @@ export const ADD_POST = 'samurai-network/profile/ADD-POST'
 export const DELETE_POST = 'samurai-network/profile/DELETE-POST'
 export const SET_PROFILE = 'samurai-network/profile/SET-PROFILE'
 export const SET_STATUS = 'samurai-network/profile/SET-STATUS'
+export const SAVE_PHOTO_SUCCESS = 'samurai-network/profile/SAVE-PHOTO-SUCCESS'
 
 
 export const addPost = (newPostFromTextarea: string) => ({type: ADD_POST, newPostFromTextarea} as const)
 export const deletePost = (postId: string) => ({type: DELETE_POST, postId} as const)
 export const setProfile = (profile: any) => ({type: SET_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
 
 export const getProfile = (userId: string): ThunkType => {
   return async (dispatch) => {
@@ -50,6 +53,15 @@ export const changeStatus = (status: string): ThunkType => {
 
     if (!data.resultCode) {
       dispatch(setStatus(status))
+    }
+  }
+}
+export const savePhoto = (file: any): ThunkType => {
+  return async (dispatch) => {
+    let data = await profileAPI.savePhoto(file)
+
+    if (!data.resultCode) {
+      dispatch(savePhotoSuccess(data.data.photos))
     }
   }
 }
@@ -91,6 +103,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
       return {
         ...state,
         status: action.status
+      }
+    case SAVE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        profile: {...state.profile, photos: action.photos}
       }
     default:
       return state as ProfilePageType

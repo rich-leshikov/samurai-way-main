@@ -1,5 +1,4 @@
 .profileInfo {
-
 }
 
 .profile__wallpaper img {
@@ -10,6 +9,11 @@
   padding: 20px;
   display: flex;
   justify-content: left;
+}
+
+.profile__description__avatar {
+  display: flex;
+  flex-direction: column;
 }
 
 .profile__description__avatar img {
