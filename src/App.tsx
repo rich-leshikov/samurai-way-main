@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
@@ -51,13 +51,13 @@ class App extends React.Component<AppPropsType> {
         <HeaderContainer/>
         <Navbar/>
         <div className="app-wrapper-content">
-          <Route path={'/audio'} render={WithSuspense(Feed)}/>
-          <Route path={'/audio'} render={WithSuspense(Feed)}/>
+          <Route path={'/feed'} render={WithSuspense(Feed)}/>
+          <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
           <Route path={'/audio'} render={WithSuspense(Audio)}/>
           <Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>
           <Route path={'/search'} render={WithSuspense(SearchContainer)}/>
-          <Route path={'/search'} render={WithSuspense(Settings)}/>
-          <Route path={'/search'} render={WithSuspense(LoginPage)}/>
+          <Route path={'/settings'} render={WithSuspense(Settings)}/>
+          <Route path={'/login'} render={WithSuspense(LoginPage)}/>
         </div>
         <Footer/>
       </div>
