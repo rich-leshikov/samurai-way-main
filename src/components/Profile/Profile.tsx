@@ -24,6 +24,7 @@ export function Profile(props: ProfilePropsType) {
     <div className={s.profile}>
       <ProfileInfo
         profile={props.profile}
+        fullName={props.fullName}
         status={props.status}
         isOwner={props.isOwner}
         changeStatus={props.changeStatus}

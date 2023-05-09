@@ -9,6 +9,7 @@ let initialState: ProfilePageType = {
     {id: '322', message: 'Today I\'m playing guitar!', likesCount: 6},
   ],
   profile: null,
+  fullName: '',
   status: ''
 }
 

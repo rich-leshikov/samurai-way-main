@@ -5,6 +5,7 @@ import {ProfileStatus} from './ProfileStatus/ProfileStatus';
 
 type ProfileInfoPropsType = {
   profile: any
+  fullName: string
   status: string
   isOwner: boolean
   changeStatus: (status: string) => ThunkType
@@ -28,6 +29,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
           {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
         </div>
         <div className={s.profile__description__info}>
+          <h2>{props.fullName}</h2>
           <h4>Thinking about</h4>
           <ProfileStatus
             status={props.status}

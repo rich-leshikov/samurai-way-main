@@ -13,6 +13,7 @@ export type UserAPIType = {
 }
 export type ProfileAPIType = {
   getProfile: (userId: string) => Promise<any>
+  getFullName: (userId: string) => Promise<any>
   getStatus: (userId: string) => Promise<any>
   changeStatus: (status: string) => Promise<any>
   savePhoto: (file: any) => Promise<any>
@@ -67,6 +68,11 @@ export const profileAPI: ProfileAPIType = {
     return instance
       .get(`profile/${userId}`)
       .then(response => response.data)
+  },
+  getFullName: (userId: string = '2') => {
+    return instance
+      .get(`profile/${userId}`)
+      .then(response => response.data.fullName)
   },
   getStatus: (userId: string = '2') => {
     return instance

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Profile} from './Profile';
-import {addPost, ProfilePageType, getProfile, getStatus, changeStatus, savePhoto} from '../../redux/profile-reducer';
+import {addPost, ProfilePageType, getProfile, getStatus, changeStatus, savePhoto, getFullName} from '../../redux/profile-reducer';
 import {AppStateType, ThunkType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
@@ -14,6 +14,7 @@ type MapStatePropsType = ProfilePageType & {
 }
 type MapDispatchPropsType = {
   getProfile: (userId: string) => void
+  getFullName: (userId: string) => void
   getStatus: (userId: string) => void
   addPost: () => void
   changeStatus: (status: string) => ThunkType
@@ -39,6 +40,7 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
     }
 
     this.props.getProfile(userId)
+    this.props.getFullName(userId)
     this.props.getStatus(userId)
   }
 
@@ -73,6 +75,7 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   posts: state.profilePage.posts,
   profile: state.profilePage.profile,
+  fullName: state.profilePage.fullName,
   status: state.profilePage.status,
   id: state.auth.id,
   isAuth: state.auth.isAuth
@@ -85,6 +88,7 @@ export const ProfileContainer = compose<React.ComponentType>(
     addPost,
     getProfile,
     getStatus,
+    getFullName,
     changeStatus,
     savePhoto
   })
