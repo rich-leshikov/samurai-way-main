@@ -49,11 +49,9 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
   }
 
   componentDidUpdate(prevProps: Readonly<ProfilePropsType>, prevState: Readonly<{}>, snapshot?: any) {
-    console.log(this.props.match.params.userId)
-    // debugger
-    // if (prevProps.id && (this.props.match.params.userId !== prevProps.id.toString())) {
-    //   this.refreshProfile()
-    // }
+    if (prevProps.id && (this.props.match.params.userId !== prevProps.match.params.userId)) {
+      this.refreshProfile()
+    }
   }
 
   render() {
