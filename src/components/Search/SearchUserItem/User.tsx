@@ -5,12 +5,11 @@ import {NavLink} from 'react-router-dom';
 type UserPropsType = {
   id: string
   followed: boolean
-  avatarURL: string // can't send props.avatarURL to require()
+  avatarURL: string
   name: string
   status: string
   smallAva: string
   subscribingInProgress: Array<string>
-  // location: LocationType
   subscribe: (userID: string) => void
   unsubscribe: (userID: string) => void
 }

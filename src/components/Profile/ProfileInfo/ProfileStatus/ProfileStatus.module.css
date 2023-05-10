@@ -1,3 +1,8 @@
 .profileStatus {
 
 }
+
+.profileStatus p, input {
+  margin: 0;
+  display: inline-block;
+}

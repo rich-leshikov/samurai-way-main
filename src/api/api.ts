@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { ProfileType } from '../redux/profile-reducer';
+import { UserType } from '../redux/search-reducer';
 
 
 export type AuthAPIType = {
@@ -17,6 +19,26 @@ export type ProfileAPIType = {
   getStatus: (userId: string) => Promise<any>
   changeStatus: (status: string) => Promise<any>
   savePhoto: (file: any) => Promise<any>
+  saveProfile: (profile: any) => Promise<any>
+}
+export enum ResultCodeEnum {// enum может быть либо A либо B либо...
+  Success = 0,
+  Error = 1,
+}
+export enum ResultCodeCaptchaEnum {
+  CaptchaIsRequired = 10
+}
+
+export type GetItemsType = {
+  items: Array<UserType>
+  totalCount: number,
+  error: null | string
+}
+
+export type APIResponseType<D = {},RC = ResultCodeEnum> = {
+  data: D
+  resultCode: RC
+  messages: Array<string>
 }
 
 
@@ -84,7 +106,7 @@ export const profileAPI: ProfileAPIType = {
       .put(`profile/status`, {status})
       .then(response => response.data)
   },
-  savePhoto: (photoFile: any) => {
+  savePhoto: (photoFile: File) => {
     const formData = new FormData()
     formData.append('image', photoFile)
     return instance
@@ -93,6 +115,11 @@ export const profileAPI: ProfileAPIType = {
           'Content-Type': 'multipart/form-data'
         }
       })
+      .then(response => response.data)
+  },
+  saveProfile: (profile: ProfileType) => {
+    return instance
+      .put<APIResponseType>(`profile`, profile)
       .then(response => response.data)
   }
 }

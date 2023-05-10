@@ -25,7 +25,7 @@ export const ProfileStatus = (props: ProfileStatusPropsType) => {
   const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => changeStatus(e.currentTarget.value)
 
   return (
-    <div className={s.profileStatus}>
+    <span className={s.profileStatus}>
       {
         !editMode && <p onDoubleClick={activateEditMode}>{status}</p>
       }
@@ -38,6 +38,6 @@ export const ProfileStatus = (props: ProfileStatusPropsType) => {
           value={status}
         />
       }
-    </div>
+    </span>
   )
 }

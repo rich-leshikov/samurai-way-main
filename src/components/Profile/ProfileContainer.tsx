@@ -1,7 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Profile} from './Profile';
-import {addPost, ProfilePageType, getProfile, getStatus, changeStatus, savePhoto, getFullName} from '../../redux/profile-reducer';
+import {
+  addPost,
+  ProfilePageType,
+  getProfile,
+  getStatus,
+  changeStatus,
+  savePhoto,
+  getFullName,
+  saveProfile, ProfileType
+} from '../../redux/profile-reducer';
 import {AppStateType, ThunkType} from '../../redux/redux-store';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
@@ -19,6 +28,7 @@ type MapDispatchPropsType = {
   addPost: () => void
   changeStatus: (status: string) => ThunkType
   savePhoto: (file: any) => void
+  saveProfile: (profile: ProfileType) => void
 }
 type PathParamsType = {
   userId: string
@@ -64,6 +74,7 @@ class ProfileAPIContainer extends React.Component<ProfilePropsType> {
         addPost={this.props.addPost}
         changeStatus={this.props.changeStatus}
         savePhoto={this.props.savePhoto}
+        saveProfile={this.props.saveProfile}
       />
     )
   }
@@ -88,6 +99,7 @@ export const ProfileContainer = compose<React.ComponentType>(
     getStatus,
     getFullName,
     changeStatus,
-    savePhoto
+    savePhoto,
+    saveProfile
   })
 )(ProfileAPIContainer)

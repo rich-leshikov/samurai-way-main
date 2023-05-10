@@ -5,6 +5,7 @@ import {MyPosts} from './MyPosts/MyPosts';
 import {ProfilePageType} from '../../redux/profile-reducer';
 import {Preloader} from '../common/Preloader/Preloader';
 import {ThunkType} from '../../redux/redux-store';
+import {FormDataType} from '../Login/LoginForm/LoginForm';
 
 
 type ProfilePropsType = ProfilePageType & {
@@ -12,6 +13,7 @@ type ProfilePropsType = ProfilePageType & {
   addPost: (postText: string) => void
   changeStatus: (status: string) => ThunkType
   savePhoto: (file: any) => void
+  saveProfile: (profile: any) => void
 }
 
 
@@ -29,6 +31,7 @@ export function Profile(props: ProfilePropsType) {
         isOwner={props.isOwner}
         changeStatus={props.changeStatus}
         savePhoto={props.savePhoto}
+        saveProfile={props.saveProfile}
       />
       <MyPosts
         profile={props.profile}
