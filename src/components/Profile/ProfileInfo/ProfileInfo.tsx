@@ -13,7 +13,7 @@ type ProfileInfoPropsType = {
   isOwner: boolean
   changeStatus: (status: string) => ThunkType
   savePhoto: (file: File) => void
-  saveProfile: (profile: ProfileType) => void
+  saveProfile: (profile: ProfileType) => Promise<any>
 }
 
 export function ProfileInfo({profile, ...props}: ProfileInfoPropsType) {
@@ -25,8 +25,11 @@ export function ProfileInfo({profile, ...props}: ProfileInfoPropsType) {
     }
   }
   const onSubmit = (formData: ProfileType) => {
-    props.saveProfile(formData)
-    setEditMode(false)
+    // props.saveProfile(formData)
+    // setEditMode(false)
+    props.saveProfile(formData).then(() => {
+      setEditMode(false)
+    })
   }
 
   return (

@@ -13,7 +13,7 @@ type ProfilePropsType = ProfilePageType & {
   addPost: (postText: string) => void
   changeStatus: (status: string) => ThunkType
   savePhoto: (file: any) => void
-  saveProfile: (profile: ProfileType) => void
+  saveProfile: (profile: ProfileType) => Promise<any>
 }
 
 

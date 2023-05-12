@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {ActionType, ThunkType} from './redux-store';
-import {profileAPI, ResultCodeEnum} from '../api/api';
+import {profileAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
 
 
@@ -108,8 +108,9 @@ export const saveProfile = (profile: ProfileType): ThunkType => {
     if (!data.resultCode && userId) {
       dispatch(getProfile(userId.toString()))
     } else {
-      console.log(data)
+      // dispatch(stopSubmit('edit-profile', {'contacts': {'facebook': data.messages[0]}}))
       dispatch(stopSubmit('edit-profile', {_error: data.messages[0]}))
+      return Promise.reject(data.messages[0])
     }
   }
 }

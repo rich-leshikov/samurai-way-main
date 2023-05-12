@@ -28,7 +28,7 @@ type MapDispatchPropsType = {
   addPost: () => void
   changeStatus: (status: string) => ThunkType
   savePhoto: (file: any) => void
-  saveProfile: (profile: ProfileType) => void
+  saveProfile: (profile: ProfileType) => Promise<any>
 }
 type PathParamsType = {
   userId: string

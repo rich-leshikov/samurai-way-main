@@ -24,7 +24,8 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & Prop
       className={s.profileDataForm}
       onSubmit={handleSubmit}
     >
-      {error && <div className={s.formSummaryError}>{error}</div>}
+      {/*{error && <div className={s.formSummaryError}>{error}</div>}*/}
+      <div className={s.formSummaryError}>{error}</div>
       <div>
         <strong>Looking for a job: </strong>
         {
