@@ -4,15 +4,14 @@ import s from './ProfileContact.module.css'
 
 type ProfileContactPropsType = {
   contactTitle: string
-  contactValue: any
+  contactValue: string
 }
 
 
 export function ProfileContact({contactTitle, contactValue, ...props}: ProfileContactPropsType) {
   return (
     <div className={s.profileContact}>
-      <strong>{contactTitle}: </strong>
-      {contactTitle}
+      <strong>{contactTitle}: </strong>{contactValue}
     </div>
   )
 }

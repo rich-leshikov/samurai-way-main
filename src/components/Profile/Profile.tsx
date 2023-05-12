@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Profile.module.css'
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPosts} from './MyPosts/MyPosts';
-import {ProfilePageType} from '../../redux/profile-reducer';
+import {ProfilePageType, ProfileType} from '../../redux/profile-reducer';
 import {Preloader} from '../common/Preloader/Preloader';
 import {ThunkType} from '../../redux/redux-store';
 import {FormDataType} from '../Login/LoginForm/LoginForm';
@@ -13,7 +13,7 @@ type ProfilePropsType = ProfilePageType & {
   addPost: (postText: string) => void
   changeStatus: (status: string) => ThunkType
   savePhoto: (file: any) => void
-  saveProfile: (profile: any) => void
+  saveProfile: (profile: ProfileType) => void
 }
 
 

@@ -1,6 +1,7 @@
 import {v1} from 'uuid';
 import {ActionType, ThunkType} from './redux-store';
-import {profileAPI} from '../api/api';
+import {profileAPI, ResultCodeEnum} from '../api/api';
+import {stopSubmit} from 'redux-form';
 
 
 export type ProfileActionType = ReturnType<typeof addPost>
@@ -58,7 +59,7 @@ export const deletePost = (postId: string) => ({type: DELETE_POST, postId} as co
 export const setProfile = (profile: ProfileType) => ({type: SET_PROFILE, profile} as const)
 export const setFullName = (fullName: string) => ({type: SET_FULL_NAME, fullName} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
-export const savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
+export const savePhotoSuccess = (photos: PhotosType) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
 
 export const getProfile = (userId: string): ThunkType => {
   return async (dispatch) => {
@@ -106,6 +107,9 @@ export const saveProfile = (profile: ProfileType): ThunkType => {
 
     if (!data.resultCode && userId) {
       dispatch(getProfile(userId.toString()))
+    } else {
+      console.log(data)
+      dispatch(stopSubmit('edit-profile', {_error: data.messages[0]}))
     }
   }
 }

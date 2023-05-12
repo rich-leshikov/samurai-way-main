@@ -2,7 +2,7 @@ import React from 'react';
 import {Field, WrappedFieldMetaProps, WrappedFieldProps} from 'redux-form';
 
 import s from './FormControls.module.css'
-import { FieldValidatorType } from '../../../utils/validators';
+import {FieldValidatorType} from '../../../utils/validators';
 
 
 type FormControlPropsType = {
@@ -31,13 +31,13 @@ export const Input: React.FC<WrappedFieldProps> = props => {
   return <FormControl {...props}><input {...input} {...restProps}/></FormControl>
 }
 
-export const createField  = (
+export const createField = (
   placeholder: string | undefined,
   name: string,
-  validators:  Array<FieldValidatorType>,
+  validators: Array<FieldValidatorType>,
   component: React.FC<WrappedFieldProps>,
-  text: ' ',
-  props: {}
+  text?: ' ',
+  props?: {}
 ) => {
   return (
     <div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './ProfileData.module.css'
 import {ProfileContact} from '../ProfileContact/ProfileContact';
+import {ContactsType} from '../../../../redux/profile-reducer';
 
 
 type ProfileDataPropsType = {
@@ -32,15 +33,15 @@ export function ProfileData({profile, isOwner, editMode, setEditMode, ...props}:
         </div>
       }
       <div>
-        <strong>About me:</strong>
+        <strong>About me: </strong>
         {profile.aboutMe}
       </div>
       <div>
-        <strong>Contacts:</strong>
+        <strong>Contacts: </strong>
         {
           Object.keys(profile.contacts).map(key => {
             return (
-              <ProfileContact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+              <ProfileContact key={key} contactTitle={key} contactValue={profile.contacts[key as keyof ContactsType]}/>
             )
           })
         }

@@ -18,44 +18,52 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & Prop
                                                                                             profile,
                                                                                             error
                                                                                           }) => {
+  console.log(error)
   return (
     <form
       className={s.profileDataForm}
       onSubmit={handleSubmit}
     >
+      {error && <div className={s.formSummaryError}>{error}</div>}
       <div>
         <strong>Looking for a job: </strong>
         {
           createField('', 'lookingForAJob',
-            [], Input, '', {type: 'checkbox'})
+            [], Input, ' ', {type: 'checkbox'})
         }
       </div>
       <div>
-        <strong>My professional skills:</strong>
+        <strong>My professional skills: </strong>
         {
           createField('My professional skills', 'lookingForAJobDescription',
-            [], Textarea, '', {type: 'textarea'})
+            [], Textarea, ' ', {type: 'textarea'})
         }
       </div>
       <div>
-        <strong>About me:</strong>
+        <strong>About me: </strong>
         {
           createField('About me', 'aboutMe',
-            [], Textarea, '', {type: 'textarea'})
+            [], Textarea, ' ', {type: 'textarea'})
         }
       </div>
-      {/*<div>*/}
-      {/*  <strong>Contacts:</strong>*/}
-      {/*  {*/}
-      {/*    Object.keys(props.profile.contacts).map(key => {*/}
-      {/*      return (*/}
-      {/*        <ProfileContact contactTitle={key} contactValue={props.profile.contacts[key]}/>*/}
-      {/*      )*/}
-      {/*    })*/}
-      {/*  }*/}
-      {/*</div>*/}
       <div>
-        <button>Save changes</button>
+        <strong>Contacts:</strong>
+        {
+          Object.keys(profile.contacts).map(key => {
+            return (
+              <div key={key} className={s.profileContact}>
+                <strong>{key}: {
+                  createField(key, 'contacts.' + key, [], Input)
+                }</strong>
+              </div>
+            )
+          })
+        }
+      </div>
+      <div>
+        <div className={s.formButton}>
+          <button>Save changes</button>
+        </div>
       </div>
     </form>
   )

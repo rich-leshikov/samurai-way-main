@@ -12,7 +12,7 @@ type ProfileInfoPropsType = {
   status: string
   isOwner: boolean
   changeStatus: (status: string) => ThunkType
-  savePhoto: (file: any) => void
+  savePhoto: (file: File) => void
   saveProfile: (profile: ProfileType) => void
 }
 
