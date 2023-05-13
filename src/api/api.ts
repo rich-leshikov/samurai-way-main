@@ -1,12 +1,15 @@
 import axios from 'axios';
-import { ProfileType } from '../redux/profile-reducer';
-import { UserType } from '../redux/search-reducer';
+import {ProfileType} from '../redux/profile-reducer';
+import {UserType} from '../redux/search-reducer';
 
 
 export type AuthAPIType = {
   me: () => Promise<any>
-  login: (email: string, password: string, rememberMe: boolean) => Promise<any>
+  login: (email: string, password: string, rememberMe: boolean, captcha: string | null) => Promise<any>
   logout: () => Promise<any>
+}
+export type SecurityAPIType = {
+  getCaptchaUrl: () => Promise<any>
 }
 export type UserAPIType = {
   getUsers: (currentPage: number, usersOnPageCount: number) => Promise<any>
@@ -21,24 +24,24 @@ export type ProfileAPIType = {
   savePhoto: (file: any) => Promise<any>
   saveProfile: (profile: any) => Promise<any>
 }
-export enum ResultCodeEnum {// enum может быть либо A либо B либо...
-  Success = 0,
-  Error = 1,
-}
-export enum ResultCodeCaptchaEnum {
-  CaptchaIsRequired = 10
-}
-
 export type GetItemsType = {
   items: Array<UserType>
   totalCount: number,
   error: null | string
 }
-
-export type APIResponseType<D = {},RC = ResultCodeEnum> = {
+export type APIResponseType<D = {}, RC = ResultCodeEnum> = {
   data: D
   resultCode: RC
   messages: Array<string>
+}
+
+// enum может быть либо A, либо B...
+export enum ResultCodeEnum {
+  Success = 0,
+  Error = 1,
+}
+export enum ResultCodeCaptchaEnum {
+  CaptchaIsRequired = 10
 }
 
 
@@ -57,14 +60,21 @@ export const authAPI: AuthAPIType = {
       .get(`auth/me`)
       .then(response => response.data)
   },
-  login: (email: string, password: string, rememberMe: boolean = false) => {
+  login: (email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) => {
     return instance
-      .post('auth/login', {email, password, rememberMe})
+      .post('auth/login', {email, password, rememberMe, captcha})
       .then(response => response.data)
   },
   logout: () => {
     return instance
       .delete('auth/login')
+      .then(response => response.data)
+  }
+}
+export const securityAPI: SecurityAPIType = {
+  getCaptchaUrl: () => {
+    return instance
+      .get(`security/get-captcha-url`)
       .then(response => response.data)
   }
 }

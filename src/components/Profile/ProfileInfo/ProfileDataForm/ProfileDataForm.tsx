@@ -18,7 +18,6 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & Prop
                                                                                             profile,
                                                                                             error
                                                                                           }) => {
-  console.log(error)
   return (
     <form
       className={s.profileDataForm}

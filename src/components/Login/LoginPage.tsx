@@ -8,16 +8,17 @@ import {AppStateType} from '../../redux/redux-store';
 
 type MapStatePropsType = {
   isAuth: boolean
+  captchaUrl: string | null
 }
 type MapDispatchPropsType = {
-  login: (email: string, password: string, rememberMe: boolean) => void
+  login: (email: string, password: string, rememberMe: boolean, captchaUrl: string) => void
 }
 type LoginPropsType = MapStatePropsType & MapDispatchPropsType
 
 
 function Login(props: LoginPropsType) {
   const onSubmit = (formData: FormDataType) => {
-    props.login(formData.email, formData.password, formData.rememberMe)
+    props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
   }
 
   if (props.isAuth) {
@@ -29,16 +30,16 @@ function Login(props: LoginPropsType) {
       <div className={s.login__wallpaper}>
         <img src={require('../../assets/img/moria.jpg')} alt="main-img"/>
       </div>
-      <p>Ennyn Durin Aran Moria: pedo mellon a minno.</p>
-      <p>Im Narvi hain echant: Celebrimbor o Eregion teithant i thiw hin.</p>
-      <LoginReduxForm onSubmit={onSubmit}/>
+      <p>Get out of here, stalker.</p>
+      <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
     </div>
   )
 }
 
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  captchaUrl: state.auth.captchaUrl
 })
 
 

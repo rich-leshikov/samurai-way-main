@@ -24,7 +24,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   id: state.auth.id,
   email: state.auth.email,
   login: state.auth.login,
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  captchaUrl: state.auth.captchaUrl
 })
 
 

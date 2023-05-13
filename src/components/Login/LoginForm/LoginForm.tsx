@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './LoginForm.module.css'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {Input} from '../../common/FormControls/FormControls';
+import {createField, Input} from '../../common/FormControls/FormControls';
 import {maxLengthCreator, required} from '../../../utils/validators';
 
 
@@ -9,13 +9,21 @@ export type FormDataType = {
   email: string
   password: string
   rememberMe: boolean
+  captcha: string
+}
+export type LoginFormPropsType = {
+  captchaUrl: string | null
 }
 
 
 const maxLength12 = maxLengthCreator(30)
 
 
-function LoginForm({handleSubmit, error}: InjectedFormProps<FormDataType>) {
+function LoginForm({
+                     handleSubmit,
+                     error,
+                     captchaUrl
+                   }: InjectedFormProps<FormDataType, LoginFormPropsType> & LoginFormPropsType) {
   return (
     <form onSubmit={handleSubmit}>
       <div className={s.loginForm__login}>
@@ -44,6 +52,8 @@ function LoginForm({handleSubmit, error}: InjectedFormProps<FormDataType>) {
         />
         <span>remember me</span>
       </div>
+      {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
+      {captchaUrl && createField('Symbols from image', 'captcha', [required], Input, ' ', {})}
       {error && <div className={s.loginForm__summaryError}>{error}</div>}
       <div className={s.loginForm__button}>
         <button>Login</button>
@@ -53,4 +63,4 @@ function LoginForm({handleSubmit, error}: InjectedFormProps<FormDataType>) {
 }
 
 
-export const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+export const LoginReduxForm = reduxForm<FormDataType, LoginFormPropsType>({form: 'login'})(LoginForm)
