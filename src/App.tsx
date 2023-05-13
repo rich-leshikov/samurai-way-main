@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter, Route, withRouter} from 'react-router-dom';
+import {HashRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
 import {Footer} from './components/Footer/Footer';
@@ -51,13 +51,17 @@ class App extends React.Component<AppPropsType> {
         <HeaderContainer/>
         <Navbar/>
         <div className="app-wrapper-content">
-          <Route path={'/feed'} render={WithSuspense(Feed)}/>
-          <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
-          <Route path={'/audio'} render={WithSuspense(Audio)}/>
-          <Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>
-          <Route path={'/search'} render={WithSuspense(SearchContainer)}/>
-          <Route path={'/settings'} render={WithSuspense(Settings)}/>
-          <Route path={'/login'} render={WithSuspense(LoginPage)}/>
+          <Switch>
+            <Route path='/' exact><Redirect to='/feed'/></Route>
+            <Route path={'/feed'} render={WithSuspense(Feed)}/>
+            <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
+            <Route path={'/audio'} render={WithSuspense(Audio)}/>
+            <Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>
+            <Route path={'/search'} render={WithSuspense(SearchContainer)}/>
+            <Route path={'/settings'} render={WithSuspense(Settings)}/>
+            <Route exact path={'/login'} render={WithSuspense(LoginPage)}/>
+            <Route path={'*'} render={() => <div>404 Not found</div>}/>
+          </Switch>
         </div>
         <Footer/>
       </div>
@@ -78,6 +82,7 @@ let AppContainer = compose<React.ComponentType>(
   })
 )(App)
 
+// BrowserRouter preferably, but GitHub Pages correct work needed
 export const SamuraiJSApp = () => {
   return (
     <Provider store={store}>
