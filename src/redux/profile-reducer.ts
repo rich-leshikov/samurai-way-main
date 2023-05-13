@@ -84,10 +84,14 @@ export const getStatus = (userId: string): ThunkType => {
 }
 export const changeStatus = (status: string): ThunkType => {
   return async (dispatch) => {
-    let data = await profileAPI.changeStatus(status)
+    try {
+      let data = await profileAPI.changeStatus(status)
 
-    if (!data.resultCode) {
-      dispatch(setStatus(status))
+      if (!data.resultCode) {
+        dispatch(setStatus(status))
+      }
+    } catch (error) {
+
     }
   }
 }
